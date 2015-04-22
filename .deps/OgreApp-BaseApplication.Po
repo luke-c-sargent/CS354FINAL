@@ -1,9 +1,10 @@
 OgreApp-BaseApplication.o: BaseApplication.cpp /usr/include/stdc-predef.h \
- BaseApplication.h /usr/local/include/OGRE/OgreCamera.h \
- /usr/local/include/OGRE/OgrePrerequisites.h \
- /usr/local/include/OGRE/OgrePlatform.h \
- /usr/local/include/OGRE/OgreConfig.h \
- /usr/local/include/OGRE/OgreBuildSettings.h /usr/include/c++/4.8/string \
+ BaseApplication.h /lusr/opt/ogre-1.9/include/OGRE/OgreCamera.h \
+ /lusr/opt/ogre-1.9/include/OGRE/OgrePrerequisites.h \
+ /lusr/opt/ogre-1.9/include/OGRE/OgrePlatform.h \
+ /lusr/opt/ogre-1.9/include/OGRE/OgreConfig.h \
+ /lusr/opt/ogre-1.9/include/OGRE/OgreBuildSettings.h \
+ /usr/include/c++/4.8/string \
  /usr/include/x86_64-linux-gnu/c++/4.8/bits/c++config.h \
  /usr/include/x86_64-linux-gnu/c++/4.8/bits/os_defines.h \
  /usr/include/features.h /usr/include/x86_64-linux-gnu/sys/cdefs.h \
@@ -88,11 +89,12 @@ OgreApp-BaseApplication.o: BaseApplication.cpp /usr/include/stdc-predef.h \
  /usr/include/c++/4.8/bits/functional_hash.h \
  /usr/include/c++/4.8/bits/hash_bytes.h \
  /usr/include/c++/4.8/bits/basic_string.tcc \
- /usr/local/include/OGRE/OgreStdHeaders.h /usr/include/c++/4.8/cassert \
- /usr/include/assert.h /usr/include/c++/4.8/ctime \
- /usr/include/c++/4.8/cstring /usr/include/string.h \
- /usr/include/c++/4.8/cstdarg /usr/include/c++/4.8/cmath \
- /usr/include/math.h /usr/include/x86_64-linux-gnu/bits/huge_val.h \
+ /lusr/opt/ogre-1.9/include/OGRE/OgreStdHeaders.h \
+ /usr/include/c++/4.8/cassert /usr/include/assert.h \
+ /usr/include/c++/4.8/ctime /usr/include/c++/4.8/cstring \
+ /usr/include/string.h /usr/include/c++/4.8/cstdarg \
+ /usr/include/c++/4.8/cmath /usr/include/math.h \
+ /usr/include/x86_64-linux-gnu/bits/huge_val.h \
  /usr/include/x86_64-linux-gnu/bits/huge_valf.h \
  /usr/include/x86_64-linux-gnu/bits/huge_vall.h \
  /usr/include/x86_64-linux-gnu/bits/inf.h \
@@ -176,19 +178,19 @@ OgreApp-BaseApplication.o: BaseApplication.cpp /usr/include/stdc-predef.h \
  /usr/include/x86_64-linux-gnu/bits/environments.h \
  /usr/include/x86_64-linux-gnu/bits/confname.h /usr/include/getopt.h \
  /usr/include/dlfcn.h /usr/include/x86_64-linux-gnu/bits/dlfcn.h \
- /usr/local/include/OGRE/OgreMemoryAllocatorConfig.h \
- /usr/local/include/OGRE/OgreMemoryAllocatedObject.h \
- /usr/local/include/OGRE/OgreHeaderPrefix.h \
- /usr/local/include/OGRE/OgreHeaderSuffix.h \
- /usr/local/include/OGRE/OgreMemorySTLAllocator.h \
- /usr/local/include/OGRE/OgreMemoryNedPooling.h \
- /usr/local/include/OGRE/OgreString.h \
- /usr/local/include/OGRE/OgreMovableObject.h \
- /usr/local/include/OGRE/OgreRenderQueue.h \
- /usr/local/include/OGRE/OgreIteratorWrappers.h \
- /usr/local/include/OGRE/OgreIteratorWrapper.h \
- /usr/local/include/OGRE/OgreIteratorRange.h /usr/include/boost/range.hpp \
- /usr/include/boost/range/functions.hpp \
+ /lusr/opt/ogre-1.9/include/OGRE/OgreMemoryAllocatorConfig.h \
+ /lusr/opt/ogre-1.9/include/OGRE/OgreMemoryAllocatedObject.h \
+ /lusr/opt/ogre-1.9/include/OGRE/OgreHeaderPrefix.h \
+ /lusr/opt/ogre-1.9/include/OGRE/OgreHeaderSuffix.h \
+ /lusr/opt/ogre-1.9/include/OGRE/OgreMemorySTLAllocator.h \
+ /lusr/opt/ogre-1.9/include/OGRE/OgreMemoryNedPooling.h \
+ /lusr/opt/ogre-1.9/include/OGRE/OgreString.h \
+ /lusr/opt/ogre-1.9/include/OGRE/OgreMovableObject.h \
+ /lusr/opt/ogre-1.9/include/OGRE/OgreRenderQueue.h \
+ /lusr/opt/ogre-1.9/include/OGRE/OgreIteratorWrappers.h \
+ /lusr/opt/ogre-1.9/include/OGRE/OgreIteratorWrapper.h \
+ /lusr/opt/ogre-1.9/include/OGRE/OgreIteratorRange.h \
+ /usr/include/boost/range.hpp /usr/include/boost/range/functions.hpp \
  /usr/include/boost/range/begin.hpp /usr/include/boost/range/config.hpp \
  /usr/include/boost/detail/workaround.hpp /usr/include/boost/config.hpp \
  /usr/include/boost/config/user.hpp \
@@ -456,23 +458,25 @@ OgreApp-BaseApplication.o: BaseApplication.cpp /usr/include/stdc-predef.h \
  /usr/include/boost/range/detail/safe_bool.hpp \
  /usr/include/boost/range/iterator_range_io.hpp \
  /usr/include/boost/range/sub_range.hpp \
- /usr/local/include/OGRE/OgreAxisAlignedBox.h \
- /usr/local/include/OGRE/OgreVector3.h /usr/local/include/OGRE/OgreMath.h \
- /usr/local/include/OGRE/OgreQuaternion.h \
- /usr/local/include/OGRE/OgreMatrix4.h \
- /usr/local/include/OGRE/OgreMatrix3.h \
- /usr/local/include/OGRE/OgreVector4.h \
- /usr/local/include/OGRE/OgrePlane.h /usr/local/include/OGRE/OgreSphere.h \
- /usr/local/include/OGRE/OgreShadowCaster.h \
- /usr/local/include/OGRE/OgreRenderable.h \
- /usr/local/include/OGRE/OgreCommon.h \
- /usr/local/include/OGRE/OgreRenderOperation.h \
- /usr/local/include/OGRE/OgreVertexIndexData.h \
- /usr/local/include/OGRE/OgreHardwareVertexBuffer.h \
- /usr/local/include/OGRE/OgreHardwareBuffer.h \
- /usr/local/include/OGRE/OgreException.h \
- /usr/local/include/OGRE/OgreSharedPtr.h \
- /usr/local/include/OGRE/OgreAtomicScalar.h /usr/include/signal.h \
+ /lusr/opt/ogre-1.9/include/OGRE/OgreAxisAlignedBox.h \
+ /lusr/opt/ogre-1.9/include/OGRE/OgreVector3.h \
+ /lusr/opt/ogre-1.9/include/OGRE/OgreMath.h \
+ /lusr/opt/ogre-1.9/include/OGRE/OgreQuaternion.h \
+ /lusr/opt/ogre-1.9/include/OGRE/OgreMatrix4.h \
+ /lusr/opt/ogre-1.9/include/OGRE/OgreMatrix3.h \
+ /lusr/opt/ogre-1.9/include/OGRE/OgreVector4.h \
+ /lusr/opt/ogre-1.9/include/OGRE/OgrePlane.h \
+ /lusr/opt/ogre-1.9/include/OGRE/OgreSphere.h \
+ /lusr/opt/ogre-1.9/include/OGRE/OgreShadowCaster.h \
+ /lusr/opt/ogre-1.9/include/OGRE/OgreRenderable.h \
+ /lusr/opt/ogre-1.9/include/OGRE/OgreCommon.h \
+ /lusr/opt/ogre-1.9/include/OGRE/OgreRenderOperation.h \
+ /lusr/opt/ogre-1.9/include/OGRE/OgreVertexIndexData.h \
+ /lusr/opt/ogre-1.9/include/OGRE/OgreHardwareVertexBuffer.h \
+ /lusr/opt/ogre-1.9/include/OGRE/OgreHardwareBuffer.h \
+ /lusr/opt/ogre-1.9/include/OGRE/OgreException.h \
+ /lusr/opt/ogre-1.9/include/OGRE/OgreSharedPtr.h \
+ /lusr/opt/ogre-1.9/include/OGRE/OgreAtomicScalar.h /usr/include/signal.h \
  /usr/include/x86_64-linux-gnu/bits/signum.h \
  /usr/include/x86_64-linux-gnu/bits/siginfo.h \
  /usr/include/x86_64-linux-gnu/bits/sigaction.h \
@@ -480,14 +484,14 @@ OgreApp-BaseApplication.o: BaseApplication.cpp /usr/include/stdc-predef.h \
  /usr/include/x86_64-linux-gnu/bits/sigstack.h \
  /usr/include/x86_64-linux-gnu/sys/ucontext.h \
  /usr/include/x86_64-linux-gnu/bits/sigthread.h \
- /usr/local/include/OGRE/OgrePlatformInformation.h \
- /usr/local/include/OGRE/OgreColourValue.h \
- /usr/local/include/OGRE/OgreHardwareIndexBuffer.h \
- /usr/local/include/OGRE/OgreMaterial.h \
- /usr/local/include/OGRE/OgreResource.h \
- /usr/local/include/OGRE/OgreStringInterface.h \
- /usr/local/include/OGRE/Threading/OgreThreadHeaders.h \
- /usr/local/include/OGRE/Threading/OgreThreadHeadersBoost.h \
+ /lusr/opt/ogre-1.9/include/OGRE/OgrePlatformInformation.h \
+ /lusr/opt/ogre-1.9/include/OGRE/OgreColourValue.h \
+ /lusr/opt/ogre-1.9/include/OGRE/OgreHardwareIndexBuffer.h \
+ /lusr/opt/ogre-1.9/include/OGRE/OgreMaterial.h \
+ /lusr/opt/ogre-1.9/include/OGRE/OgreResource.h \
+ /lusr/opt/ogre-1.9/include/OGRE/OgreStringInterface.h \
+ /lusr/opt/ogre-1.9/include/OGRE/Threading/OgreThreadHeaders.h \
+ /lusr/opt/ogre-1.9/include/OGRE/Threading/OgreThreadHeadersBoost.h \
  /usr/include/boost/thread/tss.hpp \
  /usr/include/boost/thread/detail/config.hpp \
  /usr/include/boost/thread/detail/platform.hpp \
@@ -721,191 +725,212 @@ OgreApp-BaseApplication.o: BaseApplication.cpp /usr/include/stdc-predef.h \
  /usr/include/boost/thread/pthread/shared_mutex.hpp \
  /usr/include/boost/thread/locks.hpp \
  /usr/include/boost/thread/lock_algorithms.hpp \
- /usr/local/include/OGRE/Threading/OgreThreadDefines.h \
- /usr/local/include/OGRE/Threading/OgreThreadDefinesBoost.h \
- /usr/local/include/OGRE/OgreBlendMode.h \
- /usr/local/include/OGRE/OgreGpuProgram.h \
- /usr/local/include/OGRE/OgreSerializer.h \
- /usr/local/include/OGRE/OgreDataStream.h \
- /usr/local/include/OGRE/OgreGpuProgramParams.h \
- /usr/local/include/OGRE/OgreAny.h \
- /usr/local/include/OGRE/OgreUserObjectBindings.h \
- /usr/local/include/OGRE/OgreFactoryObj.h \
- /usr/local/include/OGRE/OgreAnimable.h \
- /usr/local/include/OGRE/OgreVector2.h \
- /usr/local/include/OGRE/OgreStringVector.h \
- /usr/local/include/OGRE/OgreFrustum.h \
- /usr/local/include/OGRE/OgreMovablePlane.h \
- /usr/local/include/OGRE/OgreRay.h \
- /usr/local/include/OGRE/OgrePlaneBoundedVolume.h \
- /usr/local/include/OGRE/OgreEntity.h \
- /usr/local/include/OGRE/OgreHardwareBufferManager.h \
- /usr/local/include/OGRE/OgreSingleton.h \
- /usr/local/include/OGRE/OgreHardwareCounterBuffer.h \
- /usr/local/include/OGRE/OgreHardwareUniformBuffer.h \
- /usr/local/include/OGRE/OgreRenderToVertexBuffer.h \
- /usr/local/include/OGRE/OgreMesh.h \
- /usr/local/include/OGRE/OgreVertexBoneAssignment.h \
- /usr/local/include/OGRE/OgreSkeleton.h \
- /usr/local/include/OGRE/OgreAnimation.h \
- /usr/local/include/OGRE/OgreAnimationTrack.h \
- /usr/local/include/OGRE/OgreSimpleSpline.h \
- /usr/local/include/OGRE/OgreRotationalSpline.h \
- /usr/local/include/OGRE/OgreKeyFrame.h \
- /usr/local/include/OGRE/OgrePose.h \
- /usr/local/include/OGRE/OgreAnimationState.h \
- /usr/local/include/OGRE/OgreController.h \
- /usr/local/include/OGRE/OgreResourceGroupManager.h \
- /usr/local/include/OGRE/OgreArchive.h \
- /usr/local/include/OGRE/OgreLogManager.h \
- /usr/local/include/OGRE/OgreLog.h /usr/local/include/OGRE/OgreRoot.h \
- /usr/local/include/OGRE/OgreSceneManagerEnumerator.h \
- /usr/local/include/OGRE/OgreSceneManager.h \
- /usr/local/include/OGRE/OgreSceneNode.h \
- /usr/local/include/OGRE/OgreNode.h \
- /usr/local/include/OGRE/OgreSceneQuery.h \
- /usr/local/include/OGRE/OgreAutoParamDataSource.h \
- /usr/local/include/OGRE/OgreLight.h \
- /usr/local/include/OGRE/OgreShadowCameraSetup.h \
- /usr/local/include/OGRE/OgreRenderQueueSortingGrouping.h \
- /usr/local/include/OGRE/OgreTechnique.h \
- /usr/local/include/OGRE/OgrePass.h \
- /usr/local/include/OGRE/OgreTextureUnitState.h \
- /usr/local/include/OGRE/OgreTexture.h \
- /usr/local/include/OGRE/OgreImage.h \
- /usr/local/include/OGRE/OgrePixelFormat.h \
- /usr/local/include/OGRE/OgreRenderSystemCapabilities.h \
- /usr/local/include/OGRE/OgreStringConverter.h \
- /usr/local/include/OGRE/OgreLogManager.h \
- /usr/local/include/OGRE/OgreRadixSort.h \
- /usr/local/include/OGRE/OgreRectangle2D.h \
- /usr/local/include/OGRE/OgreSimpleRenderable.h \
- /usr/local/include/OGRE/OgreShadowTextureManager.h \
- /usr/local/include/OGRE/OgreCamera.h \
- /usr/local/include/OGRE/OgreInstancedGeometry.h \
- /usr/local/include/OGRE/OgreSkeletonInstance.h \
- /usr/local/include/OGRE/OgreBone.h \
- /usr/local/include/OGRE/OgreLodListener.h \
- /usr/local/include/OGRE/OgreInstanceManager.h \
- /usr/local/include/OGRE/OgreRenderSystem.h \
- /usr/local/include/OGRE/OgreMaterialManager.h \
- /usr/local/include/OGRE/OgreResourceManager.h \
- /usr/local/include/OGRE/OgreScriptLoader.h \
- /usr/local/include/OGRE/OgreMaterialSerializer.h \
- /usr/local/include/OGRE/OgreRenderTarget.h \
- /usr/local/include/OGRE/OgreTextureManager.h \
- /usr/local/include/OGRE/OgreViewport.h \
- /usr/local/include/OGRE/OgreTimer.h \
- /usr/local/include/OGRE/GLX/OgreTimerImp.h \
- /usr/local/include/OGRE/GLX/../OgrePrerequisites.h \
- /usr/local/include/OGRE/OgreRenderTexture.h \
- /usr/local/include/OGRE/OgreFrameListener.h \
- /usr/local/include/OGRE/OgreConfigOptionMap.h \
- /usr/local/include/OGRE/OgreNameGenerator.h \
- /usr/local/include/OGRE/OgreLodStrategyManager.h \
- /usr/local/include/OGRE/OgreLodStrategy.h \
- /usr/local/include/OGRE/OgreWorkQueue.h \
- /usr/local/include/OGRE/OgreViewport.h \
- /usr/local/include/OGRE/OgreSceneManager.h \
- /usr/local/include/OGRE/OgreRenderWindow.h \
- /usr/local/include/OGRE/OgreConfigFile.h /usr/include/ois/OISEvents.h \
- /usr/include/ois/OISPrereqs.h /usr/include/ois/OISConfig.h \
- /usr/include/ois/OISInputManager.h /usr/include/ois/OISKeyboard.h \
- /usr/include/ois/OISObject.h /usr/include/ois/OISInterface.h \
- /usr/include/ois/OISEvents.h /usr/include/ois/OISMouse.h \
- /usr/local/include/OGRE/SdkTrays.h /usr/local/include/OGRE/Ogre.h \
- /usr/local/include/OGRE/OgreArchiveManager.h \
- /usr/local/include/OGRE/OgreBillboardChain.h \
- /usr/local/include/OGRE/OgreBillboardSet.h \
- /usr/local/include/OGRE/OgreConfigFile.h \
- /usr/local/include/OGRE/OgreControllerManager.h \
- /usr/local/include/OGRE/OgrePredefinedControllers.h \
- /usr/local/include/OGRE/OgreEntity.h \
- /usr/local/include/OGRE/OgreGpuProgramManager.h \
- /usr/local/include/OGRE/OgreHardwarePixelBuffer.h \
- /usr/local/include/OGRE/OgreHardwareOcclusionQuery.h \
- /usr/local/include/OGRE/OgreHighLevelGpuProgram.h \
- /usr/local/include/OGRE/OgreHighLevelGpuProgramManager.h \
- /usr/local/include/OGRE/OgreInstanceBatch.h \
- /usr/local/include/OGRE/OgreInstancedEntity.h \
- /usr/local/include/OGRE/OgreManualObject.h \
- /usr/local/include/OGRE/OgreMeshManager.h \
- /usr/local/include/OGRE/OgrePatchMesh.h \
- /usr/local/include/OGRE/OgrePatchSurface.h \
- /usr/local/include/OGRE/OgreMeshSerializer.h \
- /usr/local/include/OGRE/OgreMeshSerializerImpl.h \
- /usr/local/include/OGRE/OgreEdgeListBuilder.h \
- /usr/local/include/OGRE/OgreParticleAffector.h \
- /usr/local/include/OGRE/OgreParticleEmitter.h \
- /usr/local/include/OGRE/OgreParticleEmitterCommands.h \
- /usr/local/include/OGRE/OgreParticle.h \
- /usr/local/include/OGRE/OgreBillboard.h \
- /usr/local/include/OGRE/OgreParticleSystemManager.h \
- /usr/local/include/OGRE/OgreParticleSystem.h \
- /usr/local/include/OGRE/OgreParticleIterator.h \
- /usr/local/include/OGRE/OgreProfiler.h \
- /usr/local/include/OGRE/OgreRenderQueueInvocation.h \
- /usr/local/include/OGRE/OgreRenderQueueListener.h \
- /usr/local/include/OGRE/OgreRenderObjectListener.h \
- /usr/local/include/OGRE/OgreRenderTargetListener.h \
- /usr/local/include/OGRE/OgreRenderWindow.h \
- /usr/local/include/OGRE/OgreResourceBackgroundQueue.h \
- /usr/local/include/OGRE/OgreRibbonTrail.h \
- /usr/local/include/OGRE/OgreRoot.h \
- /usr/local/include/OGRE/OgreSkeletonManager.h \
- /usr/local/include/OGRE/OgreSkeletonSerializer.h \
- /usr/local/include/OGRE/OgreStaticGeometry.h \
- /usr/local/include/OGRE/OgreSubEntity.h \
- /usr/local/include/OGRE/OgreSubMesh.h \
- /usr/local/include/OGRE/OgreCompositor.h \
- /usr/local/include/OGRE/OgreCompositorManager.h \
- /usr/local/include/OGRE/OgreCompositionTechnique.h \
- /usr/local/include/OGRE/OgreCompositorChain.h \
- /usr/local/include/OGRE/OgreCompositorInstance.h \
- /usr/local/include/OGRE/OgreCompositionPass.h \
- /usr/local/include/OGRE/OgreCompositionTargetPass.h \
- /usr/local/include/OGRE/OgreWindowEventUtilities.h \
- /usr/local/include/OGRE/OgreShadowCameraSetupFocused.h \
- /usr/local/include/OGRE/OgrePolygon.h \
- /usr/local/include/OGRE/OgreConvexBody.h \
- /usr/local/include/OGRE/OgreShadowCameraSetupLiSPSM.h \
- /usr/local/include/OGRE/OgreShadowCameraSetupPlaneOptimal.h \
- /usr/local/include/OGRE/OgreShadowCameraSetupPSSM.h \
- /usr/local/include/OGRE/OgreOverlaySystem.h \
- /usr/local/include/OGRE/OgreOverlay.h \
- /usr/local/include/OGRE/OgreOverlayPrerequisites.h \
- /usr/local/include/OGRE/OgreOverlayContainer.h \
- /usr/local/include/OGRE/OgreOverlayElement.h \
- /usr/local/include/OGRE/OgreUTFString.h \
- /usr/local/include/OGRE/OgreOverlayElementCommands.h \
- /usr/local/include/OGRE/OgreOverlayManager.h \
- /usr/local/include/OGRE/OgreFontManager.h \
- /usr/local/include/OGRE/OgreFont.h \
- /usr/local/include/OGRE/OgreBorderPanelOverlayElement.h \
- /usr/local/include/OGRE/OgrePanelOverlayElement.h \
- /usr/local/include/OGRE/OgreTextAreaOverlayElement.h \
- /usr/local/include/OGRE/OgreOverlayElementFactory.h \
- /usr/local/include/OGRE/InputContext.h /usr/include/ois/OIS.h \
+ /lusr/opt/ogre-1.9/include/OGRE/Threading/OgreThreadDefines.h \
+ /lusr/opt/ogre-1.9/include/OGRE/Threading/OgreThreadDefinesBoost.h \
+ /lusr/opt/ogre-1.9/include/OGRE/OgreBlendMode.h \
+ /lusr/opt/ogre-1.9/include/OGRE/OgreGpuProgram.h \
+ /lusr/opt/ogre-1.9/include/OGRE/OgreSerializer.h \
+ /lusr/opt/ogre-1.9/include/OGRE/OgreDataStream.h \
+ /lusr/opt/ogre-1.9/include/OGRE/OgreGpuProgramParams.h \
+ /lusr/opt/ogre-1.9/include/OGRE/OgreAny.h \
+ /lusr/opt/ogre-1.9/include/OGRE/OgreUserObjectBindings.h \
+ /lusr/opt/ogre-1.9/include/OGRE/OgreFactoryObj.h \
+ /lusr/opt/ogre-1.9/include/OGRE/OgreAnimable.h \
+ /lusr/opt/ogre-1.9/include/OGRE/OgreVector2.h \
+ /lusr/opt/ogre-1.9/include/OGRE/OgreStringVector.h \
+ /lusr/opt/ogre-1.9/include/OGRE/OgreFrustum.h \
+ /lusr/opt/ogre-1.9/include/OGRE/OgreMovablePlane.h \
+ /lusr/opt/ogre-1.9/include/OGRE/OgreRay.h \
+ /lusr/opt/ogre-1.9/include/OGRE/OgrePlaneBoundedVolume.h \
+ /lusr/opt/ogre-1.9/include/OGRE/OgreEntity.h \
+ /lusr/opt/ogre-1.9/include/OGRE/OgreHardwareBufferManager.h \
+ /lusr/opt/ogre-1.9/include/OGRE/OgreSingleton.h \
+ /lusr/opt/ogre-1.9/include/OGRE/OgreHardwareCounterBuffer.h \
+ /lusr/opt/ogre-1.9/include/OGRE/OgreHardwareUniformBuffer.h \
+ /lusr/opt/ogre-1.9/include/OGRE/OgreRenderToVertexBuffer.h \
+ /lusr/opt/ogre-1.9/include/OGRE/OgreMesh.h \
+ /lusr/opt/ogre-1.9/include/OGRE/OgreVertexBoneAssignment.h \
+ /lusr/opt/ogre-1.9/include/OGRE/OgreSkeleton.h \
+ /lusr/opt/ogre-1.9/include/OGRE/OgreAnimation.h \
+ /lusr/opt/ogre-1.9/include/OGRE/OgreAnimationTrack.h \
+ /lusr/opt/ogre-1.9/include/OGRE/OgreSimpleSpline.h \
+ /lusr/opt/ogre-1.9/include/OGRE/OgreRotationalSpline.h \
+ /lusr/opt/ogre-1.9/include/OGRE/OgreKeyFrame.h \
+ /lusr/opt/ogre-1.9/include/OGRE/OgrePose.h \
+ /lusr/opt/ogre-1.9/include/OGRE/OgreAnimationState.h \
+ /lusr/opt/ogre-1.9/include/OGRE/OgreController.h \
+ /lusr/opt/ogre-1.9/include/OGRE/OgreResourceGroupManager.h \
+ /lusr/opt/ogre-1.9/include/OGRE/OgreArchive.h \
+ /lusr/opt/ogre-1.9/include/OGRE/OgreLogManager.h \
+ /lusr/opt/ogre-1.9/include/OGRE/OgreLog.h \
+ /lusr/opt/ogre-1.9/include/OGRE/OgreRoot.h \
+ /lusr/opt/ogre-1.9/include/OGRE/OgreSceneManagerEnumerator.h \
+ /lusr/opt/ogre-1.9/include/OGRE/OgreSceneManager.h \
+ /lusr/opt/ogre-1.9/include/OGRE/OgreSceneNode.h \
+ /lusr/opt/ogre-1.9/include/OGRE/OgreNode.h \
+ /lusr/opt/ogre-1.9/include/OGRE/OgreSceneQuery.h \
+ /lusr/opt/ogre-1.9/include/OGRE/OgreAutoParamDataSource.h \
+ /lusr/opt/ogre-1.9/include/OGRE/OgreLight.h \
+ /lusr/opt/ogre-1.9/include/OGRE/OgreShadowCameraSetup.h \
+ /lusr/opt/ogre-1.9/include/OGRE/OgreRenderQueueSortingGrouping.h \
+ /lusr/opt/ogre-1.9/include/OGRE/OgreTechnique.h \
+ /lusr/opt/ogre-1.9/include/OGRE/OgrePass.h \
+ /lusr/opt/ogre-1.9/include/OGRE/OgreTextureUnitState.h \
+ /lusr/opt/ogre-1.9/include/OGRE/OgreTexture.h \
+ /lusr/opt/ogre-1.9/include/OGRE/OgreImage.h \
+ /lusr/opt/ogre-1.9/include/OGRE/OgrePixelFormat.h \
+ /lusr/opt/ogre-1.9/include/OGRE/OgreRenderSystemCapabilities.h \
+ /lusr/opt/ogre-1.9/include/OGRE/OgreStringConverter.h \
+ /lusr/opt/ogre-1.9/include/OGRE/OgreLogManager.h \
+ /lusr/opt/ogre-1.9/include/OGRE/OgreRadixSort.h \
+ /lusr/opt/ogre-1.9/include/OGRE/OgreRectangle2D.h \
+ /lusr/opt/ogre-1.9/include/OGRE/OgreSimpleRenderable.h \
+ /lusr/opt/ogre-1.9/include/OGRE/OgreShadowTextureManager.h \
+ /lusr/opt/ogre-1.9/include/OGRE/OgreCamera.h \
+ /lusr/opt/ogre-1.9/include/OGRE/OgreInstancedGeometry.h \
+ /lusr/opt/ogre-1.9/include/OGRE/OgreSkeletonInstance.h \
+ /lusr/opt/ogre-1.9/include/OGRE/OgreBone.h \
+ /lusr/opt/ogre-1.9/include/OGRE/OgreLodListener.h \
+ /lusr/opt/ogre-1.9/include/OGRE/OgreInstanceManager.h \
+ /lusr/opt/ogre-1.9/include/OGRE/OgreRenderSystem.h \
+ /lusr/opt/ogre-1.9/include/OGRE/OgreMaterialManager.h \
+ /lusr/opt/ogre-1.9/include/OGRE/OgreResourceManager.h \
+ /lusr/opt/ogre-1.9/include/OGRE/OgreScriptLoader.h \
+ /lusr/opt/ogre-1.9/include/OGRE/OgreMaterialSerializer.h \
+ /lusr/opt/ogre-1.9/include/OGRE/OgreRenderTarget.h \
+ /lusr/opt/ogre-1.9/include/OGRE/OgreTextureManager.h \
+ /lusr/opt/ogre-1.9/include/OGRE/OgreViewport.h \
+ /lusr/opt/ogre-1.9/include/OGRE/OgreTimer.h \
+ /lusr/opt/ogre-1.9/include/OGRE/GLX/OgreTimerImp.h \
+ /lusr/opt/ogre-1.9/include/OGRE/GLX/../OgrePrerequisites.h \
+ /lusr/opt/ogre-1.9/include/OGRE/OgreRenderTexture.h \
+ /lusr/opt/ogre-1.9/include/OGRE/OgreFrameListener.h \
+ /lusr/opt/ogre-1.9/include/OGRE/OgreConfigOptionMap.h \
+ /lusr/opt/ogre-1.9/include/OGRE/OgreNameGenerator.h \
+ /lusr/opt/ogre-1.9/include/OGRE/OgreLodStrategyManager.h \
+ /lusr/opt/ogre-1.9/include/OGRE/OgreLodStrategy.h \
+ /lusr/opt/ogre-1.9/include/OGRE/OgreWorkQueue.h \
+ /lusr/opt/ogre-1.9/include/OGRE/OgreViewport.h \
+ /lusr/opt/ogre-1.9/include/OGRE/OgreSceneManager.h \
+ /lusr/opt/ogre-1.9/include/OGRE/OgreRenderWindow.h \
+ /lusr/opt/ogre-1.9/include/OGRE/OgreConfigFile.h \
+ /usr/include/ois/OISEvents.h /usr/include/ois/OISPrereqs.h \
+ /usr/include/ois/OISConfig.h /usr/include/ois/OISInputManager.h \
+ /usr/include/ois/OISKeyboard.h /usr/include/ois/OISObject.h \
+ /usr/include/ois/OISInterface.h /usr/include/ois/OISEvents.h \
+ /usr/include/ois/OISMouse.h /lusr/opt/ogre-1.9/include/OGRE/SdkTrays.h \
+ /lusr/opt/ogre-1.9/include/OGRE/Ogre.h \
+ /lusr/opt/ogre-1.9/include/OGRE/OgreArchiveManager.h \
+ /lusr/opt/ogre-1.9/include/OGRE/OgreBillboardChain.h \
+ /lusr/opt/ogre-1.9/include/OGRE/OgreBillboardSet.h \
+ /lusr/opt/ogre-1.9/include/OGRE/OgreConfigFile.h \
+ /lusr/opt/ogre-1.9/include/OGRE/OgreControllerManager.h \
+ /lusr/opt/ogre-1.9/include/OGRE/OgrePredefinedControllers.h \
+ /lusr/opt/ogre-1.9/include/OGRE/OgreEntity.h \
+ /lusr/opt/ogre-1.9/include/OGRE/OgreGpuProgramManager.h \
+ /lusr/opt/ogre-1.9/include/OGRE/OgreHardwarePixelBuffer.h \
+ /lusr/opt/ogre-1.9/include/OGRE/OgreHardwareOcclusionQuery.h \
+ /lusr/opt/ogre-1.9/include/OGRE/OgreHighLevelGpuProgram.h \
+ /lusr/opt/ogre-1.9/include/OGRE/OgreHighLevelGpuProgramManager.h \
+ /lusr/opt/ogre-1.9/include/OGRE/OgreInstanceBatch.h \
+ /lusr/opt/ogre-1.9/include/OGRE/OgreInstancedEntity.h \
+ /lusr/opt/ogre-1.9/include/OGRE/OgreManualObject.h \
+ /lusr/opt/ogre-1.9/include/OGRE/OgreMeshManager.h \
+ /lusr/opt/ogre-1.9/include/OGRE/OgrePatchMesh.h \
+ /lusr/opt/ogre-1.9/include/OGRE/OgrePatchSurface.h \
+ /lusr/opt/ogre-1.9/include/OGRE/OgreMeshSerializer.h \
+ /lusr/opt/ogre-1.9/include/OGRE/OgreMeshSerializerImpl.h \
+ /lusr/opt/ogre-1.9/include/OGRE/OgreEdgeListBuilder.h \
+ /lusr/opt/ogre-1.9/include/OGRE/OgreParticleAffector.h \
+ /lusr/opt/ogre-1.9/include/OGRE/OgreParticleEmitter.h \
+ /lusr/opt/ogre-1.9/include/OGRE/OgreParticleEmitterCommands.h \
+ /lusr/opt/ogre-1.9/include/OGRE/OgreParticle.h \
+ /lusr/opt/ogre-1.9/include/OGRE/OgreBillboard.h \
+ /lusr/opt/ogre-1.9/include/OGRE/OgreParticleSystemManager.h \
+ /lusr/opt/ogre-1.9/include/OGRE/OgreParticleSystem.h \
+ /lusr/opt/ogre-1.9/include/OGRE/OgreParticleIterator.h \
+ /lusr/opt/ogre-1.9/include/OGRE/OgreProfiler.h \
+ /lusr/opt/ogre-1.9/include/OGRE/OgreRenderQueueInvocation.h \
+ /lusr/opt/ogre-1.9/include/OGRE/OgreRenderQueueListener.h \
+ /lusr/opt/ogre-1.9/include/OGRE/OgreRenderObjectListener.h \
+ /lusr/opt/ogre-1.9/include/OGRE/OgreRenderTargetListener.h \
+ /lusr/opt/ogre-1.9/include/OGRE/OgreRenderWindow.h \
+ /lusr/opt/ogre-1.9/include/OGRE/OgreResourceBackgroundQueue.h \
+ /lusr/opt/ogre-1.9/include/OGRE/OgreRibbonTrail.h \
+ /lusr/opt/ogre-1.9/include/OGRE/OgreRoot.h \
+ /lusr/opt/ogre-1.9/include/OGRE/OgreSkeletonManager.h \
+ /lusr/opt/ogre-1.9/include/OGRE/OgreSkeletonSerializer.h \
+ /lusr/opt/ogre-1.9/include/OGRE/OgreStaticGeometry.h \
+ /lusr/opt/ogre-1.9/include/OGRE/OgreSubEntity.h \
+ /lusr/opt/ogre-1.9/include/OGRE/OgreSubMesh.h \
+ /lusr/opt/ogre-1.9/include/OGRE/OgreCompositor.h \
+ /lusr/opt/ogre-1.9/include/OGRE/OgreCompositorManager.h \
+ /lusr/opt/ogre-1.9/include/OGRE/OgreCompositionTechnique.h \
+ /lusr/opt/ogre-1.9/include/OGRE/OgreCompositorChain.h \
+ /lusr/opt/ogre-1.9/include/OGRE/OgreCompositorInstance.h \
+ /lusr/opt/ogre-1.9/include/OGRE/OgreCompositionPass.h \
+ /lusr/opt/ogre-1.9/include/OGRE/OgreCompositionTargetPass.h \
+ /lusr/opt/ogre-1.9/include/OGRE/OgreWindowEventUtilities.h \
+ /lusr/opt/ogre-1.9/include/OGRE/OgreShadowCameraSetupFocused.h \
+ /lusr/opt/ogre-1.9/include/OGRE/OgrePolygon.h \
+ /lusr/opt/ogre-1.9/include/OGRE/OgreConvexBody.h \
+ /lusr/opt/ogre-1.9/include/OGRE/OgreShadowCameraSetupLiSPSM.h \
+ /lusr/opt/ogre-1.9/include/OGRE/OgreShadowCameraSetupPlaneOptimal.h \
+ /lusr/opt/ogre-1.9/include/OGRE/OgreShadowCameraSetupPSSM.h \
+ /lusr/opt/ogre-1.9/include/OGRE/Overlay/OgreOverlaySystem.h \
+ /lusr/opt/ogre-1.9/include/OGRE/Overlay/OgreOverlay.h \
+ /lusr/opt/ogre-1.9/include/OGRE/Overlay/OgreOverlayPrerequisites.h \
+ /lusr/opt/ogre-1.9/include/OGRE/OgrePrerequisites.h \
+ /lusr/opt/ogre-1.9/include/OGRE/OgreSceneNode.h \
+ /lusr/opt/ogre-1.9/include/OGRE/OgreIteratorWrappers.h \
+ /lusr/opt/ogre-1.9/include/OGRE/OgreMatrix4.h \
+ /lusr/opt/ogre-1.9/include/OGRE/Overlay/OgreOverlayContainer.h \
+ /lusr/opt/ogre-1.9/include/OGRE/Overlay/OgreOverlayElement.h \
+ /lusr/opt/ogre-1.9/include/OGRE/OgreString.h \
+ /lusr/opt/ogre-1.9/include/OGRE/OgreRenderable.h \
+ /lusr/opt/ogre-1.9/include/OGRE/OgreUTFString.h \
+ /lusr/opt/ogre-1.9/include/OGRE/OgreStringInterface.h \
+ /lusr/opt/ogre-1.9/include/OGRE/Overlay/OgreOverlayElementCommands.h \
+ /lusr/opt/ogre-1.9/include/OGRE/OgreColourValue.h \
+ /lusr/opt/ogre-1.9/include/OGRE/Overlay/OgreOverlayManager.h \
+ /lusr/opt/ogre-1.9/include/OGRE/OgreSingleton.h \
+ /lusr/opt/ogre-1.9/include/OGRE/OgreStringVector.h \
+ /lusr/opt/ogre-1.9/include/OGRE/OgreScriptLoader.h \
+ /lusr/opt/ogre-1.9/include/OGRE/OgreFrustum.h \
+ /lusr/opt/ogre-1.9/include/OGRE/Overlay/OgreFontManager.h \
+ /lusr/opt/ogre-1.9/include/OGRE/OgreResourceManager.h \
+ /lusr/opt/ogre-1.9/include/OGRE/Overlay/OgreFont.h \
+ /lusr/opt/ogre-1.9/include/OGRE/OgreResource.h \
+ /lusr/opt/ogre-1.9/include/OGRE/OgreTexture.h \
+ /lusr/opt/ogre-1.9/include/OGRE/OgreMaterial.h \
+ /lusr/opt/ogre-1.9/include/OGRE/OgreCommon.h \
+ /lusr/opt/ogre-1.9/include/OGRE/Overlay/OgreBorderPanelOverlayElement.h \
+ /lusr/opt/ogre-1.9/include/OGRE/Overlay/OgrePanelOverlayElement.h \
+ /lusr/opt/ogre-1.9/include/OGRE/Overlay/OgreTextAreaOverlayElement.h \
+ /lusr/opt/ogre-1.9/include/OGRE/Overlay/OgreOverlayElementFactory.h \
+ /lusr/opt/ogre-1.9/include/OGRE/OgreRenderQueueListener.h \
+ /lusr/opt/ogre-1.9/include/OGRE/InputContext.h /usr/include/ois/OIS.h \
  /usr/include/ois/OISMouse.h /usr/include/ois/OISKeyboard.h \
  /usr/include/ois/OISJoyStick.h /usr/include/ois/OISMultiTouch.h \
  /usr/include/ois/OISInputManager.h /usr/include/ois/OISFactoryCreator.h \
  /usr/include/ois/OISException.h /usr/include/ois/OISEffect.h \
  /usr/include/ois/OISForceFeedback.h \
- /usr/local/include/OGRE/SdkCameraMan.h Level.h Tile.h
+ /lusr/opt/ogre-1.9/include/OGRE/SdkCameraMan.h GameEnums.h Level.h \
+ Tile.h
 
 /usr/include/stdc-predef.h:
 
 BaseApplication.h:
 
-/usr/local/include/OGRE/OgreCamera.h:
+/lusr/opt/ogre-1.9/include/OGRE/OgreCamera.h:
 
-/usr/local/include/OGRE/OgrePrerequisites.h:
+/lusr/opt/ogre-1.9/include/OGRE/OgrePrerequisites.h:
 
-/usr/local/include/OGRE/OgrePlatform.h:
+/lusr/opt/ogre-1.9/include/OGRE/OgrePlatform.h:
 
-/usr/local/include/OGRE/OgreConfig.h:
+/lusr/opt/ogre-1.9/include/OGRE/OgreConfig.h:
 
-/usr/local/include/OGRE/OgreBuildSettings.h:
+/lusr/opt/ogre-1.9/include/OGRE/OgreBuildSettings.h:
 
 /usr/include/c++/4.8/string:
 
@@ -1117,7 +1142,7 @@ BaseApplication.h:
 
 /usr/include/c++/4.8/bits/basic_string.tcc:
 
-/usr/local/include/OGRE/OgreStdHeaders.h:
+/lusr/opt/ogre-1.9/include/OGRE/OgreStdHeaders.h:
 
 /usr/include/c++/4.8/cassert:
 
@@ -1359,29 +1384,29 @@ BaseApplication.h:
 
 /usr/include/x86_64-linux-gnu/bits/dlfcn.h:
 
-/usr/local/include/OGRE/OgreMemoryAllocatorConfig.h:
+/lusr/opt/ogre-1.9/include/OGRE/OgreMemoryAllocatorConfig.h:
 
-/usr/local/include/OGRE/OgreMemoryAllocatedObject.h:
+/lusr/opt/ogre-1.9/include/OGRE/OgreMemoryAllocatedObject.h:
 
-/usr/local/include/OGRE/OgreHeaderPrefix.h:
+/lusr/opt/ogre-1.9/include/OGRE/OgreHeaderPrefix.h:
 
-/usr/local/include/OGRE/OgreHeaderSuffix.h:
+/lusr/opt/ogre-1.9/include/OGRE/OgreHeaderSuffix.h:
 
-/usr/local/include/OGRE/OgreMemorySTLAllocator.h:
+/lusr/opt/ogre-1.9/include/OGRE/OgreMemorySTLAllocator.h:
 
-/usr/local/include/OGRE/OgreMemoryNedPooling.h:
+/lusr/opt/ogre-1.9/include/OGRE/OgreMemoryNedPooling.h:
 
-/usr/local/include/OGRE/OgreString.h:
+/lusr/opt/ogre-1.9/include/OGRE/OgreString.h:
 
-/usr/local/include/OGRE/OgreMovableObject.h:
+/lusr/opt/ogre-1.9/include/OGRE/OgreMovableObject.h:
 
-/usr/local/include/OGRE/OgreRenderQueue.h:
+/lusr/opt/ogre-1.9/include/OGRE/OgreRenderQueue.h:
 
-/usr/local/include/OGRE/OgreIteratorWrappers.h:
+/lusr/opt/ogre-1.9/include/OGRE/OgreIteratorWrappers.h:
 
-/usr/local/include/OGRE/OgreIteratorWrapper.h:
+/lusr/opt/ogre-1.9/include/OGRE/OgreIteratorWrapper.h:
 
-/usr/local/include/OGRE/OgreIteratorRange.h:
+/lusr/opt/ogre-1.9/include/OGRE/OgreIteratorRange.h:
 
 /usr/include/boost/range.hpp:
 
@@ -1955,43 +1980,43 @@ BaseApplication.h:
 
 /usr/include/boost/range/sub_range.hpp:
 
-/usr/local/include/OGRE/OgreAxisAlignedBox.h:
+/lusr/opt/ogre-1.9/include/OGRE/OgreAxisAlignedBox.h:
 
-/usr/local/include/OGRE/OgreVector3.h:
+/lusr/opt/ogre-1.9/include/OGRE/OgreVector3.h:
 
-/usr/local/include/OGRE/OgreMath.h:
+/lusr/opt/ogre-1.9/include/OGRE/OgreMath.h:
 
-/usr/local/include/OGRE/OgreQuaternion.h:
+/lusr/opt/ogre-1.9/include/OGRE/OgreQuaternion.h:
 
-/usr/local/include/OGRE/OgreMatrix4.h:
+/lusr/opt/ogre-1.9/include/OGRE/OgreMatrix4.h:
 
-/usr/local/include/OGRE/OgreMatrix3.h:
+/lusr/opt/ogre-1.9/include/OGRE/OgreMatrix3.h:
 
-/usr/local/include/OGRE/OgreVector4.h:
+/lusr/opt/ogre-1.9/include/OGRE/OgreVector4.h:
 
-/usr/local/include/OGRE/OgrePlane.h:
+/lusr/opt/ogre-1.9/include/OGRE/OgrePlane.h:
 
-/usr/local/include/OGRE/OgreSphere.h:
+/lusr/opt/ogre-1.9/include/OGRE/OgreSphere.h:
 
-/usr/local/include/OGRE/OgreShadowCaster.h:
+/lusr/opt/ogre-1.9/include/OGRE/OgreShadowCaster.h:
 
-/usr/local/include/OGRE/OgreRenderable.h:
+/lusr/opt/ogre-1.9/include/OGRE/OgreRenderable.h:
 
-/usr/local/include/OGRE/OgreCommon.h:
+/lusr/opt/ogre-1.9/include/OGRE/OgreCommon.h:
 
-/usr/local/include/OGRE/OgreRenderOperation.h:
+/lusr/opt/ogre-1.9/include/OGRE/OgreRenderOperation.h:
 
-/usr/local/include/OGRE/OgreVertexIndexData.h:
+/lusr/opt/ogre-1.9/include/OGRE/OgreVertexIndexData.h:
 
-/usr/local/include/OGRE/OgreHardwareVertexBuffer.h:
+/lusr/opt/ogre-1.9/include/OGRE/OgreHardwareVertexBuffer.h:
 
-/usr/local/include/OGRE/OgreHardwareBuffer.h:
+/lusr/opt/ogre-1.9/include/OGRE/OgreHardwareBuffer.h:
 
-/usr/local/include/OGRE/OgreException.h:
+/lusr/opt/ogre-1.9/include/OGRE/OgreException.h:
 
-/usr/local/include/OGRE/OgreSharedPtr.h:
+/lusr/opt/ogre-1.9/include/OGRE/OgreSharedPtr.h:
 
-/usr/local/include/OGRE/OgreAtomicScalar.h:
+/lusr/opt/ogre-1.9/include/OGRE/OgreAtomicScalar.h:
 
 /usr/include/signal.h:
 
@@ -2009,21 +2034,21 @@ BaseApplication.h:
 
 /usr/include/x86_64-linux-gnu/bits/sigthread.h:
 
-/usr/local/include/OGRE/OgrePlatformInformation.h:
+/lusr/opt/ogre-1.9/include/OGRE/OgrePlatformInformation.h:
 
-/usr/local/include/OGRE/OgreColourValue.h:
+/lusr/opt/ogre-1.9/include/OGRE/OgreColourValue.h:
 
-/usr/local/include/OGRE/OgreHardwareIndexBuffer.h:
+/lusr/opt/ogre-1.9/include/OGRE/OgreHardwareIndexBuffer.h:
 
-/usr/local/include/OGRE/OgreMaterial.h:
+/lusr/opt/ogre-1.9/include/OGRE/OgreMaterial.h:
 
-/usr/local/include/OGRE/OgreResource.h:
+/lusr/opt/ogre-1.9/include/OGRE/OgreResource.h:
 
-/usr/local/include/OGRE/OgreStringInterface.h:
+/lusr/opt/ogre-1.9/include/OGRE/OgreStringInterface.h:
 
-/usr/local/include/OGRE/Threading/OgreThreadHeaders.h:
+/lusr/opt/ogre-1.9/include/OGRE/Threading/OgreThreadHeaders.h:
 
-/usr/local/include/OGRE/Threading/OgreThreadHeadersBoost.h:
+/lusr/opt/ogre-1.9/include/OGRE/Threading/OgreThreadHeadersBoost.h:
 
 /usr/include/boost/thread/tss.hpp:
 
@@ -2525,183 +2550,183 @@ BaseApplication.h:
 
 /usr/include/boost/thread/lock_algorithms.hpp:
 
-/usr/local/include/OGRE/Threading/OgreThreadDefines.h:
+/lusr/opt/ogre-1.9/include/OGRE/Threading/OgreThreadDefines.h:
 
-/usr/local/include/OGRE/Threading/OgreThreadDefinesBoost.h:
+/lusr/opt/ogre-1.9/include/OGRE/Threading/OgreThreadDefinesBoost.h:
 
-/usr/local/include/OGRE/OgreBlendMode.h:
+/lusr/opt/ogre-1.9/include/OGRE/OgreBlendMode.h:
 
-/usr/local/include/OGRE/OgreGpuProgram.h:
+/lusr/opt/ogre-1.9/include/OGRE/OgreGpuProgram.h:
 
-/usr/local/include/OGRE/OgreSerializer.h:
+/lusr/opt/ogre-1.9/include/OGRE/OgreSerializer.h:
 
-/usr/local/include/OGRE/OgreDataStream.h:
+/lusr/opt/ogre-1.9/include/OGRE/OgreDataStream.h:
 
-/usr/local/include/OGRE/OgreGpuProgramParams.h:
+/lusr/opt/ogre-1.9/include/OGRE/OgreGpuProgramParams.h:
 
-/usr/local/include/OGRE/OgreAny.h:
+/lusr/opt/ogre-1.9/include/OGRE/OgreAny.h:
 
-/usr/local/include/OGRE/OgreUserObjectBindings.h:
+/lusr/opt/ogre-1.9/include/OGRE/OgreUserObjectBindings.h:
 
-/usr/local/include/OGRE/OgreFactoryObj.h:
+/lusr/opt/ogre-1.9/include/OGRE/OgreFactoryObj.h:
 
-/usr/local/include/OGRE/OgreAnimable.h:
+/lusr/opt/ogre-1.9/include/OGRE/OgreAnimable.h:
 
-/usr/local/include/OGRE/OgreVector2.h:
+/lusr/opt/ogre-1.9/include/OGRE/OgreVector2.h:
 
-/usr/local/include/OGRE/OgreStringVector.h:
+/lusr/opt/ogre-1.9/include/OGRE/OgreStringVector.h:
 
-/usr/local/include/OGRE/OgreFrustum.h:
+/lusr/opt/ogre-1.9/include/OGRE/OgreFrustum.h:
 
-/usr/local/include/OGRE/OgreMovablePlane.h:
+/lusr/opt/ogre-1.9/include/OGRE/OgreMovablePlane.h:
 
-/usr/local/include/OGRE/OgreRay.h:
+/lusr/opt/ogre-1.9/include/OGRE/OgreRay.h:
 
-/usr/local/include/OGRE/OgrePlaneBoundedVolume.h:
+/lusr/opt/ogre-1.9/include/OGRE/OgrePlaneBoundedVolume.h:
 
-/usr/local/include/OGRE/OgreEntity.h:
+/lusr/opt/ogre-1.9/include/OGRE/OgreEntity.h:
 
-/usr/local/include/OGRE/OgreHardwareBufferManager.h:
+/lusr/opt/ogre-1.9/include/OGRE/OgreHardwareBufferManager.h:
 
-/usr/local/include/OGRE/OgreSingleton.h:
+/lusr/opt/ogre-1.9/include/OGRE/OgreSingleton.h:
 
-/usr/local/include/OGRE/OgreHardwareCounterBuffer.h:
+/lusr/opt/ogre-1.9/include/OGRE/OgreHardwareCounterBuffer.h:
 
-/usr/local/include/OGRE/OgreHardwareUniformBuffer.h:
+/lusr/opt/ogre-1.9/include/OGRE/OgreHardwareUniformBuffer.h:
 
-/usr/local/include/OGRE/OgreRenderToVertexBuffer.h:
+/lusr/opt/ogre-1.9/include/OGRE/OgreRenderToVertexBuffer.h:
 
-/usr/local/include/OGRE/OgreMesh.h:
+/lusr/opt/ogre-1.9/include/OGRE/OgreMesh.h:
 
-/usr/local/include/OGRE/OgreVertexBoneAssignment.h:
+/lusr/opt/ogre-1.9/include/OGRE/OgreVertexBoneAssignment.h:
 
-/usr/local/include/OGRE/OgreSkeleton.h:
+/lusr/opt/ogre-1.9/include/OGRE/OgreSkeleton.h:
 
-/usr/local/include/OGRE/OgreAnimation.h:
+/lusr/opt/ogre-1.9/include/OGRE/OgreAnimation.h:
 
-/usr/local/include/OGRE/OgreAnimationTrack.h:
+/lusr/opt/ogre-1.9/include/OGRE/OgreAnimationTrack.h:
 
-/usr/local/include/OGRE/OgreSimpleSpline.h:
+/lusr/opt/ogre-1.9/include/OGRE/OgreSimpleSpline.h:
 
-/usr/local/include/OGRE/OgreRotationalSpline.h:
+/lusr/opt/ogre-1.9/include/OGRE/OgreRotationalSpline.h:
 
-/usr/local/include/OGRE/OgreKeyFrame.h:
+/lusr/opt/ogre-1.9/include/OGRE/OgreKeyFrame.h:
 
-/usr/local/include/OGRE/OgrePose.h:
+/lusr/opt/ogre-1.9/include/OGRE/OgrePose.h:
 
-/usr/local/include/OGRE/OgreAnimationState.h:
+/lusr/opt/ogre-1.9/include/OGRE/OgreAnimationState.h:
 
-/usr/local/include/OGRE/OgreController.h:
+/lusr/opt/ogre-1.9/include/OGRE/OgreController.h:
 
-/usr/local/include/OGRE/OgreResourceGroupManager.h:
+/lusr/opt/ogre-1.9/include/OGRE/OgreResourceGroupManager.h:
 
-/usr/local/include/OGRE/OgreArchive.h:
+/lusr/opt/ogre-1.9/include/OGRE/OgreArchive.h:
 
-/usr/local/include/OGRE/OgreLogManager.h:
+/lusr/opt/ogre-1.9/include/OGRE/OgreLogManager.h:
 
-/usr/local/include/OGRE/OgreLog.h:
+/lusr/opt/ogre-1.9/include/OGRE/OgreLog.h:
 
-/usr/local/include/OGRE/OgreRoot.h:
+/lusr/opt/ogre-1.9/include/OGRE/OgreRoot.h:
 
-/usr/local/include/OGRE/OgreSceneManagerEnumerator.h:
+/lusr/opt/ogre-1.9/include/OGRE/OgreSceneManagerEnumerator.h:
 
-/usr/local/include/OGRE/OgreSceneManager.h:
+/lusr/opt/ogre-1.9/include/OGRE/OgreSceneManager.h:
 
-/usr/local/include/OGRE/OgreSceneNode.h:
+/lusr/opt/ogre-1.9/include/OGRE/OgreSceneNode.h:
 
-/usr/local/include/OGRE/OgreNode.h:
+/lusr/opt/ogre-1.9/include/OGRE/OgreNode.h:
 
-/usr/local/include/OGRE/OgreSceneQuery.h:
+/lusr/opt/ogre-1.9/include/OGRE/OgreSceneQuery.h:
 
-/usr/local/include/OGRE/OgreAutoParamDataSource.h:
+/lusr/opt/ogre-1.9/include/OGRE/OgreAutoParamDataSource.h:
 
-/usr/local/include/OGRE/OgreLight.h:
+/lusr/opt/ogre-1.9/include/OGRE/OgreLight.h:
 
-/usr/local/include/OGRE/OgreShadowCameraSetup.h:
+/lusr/opt/ogre-1.9/include/OGRE/OgreShadowCameraSetup.h:
 
-/usr/local/include/OGRE/OgreRenderQueueSortingGrouping.h:
+/lusr/opt/ogre-1.9/include/OGRE/OgreRenderQueueSortingGrouping.h:
 
-/usr/local/include/OGRE/OgreTechnique.h:
+/lusr/opt/ogre-1.9/include/OGRE/OgreTechnique.h:
 
-/usr/local/include/OGRE/OgrePass.h:
+/lusr/opt/ogre-1.9/include/OGRE/OgrePass.h:
 
-/usr/local/include/OGRE/OgreTextureUnitState.h:
+/lusr/opt/ogre-1.9/include/OGRE/OgreTextureUnitState.h:
 
-/usr/local/include/OGRE/OgreTexture.h:
+/lusr/opt/ogre-1.9/include/OGRE/OgreTexture.h:
 
-/usr/local/include/OGRE/OgreImage.h:
+/lusr/opt/ogre-1.9/include/OGRE/OgreImage.h:
 
-/usr/local/include/OGRE/OgrePixelFormat.h:
+/lusr/opt/ogre-1.9/include/OGRE/OgrePixelFormat.h:
 
-/usr/local/include/OGRE/OgreRenderSystemCapabilities.h:
+/lusr/opt/ogre-1.9/include/OGRE/OgreRenderSystemCapabilities.h:
 
-/usr/local/include/OGRE/OgreStringConverter.h:
+/lusr/opt/ogre-1.9/include/OGRE/OgreStringConverter.h:
 
-/usr/local/include/OGRE/OgreLogManager.h:
+/lusr/opt/ogre-1.9/include/OGRE/OgreLogManager.h:
 
-/usr/local/include/OGRE/OgreRadixSort.h:
+/lusr/opt/ogre-1.9/include/OGRE/OgreRadixSort.h:
 
-/usr/local/include/OGRE/OgreRectangle2D.h:
+/lusr/opt/ogre-1.9/include/OGRE/OgreRectangle2D.h:
 
-/usr/local/include/OGRE/OgreSimpleRenderable.h:
+/lusr/opt/ogre-1.9/include/OGRE/OgreSimpleRenderable.h:
 
-/usr/local/include/OGRE/OgreShadowTextureManager.h:
+/lusr/opt/ogre-1.9/include/OGRE/OgreShadowTextureManager.h:
 
-/usr/local/include/OGRE/OgreCamera.h:
+/lusr/opt/ogre-1.9/include/OGRE/OgreCamera.h:
 
-/usr/local/include/OGRE/OgreInstancedGeometry.h:
+/lusr/opt/ogre-1.9/include/OGRE/OgreInstancedGeometry.h:
 
-/usr/local/include/OGRE/OgreSkeletonInstance.h:
+/lusr/opt/ogre-1.9/include/OGRE/OgreSkeletonInstance.h:
 
-/usr/local/include/OGRE/OgreBone.h:
+/lusr/opt/ogre-1.9/include/OGRE/OgreBone.h:
 
-/usr/local/include/OGRE/OgreLodListener.h:
+/lusr/opt/ogre-1.9/include/OGRE/OgreLodListener.h:
 
-/usr/local/include/OGRE/OgreInstanceManager.h:
+/lusr/opt/ogre-1.9/include/OGRE/OgreInstanceManager.h:
 
-/usr/local/include/OGRE/OgreRenderSystem.h:
+/lusr/opt/ogre-1.9/include/OGRE/OgreRenderSystem.h:
 
-/usr/local/include/OGRE/OgreMaterialManager.h:
+/lusr/opt/ogre-1.9/include/OGRE/OgreMaterialManager.h:
 
-/usr/local/include/OGRE/OgreResourceManager.h:
+/lusr/opt/ogre-1.9/include/OGRE/OgreResourceManager.h:
 
-/usr/local/include/OGRE/OgreScriptLoader.h:
+/lusr/opt/ogre-1.9/include/OGRE/OgreScriptLoader.h:
 
-/usr/local/include/OGRE/OgreMaterialSerializer.h:
+/lusr/opt/ogre-1.9/include/OGRE/OgreMaterialSerializer.h:
 
-/usr/local/include/OGRE/OgreRenderTarget.h:
+/lusr/opt/ogre-1.9/include/OGRE/OgreRenderTarget.h:
 
-/usr/local/include/OGRE/OgreTextureManager.h:
+/lusr/opt/ogre-1.9/include/OGRE/OgreTextureManager.h:
 
-/usr/local/include/OGRE/OgreViewport.h:
+/lusr/opt/ogre-1.9/include/OGRE/OgreViewport.h:
 
-/usr/local/include/OGRE/OgreTimer.h:
+/lusr/opt/ogre-1.9/include/OGRE/OgreTimer.h:
 
-/usr/local/include/OGRE/GLX/OgreTimerImp.h:
+/lusr/opt/ogre-1.9/include/OGRE/GLX/OgreTimerImp.h:
 
-/usr/local/include/OGRE/GLX/../OgrePrerequisites.h:
+/lusr/opt/ogre-1.9/include/OGRE/GLX/../OgrePrerequisites.h:
 
-/usr/local/include/OGRE/OgreRenderTexture.h:
+/lusr/opt/ogre-1.9/include/OGRE/OgreRenderTexture.h:
 
-/usr/local/include/OGRE/OgreFrameListener.h:
+/lusr/opt/ogre-1.9/include/OGRE/OgreFrameListener.h:
 
-/usr/local/include/OGRE/OgreConfigOptionMap.h:
+/lusr/opt/ogre-1.9/include/OGRE/OgreConfigOptionMap.h:
 
-/usr/local/include/OGRE/OgreNameGenerator.h:
+/lusr/opt/ogre-1.9/include/OGRE/OgreNameGenerator.h:
 
-/usr/local/include/OGRE/OgreLodStrategyManager.h:
+/lusr/opt/ogre-1.9/include/OGRE/OgreLodStrategyManager.h:
 
-/usr/local/include/OGRE/OgreLodStrategy.h:
+/lusr/opt/ogre-1.9/include/OGRE/OgreLodStrategy.h:
 
-/usr/local/include/OGRE/OgreWorkQueue.h:
+/lusr/opt/ogre-1.9/include/OGRE/OgreWorkQueue.h:
 
-/usr/local/include/OGRE/OgreViewport.h:
+/lusr/opt/ogre-1.9/include/OGRE/OgreViewport.h:
 
-/usr/local/include/OGRE/OgreSceneManager.h:
+/lusr/opt/ogre-1.9/include/OGRE/OgreSceneManager.h:
 
-/usr/local/include/OGRE/OgreRenderWindow.h:
+/lusr/opt/ogre-1.9/include/OGRE/OgreRenderWindow.h:
 
-/usr/local/include/OGRE/OgreConfigFile.h:
+/lusr/opt/ogre-1.9/include/OGRE/OgreConfigFile.h:
 
 /usr/include/ois/OISEvents.h:
 
@@ -2721,153 +2746,189 @@ BaseApplication.h:
 
 /usr/include/ois/OISMouse.h:
 
-/usr/local/include/OGRE/SdkTrays.h:
+/lusr/opt/ogre-1.9/include/OGRE/SdkTrays.h:
 
-/usr/local/include/OGRE/Ogre.h:
+/lusr/opt/ogre-1.9/include/OGRE/Ogre.h:
 
-/usr/local/include/OGRE/OgreArchiveManager.h:
+/lusr/opt/ogre-1.9/include/OGRE/OgreArchiveManager.h:
 
-/usr/local/include/OGRE/OgreBillboardChain.h:
+/lusr/opt/ogre-1.9/include/OGRE/OgreBillboardChain.h:
 
-/usr/local/include/OGRE/OgreBillboardSet.h:
+/lusr/opt/ogre-1.9/include/OGRE/OgreBillboardSet.h:
 
-/usr/local/include/OGRE/OgreConfigFile.h:
+/lusr/opt/ogre-1.9/include/OGRE/OgreConfigFile.h:
 
-/usr/local/include/OGRE/OgreControllerManager.h:
+/lusr/opt/ogre-1.9/include/OGRE/OgreControllerManager.h:
 
-/usr/local/include/OGRE/OgrePredefinedControllers.h:
+/lusr/opt/ogre-1.9/include/OGRE/OgrePredefinedControllers.h:
 
-/usr/local/include/OGRE/OgreEntity.h:
+/lusr/opt/ogre-1.9/include/OGRE/OgreEntity.h:
 
-/usr/local/include/OGRE/OgreGpuProgramManager.h:
+/lusr/opt/ogre-1.9/include/OGRE/OgreGpuProgramManager.h:
 
-/usr/local/include/OGRE/OgreHardwarePixelBuffer.h:
+/lusr/opt/ogre-1.9/include/OGRE/OgreHardwarePixelBuffer.h:
 
-/usr/local/include/OGRE/OgreHardwareOcclusionQuery.h:
+/lusr/opt/ogre-1.9/include/OGRE/OgreHardwareOcclusionQuery.h:
 
-/usr/local/include/OGRE/OgreHighLevelGpuProgram.h:
+/lusr/opt/ogre-1.9/include/OGRE/OgreHighLevelGpuProgram.h:
 
-/usr/local/include/OGRE/OgreHighLevelGpuProgramManager.h:
+/lusr/opt/ogre-1.9/include/OGRE/OgreHighLevelGpuProgramManager.h:
 
-/usr/local/include/OGRE/OgreInstanceBatch.h:
+/lusr/opt/ogre-1.9/include/OGRE/OgreInstanceBatch.h:
 
-/usr/local/include/OGRE/OgreInstancedEntity.h:
+/lusr/opt/ogre-1.9/include/OGRE/OgreInstancedEntity.h:
 
-/usr/local/include/OGRE/OgreManualObject.h:
+/lusr/opt/ogre-1.9/include/OGRE/OgreManualObject.h:
 
-/usr/local/include/OGRE/OgreMeshManager.h:
+/lusr/opt/ogre-1.9/include/OGRE/OgreMeshManager.h:
 
-/usr/local/include/OGRE/OgrePatchMesh.h:
+/lusr/opt/ogre-1.9/include/OGRE/OgrePatchMesh.h:
 
-/usr/local/include/OGRE/OgrePatchSurface.h:
+/lusr/opt/ogre-1.9/include/OGRE/OgrePatchSurface.h:
 
-/usr/local/include/OGRE/OgreMeshSerializer.h:
+/lusr/opt/ogre-1.9/include/OGRE/OgreMeshSerializer.h:
 
-/usr/local/include/OGRE/OgreMeshSerializerImpl.h:
+/lusr/opt/ogre-1.9/include/OGRE/OgreMeshSerializerImpl.h:
 
-/usr/local/include/OGRE/OgreEdgeListBuilder.h:
+/lusr/opt/ogre-1.9/include/OGRE/OgreEdgeListBuilder.h:
 
-/usr/local/include/OGRE/OgreParticleAffector.h:
+/lusr/opt/ogre-1.9/include/OGRE/OgreParticleAffector.h:
 
-/usr/local/include/OGRE/OgreParticleEmitter.h:
+/lusr/opt/ogre-1.9/include/OGRE/OgreParticleEmitter.h:
 
-/usr/local/include/OGRE/OgreParticleEmitterCommands.h:
+/lusr/opt/ogre-1.9/include/OGRE/OgreParticleEmitterCommands.h:
 
-/usr/local/include/OGRE/OgreParticle.h:
+/lusr/opt/ogre-1.9/include/OGRE/OgreParticle.h:
 
-/usr/local/include/OGRE/OgreBillboard.h:
+/lusr/opt/ogre-1.9/include/OGRE/OgreBillboard.h:
 
-/usr/local/include/OGRE/OgreParticleSystemManager.h:
+/lusr/opt/ogre-1.9/include/OGRE/OgreParticleSystemManager.h:
 
-/usr/local/include/OGRE/OgreParticleSystem.h:
+/lusr/opt/ogre-1.9/include/OGRE/OgreParticleSystem.h:
 
-/usr/local/include/OGRE/OgreParticleIterator.h:
+/lusr/opt/ogre-1.9/include/OGRE/OgreParticleIterator.h:
 
-/usr/local/include/OGRE/OgreProfiler.h:
+/lusr/opt/ogre-1.9/include/OGRE/OgreProfiler.h:
 
-/usr/local/include/OGRE/OgreRenderQueueInvocation.h:
+/lusr/opt/ogre-1.9/include/OGRE/OgreRenderQueueInvocation.h:
 
-/usr/local/include/OGRE/OgreRenderQueueListener.h:
+/lusr/opt/ogre-1.9/include/OGRE/OgreRenderQueueListener.h:
 
-/usr/local/include/OGRE/OgreRenderObjectListener.h:
+/lusr/opt/ogre-1.9/include/OGRE/OgreRenderObjectListener.h:
 
-/usr/local/include/OGRE/OgreRenderTargetListener.h:
+/lusr/opt/ogre-1.9/include/OGRE/OgreRenderTargetListener.h:
 
-/usr/local/include/OGRE/OgreRenderWindow.h:
+/lusr/opt/ogre-1.9/include/OGRE/OgreRenderWindow.h:
 
-/usr/local/include/OGRE/OgreResourceBackgroundQueue.h:
+/lusr/opt/ogre-1.9/include/OGRE/OgreResourceBackgroundQueue.h:
 
-/usr/local/include/OGRE/OgreRibbonTrail.h:
+/lusr/opt/ogre-1.9/include/OGRE/OgreRibbonTrail.h:
 
-/usr/local/include/OGRE/OgreRoot.h:
+/lusr/opt/ogre-1.9/include/OGRE/OgreRoot.h:
 
-/usr/local/include/OGRE/OgreSkeletonManager.h:
+/lusr/opt/ogre-1.9/include/OGRE/OgreSkeletonManager.h:
 
-/usr/local/include/OGRE/OgreSkeletonSerializer.h:
+/lusr/opt/ogre-1.9/include/OGRE/OgreSkeletonSerializer.h:
 
-/usr/local/include/OGRE/OgreStaticGeometry.h:
+/lusr/opt/ogre-1.9/include/OGRE/OgreStaticGeometry.h:
 
-/usr/local/include/OGRE/OgreSubEntity.h:
+/lusr/opt/ogre-1.9/include/OGRE/OgreSubEntity.h:
 
-/usr/local/include/OGRE/OgreSubMesh.h:
+/lusr/opt/ogre-1.9/include/OGRE/OgreSubMesh.h:
 
-/usr/local/include/OGRE/OgreCompositor.h:
+/lusr/opt/ogre-1.9/include/OGRE/OgreCompositor.h:
 
-/usr/local/include/OGRE/OgreCompositorManager.h:
+/lusr/opt/ogre-1.9/include/OGRE/OgreCompositorManager.h:
 
-/usr/local/include/OGRE/OgreCompositionTechnique.h:
+/lusr/opt/ogre-1.9/include/OGRE/OgreCompositionTechnique.h:
 
-/usr/local/include/OGRE/OgreCompositorChain.h:
+/lusr/opt/ogre-1.9/include/OGRE/OgreCompositorChain.h:
 
-/usr/local/include/OGRE/OgreCompositorInstance.h:
+/lusr/opt/ogre-1.9/include/OGRE/OgreCompositorInstance.h:
 
-/usr/local/include/OGRE/OgreCompositionPass.h:
+/lusr/opt/ogre-1.9/include/OGRE/OgreCompositionPass.h:
 
-/usr/local/include/OGRE/OgreCompositionTargetPass.h:
+/lusr/opt/ogre-1.9/include/OGRE/OgreCompositionTargetPass.h:
 
-/usr/local/include/OGRE/OgreWindowEventUtilities.h:
+/lusr/opt/ogre-1.9/include/OGRE/OgreWindowEventUtilities.h:
 
-/usr/local/include/OGRE/OgreShadowCameraSetupFocused.h:
+/lusr/opt/ogre-1.9/include/OGRE/OgreShadowCameraSetupFocused.h:
 
-/usr/local/include/OGRE/OgrePolygon.h:
+/lusr/opt/ogre-1.9/include/OGRE/OgrePolygon.h:
 
-/usr/local/include/OGRE/OgreConvexBody.h:
+/lusr/opt/ogre-1.9/include/OGRE/OgreConvexBody.h:
 
-/usr/local/include/OGRE/OgreShadowCameraSetupLiSPSM.h:
+/lusr/opt/ogre-1.9/include/OGRE/OgreShadowCameraSetupLiSPSM.h:
 
-/usr/local/include/OGRE/OgreShadowCameraSetupPlaneOptimal.h:
+/lusr/opt/ogre-1.9/include/OGRE/OgreShadowCameraSetupPlaneOptimal.h:
 
-/usr/local/include/OGRE/OgreShadowCameraSetupPSSM.h:
+/lusr/opt/ogre-1.9/include/OGRE/OgreShadowCameraSetupPSSM.h:
 
-/usr/local/include/OGRE/OgreOverlaySystem.h:
+/lusr/opt/ogre-1.9/include/OGRE/Overlay/OgreOverlaySystem.h:
 
-/usr/local/include/OGRE/OgreOverlay.h:
+/lusr/opt/ogre-1.9/include/OGRE/Overlay/OgreOverlay.h:
 
-/usr/local/include/OGRE/OgreOverlayPrerequisites.h:
+/lusr/opt/ogre-1.9/include/OGRE/Overlay/OgreOverlayPrerequisites.h:
 
-/usr/local/include/OGRE/OgreOverlayContainer.h:
+/lusr/opt/ogre-1.9/include/OGRE/OgrePrerequisites.h:
 
-/usr/local/include/OGRE/OgreOverlayElement.h:
+/lusr/opt/ogre-1.9/include/OGRE/OgreSceneNode.h:
 
-/usr/local/include/OGRE/OgreUTFString.h:
+/lusr/opt/ogre-1.9/include/OGRE/OgreIteratorWrappers.h:
 
-/usr/local/include/OGRE/OgreOverlayElementCommands.h:
+/lusr/opt/ogre-1.9/include/OGRE/OgreMatrix4.h:
 
-/usr/local/include/OGRE/OgreOverlayManager.h:
+/lusr/opt/ogre-1.9/include/OGRE/Overlay/OgreOverlayContainer.h:
 
-/usr/local/include/OGRE/OgreFontManager.h:
+/lusr/opt/ogre-1.9/include/OGRE/Overlay/OgreOverlayElement.h:
 
-/usr/local/include/OGRE/OgreFont.h:
+/lusr/opt/ogre-1.9/include/OGRE/OgreString.h:
 
-/usr/local/include/OGRE/OgreBorderPanelOverlayElement.h:
+/lusr/opt/ogre-1.9/include/OGRE/OgreRenderable.h:
 
-/usr/local/include/OGRE/OgrePanelOverlayElement.h:
+/lusr/opt/ogre-1.9/include/OGRE/OgreUTFString.h:
 
-/usr/local/include/OGRE/OgreTextAreaOverlayElement.h:
+/lusr/opt/ogre-1.9/include/OGRE/OgreStringInterface.h:
 
-/usr/local/include/OGRE/OgreOverlayElementFactory.h:
+/lusr/opt/ogre-1.9/include/OGRE/Overlay/OgreOverlayElementCommands.h:
 
-/usr/local/include/OGRE/InputContext.h:
+/lusr/opt/ogre-1.9/include/OGRE/OgreColourValue.h:
+
+/lusr/opt/ogre-1.9/include/OGRE/Overlay/OgreOverlayManager.h:
+
+/lusr/opt/ogre-1.9/include/OGRE/OgreSingleton.h:
+
+/lusr/opt/ogre-1.9/include/OGRE/OgreStringVector.h:
+
+/lusr/opt/ogre-1.9/include/OGRE/OgreScriptLoader.h:
+
+/lusr/opt/ogre-1.9/include/OGRE/OgreFrustum.h:
+
+/lusr/opt/ogre-1.9/include/OGRE/Overlay/OgreFontManager.h:
+
+/lusr/opt/ogre-1.9/include/OGRE/OgreResourceManager.h:
+
+/lusr/opt/ogre-1.9/include/OGRE/Overlay/OgreFont.h:
+
+/lusr/opt/ogre-1.9/include/OGRE/OgreResource.h:
+
+/lusr/opt/ogre-1.9/include/OGRE/OgreTexture.h:
+
+/lusr/opt/ogre-1.9/include/OGRE/OgreMaterial.h:
+
+/lusr/opt/ogre-1.9/include/OGRE/OgreCommon.h:
+
+/lusr/opt/ogre-1.9/include/OGRE/Overlay/OgreBorderPanelOverlayElement.h:
+
+/lusr/opt/ogre-1.9/include/OGRE/Overlay/OgrePanelOverlayElement.h:
+
+/lusr/opt/ogre-1.9/include/OGRE/Overlay/OgreTextAreaOverlayElement.h:
+
+/lusr/opt/ogre-1.9/include/OGRE/Overlay/OgreOverlayElementFactory.h:
+
+/lusr/opt/ogre-1.9/include/OGRE/OgreRenderQueueListener.h:
+
+/lusr/opt/ogre-1.9/include/OGRE/InputContext.h:
 
 /usr/include/ois/OIS.h:
 
@@ -2889,7 +2950,9 @@ BaseApplication.h:
 
 /usr/include/ois/OISForceFeedback.h:
 
-/usr/local/include/OGRE/SdkCameraMan.h:
+/lusr/opt/ogre-1.9/include/OGRE/SdkCameraMan.h:
+
+GameEnums.h:
 
 Level.h:
 

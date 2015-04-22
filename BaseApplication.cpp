@@ -11,7 +11,6 @@ BaseApplication::BaseApplication(void)
     mPluginsCfg(Ogre::StringUtil::BLANK),
     mTrayMgr(0),
     mCameraMan(0),
-    mDetailsPanel(0),
     mCursorWasVisible(false),
     mShutDown(false),
     mInputManager(0),
@@ -20,7 +19,10 @@ BaseApplication::BaseApplication(void)
     up(0),
     down(0),
     left(0),
-    right(0)
+    right(0),
+    state(GameState::Main),
+    play_button(0),
+    quit_button(0)
 {
 }
 
@@ -119,32 +121,8 @@ void BaseApplication::createFrameListener(void)
     //Register as a Window listener
     Ogre::WindowEventUtilities::addWindowEventListener(mWindow, this);
 
-  	OgreBites::InputContext inputContext;
-  	inputContext.mMouse = mMouse;
-  	inputContext.mKeyboard = mKeyboard;
-    mTrayMgr = new OgreBites::SdkTrayManager("InterfaceName", mWindow, inputContext, this);
-    mTrayMgr->showFrameStats(OgreBites::TL_BOTTOMLEFT);
-    //mTrayMgr->showLogo(OgreBites::TL_BOTTOMRIGHT);
-    mTrayMgr->hideCursor();
-
-    // create a params panel for displaying sample details
-    Ogre::StringVector items;
-    items.push_back("cam.pX");
-    items.push_back("cam.pY");
-    items.push_back("cam.pZ");
-    items.push_back("");
-    items.push_back("cam.oW");
-    items.push_back("cam.oX");
-    items.push_back("cam.oY");
-    items.push_back("cam.oZ");
-    items.push_back("");
-    items.push_back("Filtering");
-    items.push_back("Poly Mode");
-
-    mDetailsPanel = mTrayMgr->createParamsPanel(OgreBites::TL_NONE, "DetailsPanel", 200, items);
-    mDetailsPanel->setParamValue(9, "Bilinear");
-    mDetailsPanel->setParamValue(10, "Solid");
-    mDetailsPanel->hide();
+  	mInputContext.mMouse = mMouse;
+  	mInputContext.mKeyboard = mKeyboard;
 
     mRoot->addFrameListener(this);
 }
@@ -220,7 +198,6 @@ void BaseApplication::go(void)
 //-------------------------------------------------------------------------------------
 bool BaseApplication::setup(void)
 {
-    cout << "\nSETTING UP\n";
     mRoot = new Ogre::Root(mPluginsCfg);
 
     setupResources();
@@ -239,16 +216,19 @@ bool BaseApplication::setup(void)
     createResourceListener();
     // Load resources
     loadResources();
-
-    //generate level
-    level=new Level(mSceneMgr);
-    level->generateLevel(4,6,1);
-    // Create the scene
-    createScene();
     createFrameListener();
+    createMenu();
 
     return true;
 };
+//-------------------------------------------------------------------------------------
+void BaseApplication::createMenu()
+{
+    // Setup GUI
+    mTrayMgr = new OgreBites::SdkTrayManager("InterfaceName", mWindow, mInputContext, this);
+    play_button = mTrayMgr->createButton(OgreBites::TL_CENTER, "Play", "Play");
+    quit_button = mTrayMgr->createButton(OgreBites::TL_CENTER, "Exit", "Quit");
+}
 //-------------------------------------------------------------------------------------
 bool BaseApplication::frameRenderingQueued(const Ogre::FrameEvent& evt)
 {
@@ -270,16 +250,6 @@ bool BaseApplication::frameRenderingQueued(const Ogre::FrameEvent& evt)
     if (!mTrayMgr->isDialogVisible())
     {
         mCameraMan->frameRenderingQueued(evt);   // if dialog isn't up, then update the camera
-        if (mDetailsPanel->isVisible())   // if details panel is visible, then update its contents
-        {
-            mDetailsPanel->setParamValue(0, Ogre::StringConverter::toString(mCamera->getDerivedPosition().x));
-            mDetailsPanel->setParamValue(1, Ogre::StringConverter::toString(mCamera->getDerivedPosition().y));
-            mDetailsPanel->setParamValue(2, Ogre::StringConverter::toString(mCamera->getDerivedPosition().z));
-            mDetailsPanel->setParamValue(4, Ogre::StringConverter::toString(mCamera->getDerivedOrientation().w));
-            mDetailsPanel->setParamValue(5, Ogre::StringConverter::toString(mCamera->getDerivedOrientation().x));
-            mDetailsPanel->setParamValue(6, Ogre::StringConverter::toString(mCamera->getDerivedOrientation().y));
-            mDetailsPanel->setParamValue(7, Ogre::StringConverter::toString(mCamera->getDerivedOrientation().z));
-        }
     }
     return true;
 }
@@ -293,6 +263,9 @@ bool BaseApplication::keyPressed( const OIS::KeyEvent &arg )
     {
         mShutDown = true;
     }
+
+    if (state == Play)
+    {
     /*    else if(arg.key == OIS::KC_9)
             {
                 sounds->pauseMusic();
@@ -304,27 +277,39 @@ bool BaseApplication::keyPressed( const OIS::KeyEvent &arg )
         else if(arg.key == OIS::KC_1)
             {
                 sounds->enableSound();
-            }
-        else if (arg.key == OIS::KC_P)
+            }*/
+        if (arg.key == OIS::KC_P)
         {
-          if(isPaused)
-            isPaused=false;
-          else
-            isPaused=true;
+            state = Pause;
+            mTrayMgr->showCursor();
+            play_button = mTrayMgr->createButton(OgreBites::TL_CENTER, "Resume", "Resume");
+            quit_button = mTrayMgr->createButton(OgreBites::TL_CENTER, "Exit", "Quit");
         }
-        */
-        else if(arg.key == OIS::KC_W){
-            up=true;
+        
+        // else if(arg.key == OIS::KC_W){
+        //     up=true;
+        // }
+        // else if(arg.key == OIS::KC_A){
+        //     left=true;
+        // }
+        // else if(arg.key == OIS::KC_S){
+        //     down=true;
+        // }
+        // else if(arg.key == OIS::KC_D){
+        //     right=true;
+        // }
+    }
+
+    else if (state == Pause)
+    {
+        if (arg.key == OIS::KC_P)
+        {
+            mTrayMgr->clearTray(OgreBites::TL_CENTER);
+            mTrayMgr->destroyAllWidgets();
+            mTrayMgr->hideCursor();
+            state = Play;
         }
-        else if(arg.key == OIS::KC_A){
-            left=true;
-        }
-        else if(arg.key == OIS::KC_S){
-            down=true;
-        }
-        else if(arg.key == OIS::KC_D){
-            right=true;
-        }
+    }
 
     mCameraMan->injectKeyDown(arg);
     return true;
@@ -350,13 +335,33 @@ bool BaseApplication::keyReleased( const OIS::KeyEvent &arg )
 
     return true;
 }
-
+void BaseApplication::buttonHit (OgreBites::Button *button)
+{
+    if (button == play_button)
+    {
+        // Create the scene
+        mTrayMgr->clearTray(OgreBites::TL_CENTER);
+        mTrayMgr->destroyAllWidgets();
+        if (state == Main)
+        {
+            //generate level
+            level=new Level(mSceneMgr);
+            level->generateLevel(4,3,1);
+            // Create the scene
+            createScene();
+        }
+        mTrayMgr->hideCursor();
+        state = Play;
+    }
+    else if (button == quit_button)
+    {
+        mShutDown = true;
+    }
+}
 bool BaseApplication::mouseMoved( const OIS::MouseEvent &arg )
 {
-    /*
-    if (mTrayMgr->injectMouseMove(arg)) return true;
-    mCameraMan->injectMouseMove(arg);
-    */
+    if (state == Main || state == Pause)
+        mTrayMgr->injectMouseMove(arg);
     return true;
 }
 
