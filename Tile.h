@@ -16,12 +16,12 @@ using std::cout;
 struct TileInput
 {
   int n:1;//=0;
-  int ne:1;//=0;
-  int e:1;//=0;
-  int se:1;//=0;
   int s:1;//=0;
-  int sw:1;//=0;
+  int e:1;//=0;
   int w:1;//=0;
+  int ne:1;//=0;
+  int se:1;//=0;
+  int sw:1;//=0;
   int nw:1;//=0;
 };
 
@@ -32,6 +32,7 @@ class Tile
   Ogre::SceneManager * smp;
 
   TileInput defaultTile,nTile,sTile,wTile,eTile;
+  TileInput n_eTile, n_wTile, s_eTile, s_wTile;
 
   //static
   static const int x = TSIZE;

@@ -242,7 +242,7 @@ bool BaseApplication::setup(void)
 
     //generate level
     level=new Level(mSceneMgr);
-    level->generateLevel(2,3,2);
+    level->generateLevel(4,6,1);
     // Create the scene
     createScene();
     createFrameListener();
