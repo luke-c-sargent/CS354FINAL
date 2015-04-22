@@ -23,7 +23,10 @@
 
 #include <string.h>
 
-class Level;
+#include "Level.h"
+#include <stdio.h>
+
+using std::cout;
 
 class BaseApplication : public Ogre::FrameListener, public Ogre::WindowEventListener, public OIS::KeyListener, public OIS::MouseListener, OgreBites::SdkTrayListener
 {
@@ -83,8 +86,12 @@ protected:
     OIS::Mouse*    mMouse;
     OIS::Keyboard* mKeyboard;
 
+    bool up,down,left,right;
+
+    void processInput();
+
     //Level
-    Level* level;
+    Level * level;
 
 
 };

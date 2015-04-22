@@ -17,8 +17,10 @@ BaseApplication::BaseApplication(void)
     mInputManager(0),
     mMouse(0),
     mKeyboard(0),
-//addendum
-    level(0)
+    up(0),
+    down(0),
+    left(0),
+    right(0)
 {
 }
 
@@ -36,8 +38,12 @@ BaseApplication::~BaseApplication(void)
 
 void BaseApplication::createScene(void)
 {
-	mSceneMgr->setAmbientLight(Ogre::ColourValue(0.3f,0.1f,0.3f));
+	mSceneMgr->setAmbientLight(Ogre::ColourValue(0.6f,0.6f,0.6f));
 	mSceneMgr->setShadowTechnique(Ogre::SHADOWTYPE_STENCIL_ADDITIVE);
+
+  //level making
+  level->constructLevel();
+
     //lighting
 /*
 	Ogre::Light * light = mSceneMgr->createLight("light1");
@@ -80,10 +86,10 @@ void BaseApplication::createCamera(void)
     mCamera = mSceneMgr->createCamera("PlayerCam");
 
     // Position it at 500 in Z direction
-    mCamera->setPosition(Ogre::Vector3(0,0,1800));
+    mCamera->setPosition(Ogre::Vector3(0,1,-2));
     // Look back along -Z
-    mCamera->lookAt(Ogre::Vector3(0,0,-300));
-    mCamera->setNearClipDistance(5);
+    mCamera->lookAt(Ogre::Vector3(0,0,0));
+    mCamera->setNearClipDistance(1);
 
     mCameraMan = new OgreBites::SdkCameraMan(mCamera);   // create a default camera controller
 }
@@ -214,6 +220,7 @@ void BaseApplication::go(void)
 //-------------------------------------------------------------------------------------
 bool BaseApplication::setup(void)
 {
+    cout << "\nSETTING UP\n";
     mRoot = new Ogre::Root(mPluginsCfg);
 
     setupResources();
@@ -234,8 +241,8 @@ bool BaseApplication::setup(void)
     loadResources();
 
     //generate level
-    //level->generate();
-
+    level=new Level(mSceneMgr);
+    level->generateLevel(2,3,2);
     // Create the scene
     createScene();
     createFrameListener();
@@ -254,6 +261,9 @@ bool BaseApplication::frameRenderingQueued(const Ogre::FrameEvent& evt)
     //Need to capture/update each device
     mKeyboard->capture();
     mMouse->capture();
+
+    //need to process input
+    processInput();
 
     mTrayMgr->frameRenderingQueued(evt);
 
@@ -283,6 +293,38 @@ bool BaseApplication::keyPressed( const OIS::KeyEvent &arg )
     {
         mShutDown = true;
     }
+    /*    else if(arg.key == OIS::KC_9)
+            {
+                sounds->pauseMusic();
+            }
+        else if(arg.key == OIS::KC_M)
+            {
+                sounds->playEffect(1);
+            }
+        else if(arg.key == OIS::KC_1)
+            {
+                sounds->enableSound();
+            }
+        else if (arg.key == OIS::KC_P)
+        {
+          if(isPaused)
+            isPaused=false;
+          else
+            isPaused=true;
+        }
+        */
+        else if(arg.key == OIS::KC_W){
+            up=true;
+        }
+        else if(arg.key == OIS::KC_A){
+            left=true;
+        }
+        else if(arg.key == OIS::KC_S){
+            down=true;
+        }
+        else if(arg.key == OIS::KC_D){
+            right=true;
+        }
 
     mCameraMan->injectKeyDown(arg);
     return true;
@@ -291,6 +333,21 @@ bool BaseApplication::keyPressed( const OIS::KeyEvent &arg )
 bool BaseApplication::keyReleased( const OIS::KeyEvent &arg )
 {
     mCameraMan->injectKeyUp(arg);
+
+    if(arg.key == OIS::KC_W){
+      up=false;
+    }
+    else if(arg.key == OIS::KC_A){
+        left=false;
+
+    }
+    else if(arg.key == OIS::KC_S){
+        down=false;
+    }
+    else if(arg.key == OIS::KC_D){
+        right=false;
+    }
+
     return true;
 }
 
@@ -344,6 +401,10 @@ void BaseApplication::windowClosed(Ogre::RenderWindow* rw)
             mInputManager = 0;
         }
     }
+}
+
+void BaseApplication::processInput(){
+
 }
 
 #if OGRE_PLATFORM == OGRE_PLATFORM_WIN32

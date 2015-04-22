@@ -97,6 +97,7 @@ material PlayerWire
 				texture wireframe.png
 				alpha_op_ex source1 src_manual src_current 0.5
 			}
+			emissive 1.0 .9 .6 .5
 			shading phong
 		}
 	}
