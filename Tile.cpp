@@ -75,20 +75,32 @@ void Tile::bindTileEntity(TileInput t, std::string id, Ogre::Vector3 tileOffset)
 
   fNode->scale(cubeScale);
   fNode->translate(floorTranslate);
-  fNode->translate(tileOffset);
   cout << "entity material\n";
-  entity->setMaterialName("PlayerWire");
-
+  entity->setMaterialName("PlayerWire2");
 
   //create ceiling
 
   //create walls
+  //if(t.n){  makeWall("n", tilename + "_north_wall",tileNode,cubeScale);  }
   /*
-  if(t.n){  makeWall();  }
   if(t.s){  makeWall();  }
   if(t.e){  makeWall();  }
   if(t.w){  makeWall();  }
 */
+  tileNode->translate(tileOffset);
+}
 
+void Tile::makeWall(string pos, string name,
+                    Ogre::SceneNode * tn, Ogre::Vector3 cs){ //rotation
 
+  Ogre::Vector3 tv;
+  Ogre::Vector3 rv;
+  if(!pos.compare("n")){
+    tv=Ogre::Vector3(0,0,-((float)z/2.0)+((float)WALLSIZE/2.0));
+  }
+
+  Ogre::SceneNode* node=tn->createChildSceneNode(name+"_node");
+  Ogre::Entity* entity = smp->createEntity(name,"cube.mesh");
+  node->attachObject(entity);
+  node->scale(cs);
 }
