@@ -21,8 +21,6 @@
 #include <SdkTrays.h>
 #include <SdkCameraMan.h>
 
-#include "GameEnums.h"
-
 #include <string.h>
 
 #include "Level.h"
@@ -45,7 +43,6 @@ protected:
     void createFrameListener(void);
     void createScene(void);
     void destroyScene(void);
-    void createMenu(void);
     void createViewports(void);
     void setupResources(void);
     void createResourceListener(void);
@@ -77,18 +74,11 @@ protected:
     Ogre::OverlaySystem *mOverlaySystem;
 
     // OgreBites
-    OgreBites::InputContext mInputContext;
     OgreBites::SdkTrayManager* mTrayMgr;
     OgreBites::SdkCameraMan* mCameraMan;       // basic camera controller
+    OgreBites::ParamsPanel* mDetailsPanel;     // sample details panel
     bool mCursorWasVisible;                    // was cursor visible before dialog appeared
     bool mShutDown;
-
-    // GUI Stuff
-    OgreBites::Button* play_button;
-    OgreBites::Button* quit_button;
-    GameState state;
-
-    virtual void buttonHit (OgreBites::Button *button) override;
 
 
     //OIS Input devices

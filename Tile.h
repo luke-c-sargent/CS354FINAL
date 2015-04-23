@@ -33,6 +33,8 @@ class Tile
 
   TileInput defaultTile,nTile,sTile,wTile,eTile;
   TileInput n_eTile, n_wTile, s_eTile, s_wTile;
+  TileInput n_s_eTile, n_s_wTile, n_e_wTile, s_e_wTile;
+
 
   //static
   static const int x = TSIZE;

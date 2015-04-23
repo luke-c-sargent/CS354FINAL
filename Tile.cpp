@@ -20,6 +20,10 @@ Tile::Tile(Ogre::SceneNode * lvlptr, Ogre::SceneManager * smptr):
   n_wTile={1,0,0,1,0,0,0,0};
   s_eTile={0,1,1,0,0,0,0,0};
   s_wTile={0,1,0,1,0,0,0,0};
+  n_s_eTile={1,1,1,0,0,0,0,0};
+  n_s_wTile={1,1,0,1,0,0,0,0};
+  n_e_wTile={1,0,1,1,0,0,0,0};
+  s_e_wTile={0,1,1,1,0,0,0,0};
 
   cout << "\n\nTILE MADE"<<levelNode<<"\n\n";
 }
@@ -35,7 +39,7 @@ void Tile::genTile(int id, int xi, int yi, int zi){
 
 
   //calculate positional offset of tile--x and y plane is floor
-  Ogre::Vector3 offset=Ogre::Vector3(xi*5,zi*5,yi*5);
+  Ogre::Vector3 offset=Ogre::Vector3(xi*TSIZE,zi*TSIZE,yi*TSIZE);
 
   cout << "generating " << tileID <<"="<<id<<" at ";
   cout << offset.x << "," << offset.y << "," << offset.z <<"\n";
@@ -62,7 +66,7 @@ void Tile::genTile(int id, int xi, int yi, int zi){
     bindTileEntity(n_eTile, tileID,offset);
     break;
   case(7):
-   bindTileEntity(n_wTile, tileID,offset);
+    bindTileEntity(n_wTile, tileID,offset);
    break;
    case(8):
     bindTileEntity(s_eTile, tileID,offset);
@@ -70,6 +74,19 @@ void Tile::genTile(int id, int xi, int yi, int zi){
     case(9):
      bindTileEntity(s_wTile, tileID,offset);
      break;
+    case(10):
+    bindTileEntity(n_s_eTile, tileID,offset);
+    break;
+    case(11):
+    bindTileEntity(n_s_wTile, tileID,offset);
+    break;
+    case(12):
+    bindTileEntity(n_e_wTile, tileID,offset);
+    break;
+    case(13):
+    bindTileEntity(s_e_wTile, tileID,offset);
+    break;
+
    default:
     break;
   }
@@ -105,16 +122,53 @@ void Tile::bindTileEntity(TileInput t, std::string id, Ogre::Vector3 tileOffset)
 
   fNode->scale(cubeScale);
   fNode->translate(floorTranslate);
-  cout << "entity material\n";
-  entity->setMaterialName("PlayerWire");
+  entity->setMaterialName("tiledfloor");
 
   //create ceiling
 
+
+  float wallscale=(1.0-WALLSIZE/TSIZE);
+  float wallscale2x=(1.0-2.0*WALLSIZE/TSIZE);
+
   //create walls
-  if(t.n){  makeWall("n", tilename + "_north_wall",tileNode,cubeScale);  }
-  if(t.s){  makeWall("s", tilename + "_south_wall",tileNode,cubeScale);  }
-  if(t.e){  makeWall("e", tilename + "_east_wall",tileNode,cubeScale);  }
-  if(t.w){  makeWall("w", tilename + "_west_wall",tileNode,cubeScale);  }
+  if(t.n){
+     makeWall("n", tilename + "_north_wall",tileNode,
+      Ogre::Vector3(cubeScale.x,cubeScale.y,cubeScale.z*wallscale));
+   }
+  if(t.s){
+    makeWall("s", tilename + "_south_wall",tileNode,
+      Ogre::Vector3(cubeScale.x,cubeScale.y,cubeScale.z*wallscale));
+  }
+  //if(t.e){  makeWall("e", tilename + "_east_wall",tileNode,cubeScale);   }
+  //if(t.w){  makeWall("w", tilename + "_west_wall",tileNode,cubeScale);  }
+
+  if(t.e && !t.n && !t.s){
+    makeWall("e", tilename + "_east_wall",tileNode,
+      Ogre::Vector3(cubeScale.x*wallscale,cubeScale.y,cubeScale.z));
+  }
+  if(t.w && !t.n && !t.s){
+    makeWall("w", tilename + "_west_wall",tileNode,
+      Ogre::Vector3(cubeScale.x*wallscale,cubeScale.y,cubeScale.z));
+  }
+
+  if(t.e && (t.n || t.s)){
+    //cubeScale.x=cubescale*wallscale;
+    //cubeScale.z=cubescale*wallscale2x;
+    makeWall("e", tilename + "_east_wall",tileNode,
+      Ogre::Vector3(cubeScale.x*wallscale,cubeScale.y,cubeScale.z*wallscale2x));
+  }
+  if(t.w && (t.n || t.s)){
+    //cubeScale.x=cubescale*wallscale;
+    //cubeScale.z=cubescale*wallscale2x;
+    makeWall("w", tilename + "_west_wall",tileNode,
+      Ogre::Vector3(cubeScale.x*wallscale,cubeScale.y,cubeScale.z*wallscale2x));
+
+  }
+
+  //if(t.e && t.n && !t.s){}
+  //if(t.e && t.s && !t.n){}
+//*/
+
 /*  if(t.w){  makeWall();  }
 */
   tileNode->translate(tileOffset);
@@ -131,19 +185,19 @@ void Tile::makeWall(string pos, string name,
   zv=Ogre::Vector3(0,0,1);
 
   if(!pos.compare("n")){
-    tv=Ogre::Vector3(0,0,((float)z/2.0)-((float)WALLSIZE/2.0));
+    tv=Ogre::Vector3(0,WALLSIZE/2.0,((float)z/2.0)-((float)WALLSIZE/2.0));
     rq=Ogre::Quaternion(Ogre::Degree(90),xv);
   }
   else if(!pos.compare("s")){
-    tv=Ogre::Vector3(0,0,-1*((float)z/2.0)+((float)WALLSIZE/2.0));
+    tv=Ogre::Vector3(0,WALLSIZE/2.0,-1*((float)z/2.0)+((float)WALLSIZE/2.0));
     rq=Ogre::Quaternion(Ogre::Degree(90),xv);
   }
   else if(!pos.compare("e")){
-    tv=Ogre::Vector3(-1*((float)x/2.0)+((float)WALLSIZE/2.0),0,0);
+    tv=Ogre::Vector3(-1*((float)x/2.0)+((float)WALLSIZE/2.0),WALLSIZE/2.0,0);
     rq=Ogre::Quaternion(Ogre::Degree(90),zv);
   }
   else if(!pos.compare("w")){
-    tv=Ogre::Vector3(((float)x/2.0)-((float)WALLSIZE/2.0),0,0);
+    tv=Ogre::Vector3(((float)x/2.0)-((float)WALLSIZE/2.0),WALLSIZE/2.0,0);
     rq=Ogre::Quaternion(Ogre::Degree(90),zv);
   }
 
@@ -151,8 +205,10 @@ void Tile::makeWall(string pos, string name,
   Ogre::SceneNode* node=tn->createChildSceneNode(name+"_node");
   Ogre::Entity* entity = smp->createEntity(name,"cube.mesh");
   node->attachObject(entity);
-  entity->setMaterialName("PlayerWire2");
+  entity->setMaterialName("stonewall");
   node->scale(cs);
   node->translate(tv);
   node->rotate(rq);
 }
+
+//void makeSmallWall

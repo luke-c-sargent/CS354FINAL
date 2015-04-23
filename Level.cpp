@@ -47,7 +47,7 @@ int Level::generateLevel(int xi, int yi, int zi)
   for(int i=0; i < xi;i++){
     for(int j=0; j < yi;j++){
       for(int k=0; k < zi;k++){
-        short tile = rand()%4 + 6;
+        short tile = rand()%13+1;
         tile_map.push_back(tile);
   } } }
   cout << "\n\n LEVEL GENERATED \n\n";
