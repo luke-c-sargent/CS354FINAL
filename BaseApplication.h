@@ -21,6 +21,8 @@
 #include <SdkTrays.h>
 #include <SdkCameraMan.h>
 
+#include "GameEnums.h"
+
 #include <string.h>
 
 #include "Level.h"
@@ -43,6 +45,7 @@ protected:
     void createFrameListener(void);
     void createScene(void);
     void destroyScene(void);
+    void createMenu(void);
     void createViewports(void);
     void setupResources(void);
     void createResourceListener(void);
@@ -66,7 +69,12 @@ protected:
     void windowClosed(Ogre::RenderWindow* rw);
 
     Ogre::Root *mRoot;
+
+    //ye olde camera styff
     Ogre::Camera* mCamera;
+    Ogre::Vector3 cameraPos;
+    Ogre::Vector3 cameraDir;
+
     Ogre::SceneManager* mSceneMgr;
     Ogre::RenderWindow* mWindow;
     Ogre::String mResourcesCfg;
@@ -74,11 +82,18 @@ protected:
     Ogre::OverlaySystem *mOverlaySystem;
 
     // OgreBites
+    OgreBites::InputContext mInputContext;
     OgreBites::SdkTrayManager* mTrayMgr;
     OgreBites::SdkCameraMan* mCameraMan;       // basic camera controller
-    OgreBites::ParamsPanel* mDetailsPanel;     // sample details panel
     bool mCursorWasVisible;                    // was cursor visible before dialog appeared
     bool mShutDown;
+
+    // GUI Stuff
+    OgreBites::Button* play_button;
+    OgreBites::Button* quit_button;
+    GameState state;
+
+    virtual void buttonHit (OgreBites::Button *button) override;
 
 
     //OIS Input devices
@@ -86,6 +101,7 @@ protected:
     OIS::Mouse*    mMouse;
     OIS::Keyboard* mKeyboard;
 
+    float mx, my;
     bool up,down,left,right;
 
     void processInput();
