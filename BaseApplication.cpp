@@ -22,10 +22,11 @@ BaseApplication::BaseApplication(void)
     state(GameState::Main),
     play_button(0),
     quit_button(0),
-    mx(0),my(0)
+    mx(0),my(0),theta(0),phi(0)
 {
   cameraDir=Ogre::Vector3(0,-1,-1);
-  cameraPos==Ogre::Vector3(0,10,0);
+  cameraPos=Ogre::Vector3(0,0,0);
+  mSensitivity=0.1;
 }
 
 //-------------------------------------------------------------------------------------
@@ -245,7 +246,8 @@ bool BaseApplication::frameRenderingQueued(const Ogre::FrameEvent& evt)
     mMouse->capture();
 
     //need to process input
-    processInput();
+    //if(state==Play)
+        processInput();
 
     mTrayMgr->frameRenderingQueued(evt);
 
@@ -362,8 +364,10 @@ void BaseApplication::buttonHit (OgreBites::Button *button)
 }
 bool BaseApplication::mouseMoved( const OIS::MouseEvent &arg )
 {
+    if(state==Play){
     mx=(float)arg.state.X.rel;
     my=(float)arg.state.Y.rel;
+    }
     if (state == Main || state == Pause){
         mTrayMgr->injectMouseMove(arg);
       }
@@ -416,20 +420,41 @@ void BaseApplication::windowClosed(Ogre::RenderWindow* rw)
 }
 
 void BaseApplication::processInput(){
-  //move camera
-  float cameraSpeed=0.02;
+  //move camera with mouse
+  phi-=mx*mSensitivity;
+  theta-=my*mSensitivity;//to not invert mouse
+  float r90=3.1400/2.0; // just shy of 90*
+  if(theta>r90){
+      cout << "too big at" << theta;
+      theta=r90;}
+  else if(theta<=-1*r90){
+      cout << "too small at" <<theta;
+      theta=-1*r90;}
+
+  cameraDir=Ogre::Vector3(sin(phi)*cos(theta),sin(phi)*sin(theta),cos(phi));
+
+  //move camera with keyboard
+  float cameraSpeed=0.01;
   if(up){
-    cameraPos.z-=cameraSpeed;
+    cameraPos+=cameraSpeed*cameraDir;
   }
   if(down)
-    cameraPos.z+=cameraSpeed;
-  if(left)
-    cameraPos.x-=cameraSpeed;
-  if(right)
-    cameraPos.x+=cameraSpeed;
+    cameraPos-=cameraSpeed*cameraDir;
+  if(left){
+    cameraPos.x-=cameraSpeed*cos(phi+90);
+    cameraPos.z-=cameraSpeed*sin(phi+90);
+  }
+  if(right){
+      cameraPos.x+=cameraSpeed*cos(phi+90);
+      cameraPos.z+=cameraSpeed*sin(phi+90);
+  }
+
   mCamera->setPosition(cameraPos);
-  // Look back along -Z
-  //mCamera->lookAt(cameraPos+cameraDir);
+  mCamera->lookAt(cameraPos+cameraDir);
+
+  //cout << "t,p: " << theta << " " << phi << "\n";
+  cout << "pos: {"<<cameraPos.x<<","<<cameraPos.y<<","<<cameraPos.z<<"}\n";
+  cout << "dir: {"<<cameraDir.x<<","<<cameraDir.y<<","<<cameraDir.z<<"}\n";
 
   //mCamera->rotate(Ogre::Quaternion(Ogre::Degree(0.1),Ogre::Vector3(0,1,0)));
   mx=0;

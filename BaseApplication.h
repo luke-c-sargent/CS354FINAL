@@ -101,7 +101,7 @@ protected:
     OIS::Mouse*    mMouse;
     OIS::Keyboard* mKeyboard;
 
-    float mx, my;
+    float mx, my, theta, phi, mSensitivity; // theta up/down, phi l/r
     bool up,down,left,right;
 
     void processInput();
