@@ -22,6 +22,7 @@
 #include <SdkCameraMan.h>
 
 #include "GameEnums.h"
+#include "Monster.h"
 
 #include <string.h>
 

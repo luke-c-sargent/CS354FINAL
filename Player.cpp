@@ -5,7 +5,7 @@ using std::cout;
 
 //multiplayer stuff
 
-Player::Player(Ogre::SceneManager* smp, Ogre::String inname):
+Player::Player(Ogre::SceneManager* smp):
   l(25),
   w(25),
   h(50)

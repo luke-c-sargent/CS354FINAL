@@ -102,8 +102,13 @@ am__installdirs = "$(DESTDIR)$(bindir)"
 PROGRAMS = $(bin_PROGRAMS)
 am_OgreApp_OBJECTS = OgreApp-BaseApplication.$(OBJEXT) \
 	OgreApp-GameObject.$(OBJEXT) OgreApp-Simulator.$(OBJEXT) \
+<<<<<<< Updated upstream
 	OgreApp-Level.$(OBJEXT) OgreApp-Tile.$(OBJEXT) \
 	OgreApp-Weapon.$(OBJEXT)
+=======
+	OgreApp-Level.$(OBJEXT) OgreApp-Monster.$(OBJEXT) \
+	OgreApp-Tile.$(OBJEXT)
+>>>>>>> Stashed changes
 OgreApp_OBJECTS = $(am_OgreApp_OBJECTS)
 am__DEPENDENCIES_1 =
 OgreApp_DEPENDENCIES = $(am__DEPENDENCIES_1) $(am__DEPENDENCIES_1) \
@@ -336,8 +341,13 @@ top_build_prefix = @top_build_prefix@
 top_builddir = @top_builddir@
 top_srcdir = @top_srcdir@
 ACLOCAL_AMFLAGS = -I m4
+<<<<<<< Updated upstream
 noinst_HEADERS = BaseApplication.h GameObject.h Simulator.h Level.h Tile.h Weapon.h 
 OgreApp_SOURCES = BaseApplication.cpp GameObject.cpp Simulator.cpp Level.cpp Tile.cpp Weapon.cpp
+=======
+noinst_HEADERS = BaseApplication.h
+OgreApp_SOURCES = BaseApplication.cpp GameObject.cpp config.h GameObject.h Simluator.h Simulator.cpp Level.h Level.cpp Monster.cpp Monster.h Tile.h Tile.cpp
+>>>>>>> Stashed changes
 OgreApp_CPPFLAGS = -I$(top_srcdir)
 OgreApp_CXXFLAGS = $(OGRE_CFLAGS) $(OIS_CFLAGS) $(bullet_CFLAGS) $(CEGUI_CFLAGS) $(CEGUI_OGRE_CFLAGS) $(sdl_CFLAGS)
 OgreApp_LDADD = $(OGRE_LIBS) $(OIS_LIBS) $(bullet_LIBS) $(CEGUI_LIBS) $(CEGUI_OGRE_LIBS) $(sdl_LIBS)
@@ -461,6 +471,7 @@ distclean-compile:
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/OgreApp-BaseApplication.Po@am__quote@
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/OgreApp-GameObject.Po@am__quote@
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/OgreApp-Level.Po@am__quote@
+@AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/OgreApp-Monster.Po@am__quote@
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/OgreApp-Simulator.Po@am__quote@
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/OgreApp-Tile.Po@am__quote@
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/OgreApp-Weapon.Po@am__quote@
@@ -541,6 +552,20 @@ OgreApp-Level.obj: Level.cpp
 @AMDEP_TRUE@@am__fastdepCXX_FALSE@	$(AM_V_CXX)source='Level.cpp' object='OgreApp-Level.obj' libtool=no @AMDEPBACKSLASH@
 @AMDEP_TRUE@@am__fastdepCXX_FALSE@	DEPDIR=$(DEPDIR) $(CXXDEPMODE) $(depcomp) @AMDEPBACKSLASH@
 @am__fastdepCXX_FALSE@	$(AM_V_CXX@am__nodep@)$(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(OgreApp_CPPFLAGS) $(CPPFLAGS) $(OgreApp_CXXFLAGS) $(CXXFLAGS) -c -o OgreApp-Level.obj `if test -f 'Level.cpp'; then $(CYGPATH_W) 'Level.cpp'; else $(CYGPATH_W) '$(srcdir)/Level.cpp'; fi`
+
+OgreApp-Monster.o: Monster.cpp
+@am__fastdepCXX_TRUE@	$(AM_V_CXX)$(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(OgreApp_CPPFLAGS) $(CPPFLAGS) $(OgreApp_CXXFLAGS) $(CXXFLAGS) -MT OgreApp-Monster.o -MD -MP -MF $(DEPDIR)/OgreApp-Monster.Tpo -c -o OgreApp-Monster.o `test -f 'Monster.cpp' || echo '$(srcdir)/'`Monster.cpp
+@am__fastdepCXX_TRUE@	$(AM_V_at)$(am__mv) $(DEPDIR)/OgreApp-Monster.Tpo $(DEPDIR)/OgreApp-Monster.Po
+@AMDEP_TRUE@@am__fastdepCXX_FALSE@	$(AM_V_CXX)source='Monster.cpp' object='OgreApp-Monster.o' libtool=no @AMDEPBACKSLASH@
+@AMDEP_TRUE@@am__fastdepCXX_FALSE@	DEPDIR=$(DEPDIR) $(CXXDEPMODE) $(depcomp) @AMDEPBACKSLASH@
+@am__fastdepCXX_FALSE@	$(AM_V_CXX@am__nodep@)$(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(OgreApp_CPPFLAGS) $(CPPFLAGS) $(OgreApp_CXXFLAGS) $(CXXFLAGS) -c -o OgreApp-Monster.o `test -f 'Monster.cpp' || echo '$(srcdir)/'`Monster.cpp
+
+OgreApp-Monster.obj: Monster.cpp
+@am__fastdepCXX_TRUE@	$(AM_V_CXX)$(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(OgreApp_CPPFLAGS) $(CPPFLAGS) $(OgreApp_CXXFLAGS) $(CXXFLAGS) -MT OgreApp-Monster.obj -MD -MP -MF $(DEPDIR)/OgreApp-Monster.Tpo -c -o OgreApp-Monster.obj `if test -f 'Monster.cpp'; then $(CYGPATH_W) 'Monster.cpp'; else $(CYGPATH_W) '$(srcdir)/Monster.cpp'; fi`
+@am__fastdepCXX_TRUE@	$(AM_V_at)$(am__mv) $(DEPDIR)/OgreApp-Monster.Tpo $(DEPDIR)/OgreApp-Monster.Po
+@AMDEP_TRUE@@am__fastdepCXX_FALSE@	$(AM_V_CXX)source='Monster.cpp' object='OgreApp-Monster.obj' libtool=no @AMDEPBACKSLASH@
+@AMDEP_TRUE@@am__fastdepCXX_FALSE@	DEPDIR=$(DEPDIR) $(CXXDEPMODE) $(depcomp) @AMDEPBACKSLASH@
+@am__fastdepCXX_FALSE@	$(AM_V_CXX@am__nodep@)$(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(OgreApp_CPPFLAGS) $(CPPFLAGS) $(OgreApp_CXXFLAGS) $(CXXFLAGS) -c -o OgreApp-Monster.obj `if test -f 'Monster.cpp'; then $(CYGPATH_W) 'Monster.cpp'; else $(CYGPATH_W) '$(srcdir)/Monster.cpp'; fi`
 
 OgreApp-Tile.o: Tile.cpp
 @am__fastdepCXX_TRUE@	$(AM_V_CXX)$(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(OgreApp_CPPFLAGS) $(CPPFLAGS) $(OgreApp_CXXFLAGS) $(CXXFLAGS) -MT OgreApp-Tile.o -MD -MP -MF $(DEPDIR)/OgreApp-Tile.Tpo -c -o OgreApp-Tile.o `test -f 'Tile.cpp' || echo '$(srcdir)/'`Tile.cpp

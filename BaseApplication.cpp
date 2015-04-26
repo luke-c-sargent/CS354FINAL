@@ -1,5 +1,4 @@
 #include "BaseApplication.h"
-
 //-------------------------------------------------------------------------------------
 BaseApplication::BaseApplication(void)
     : mRoot(0),
@@ -72,14 +71,14 @@ void BaseApplication::createScene(void)
     mTrayMgr->moveWidgetToTray(scoreboard, OgreBites::TL_TOPLEFT, 0);
     scoreboard->show();
 
+    Monster* m = new Monster(mSceneMgr);
+    m->initMonster(mSceneMgr);
     //level making
     level->constructLevel();
 
     weapon1 = new Weapon(WeaponState::Weapon0);
     weapon2 = new Weapon(WeaponState::Weapon1);
     weapon3 = new Weapon(WeaponState::Weapon2);
-
-
 
     //lighting
 /*

@@ -1,8 +1,8 @@
 ACLOCAL_AMFLAGS= -I m4
-noinst_HEADERS= BaseApplication.h GameObject.h Simulator.h Level.h Tile.h Weapon.h 
+noinst_HEADERS= BaseApplication.h GameObject.h Simulator.h Level.h Tile.h Weapon.h Monster.h
 
 bin_PROGRAMS= OgreApp
-OgreApp_SOURCES= BaseApplication.cpp GameObject.cpp Simulator.cpp Level.cpp Tile.cpp Weapon.cpp
+OgreApp_SOURCES= BaseApplication.cpp GameObject.cpp Simulator.cpp Level.cpp Tile.cpp Weapon.cpp Monster.cpp
 
 OgreApp_CPPFLAGS= -I$(top_srcdir)
 OgreApp_CXXFLAGS=$(OGRE_CFLAGS) $(OIS_CFLAGS) $(bullet_CFLAGS) $(CEGUI_CFLAGS) $(CEGUI_OGRE_CFLAGS) $(sdl_CFLAGS)
