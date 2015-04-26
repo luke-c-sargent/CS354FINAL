@@ -2,6 +2,7 @@
 
 #include <Ogre.h>
 #include <GameObject.h>
+#include "GameEnums.h"
 
 class Player:public GameObject{
 public:
@@ -13,4 +14,6 @@ public:
     btScalar getX();
     btScalar getY();
     btScalar getZ();
+    // PlayerState playerState;
+    // WeaponState weapon;
 };

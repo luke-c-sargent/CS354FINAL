@@ -89,9 +89,13 @@ protected:
     bool mShutDown;
 
     // GUI Stuff
+    OgreBites::ParamsPanel* scoreboard;    // displays scores
     OgreBites::Button* play_button;
+    OgreBites::Button* store_button;
     OgreBites::Button* quit_button;
     GameState state;
+    PlayerState playerState;
+    WeaponState weapon;
 
     virtual void buttonHit (OgreBites::Button *button) override;
 

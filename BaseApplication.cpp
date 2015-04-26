@@ -21,7 +21,11 @@ BaseApplication::BaseApplication(void)
     right(0),
     state(GameState::Main),
     play_button(0),
+    store_button(0),
     quit_button(0),
+    playerState(PlayerState::NoFire),
+    weapon(Weapon0),
+    scoreboard(0),
     mx(0),my(0),theta(0),phi(0)
 {
   cameraDir=Ogre::Vector3(0,-1,-1);
@@ -45,6 +49,20 @@ void BaseApplication::createScene(void)
 {
 	mSceneMgr->setAmbientLight(Ogre::ColourValue(0.6f,0.6f,0.6f));
 	mSceneMgr->setShadowTechnique(Ogre::SHADOWTYPE_STENCIL_ADDITIVE);
+
+    Ogre::StringVector scores;
+    scores.push_back("Level");
+    scores.push_back("Weapon");
+    scores.push_back("Score");
+    scores.push_back("Music");
+
+    scoreboard = mTrayMgr->createParamsPanel(OgreBites::TL_TOPLEFT, "Scoreboard", 250, scores);
+    scoreboard->setParamValue(0, "0");
+    scoreboard->setParamValue(1, "1");
+    scoreboard->setParamValue(2, "0");
+    scoreboard->setParamValue(3, "Off");
+    mTrayMgr->moveWidgetToTray(scoreboard, OgreBites::TL_TOPLEFT, 0);
+    scoreboard->show();
 
   //level making
   level->constructLevel();
@@ -230,6 +248,7 @@ void BaseApplication::createMenu()
     // Setup GUI
     mTrayMgr = new OgreBites::SdkTrayManager("InterfaceName", mWindow, mInputContext, this);
     play_button = mTrayMgr->createButton(OgreBites::TL_CENTER, "Play", "Play");
+    store_button = mTrayMgr->createButton(OgreBites::TL_CENTER, "Store", "Store");
     quit_button = mTrayMgr->createButton(OgreBites::TL_CENTER, "Exit", "Quit");
 }
 //-------------------------------------------------------------------------------------
@@ -302,6 +321,18 @@ bool BaseApplication::keyPressed( const OIS::KeyEvent &arg )
         else if(arg.key == OIS::KC_D){
             right=true;
         }
+        else if(arg.key == OIS::KC_1){
+            weapon = WeaponState::Weapon0;
+            scoreboard->setParamValue(1, "Weapon 1");
+        }
+        else if(arg.key == OIS::KC_2){
+            weapon = WeaponState::Weapon1;
+            scoreboard->setParamValue(1, "Weapon 2");
+        }
+        else if(arg.key == OIS::KC_3){
+            weapon = WeaponState::Weapon2;
+            scoreboard->setParamValue(1, "Weapon 3");
+        }
     }
 
     else if (state == Pause)
@@ -356,6 +387,11 @@ void BaseApplication::buttonHit (OgreBites::Button *button)
         }
         mTrayMgr->hideCursor();
         state = Play;
+    }
+    else if (button == store_button)
+    {
+        state = Store;
+        mShutDown = true;
     }
     else if (button == quit_button)
     {

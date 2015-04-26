@@ -9,6 +9,8 @@ Player::Player(Ogre::SceneManager* smp, Ogre::String inname):
   l(25),
   w(25),
   h(50)
+  // playerState(PlayerState::NoFire),
+  // weapon(Weapon0)
 
 {
     //set scene manager pointer
