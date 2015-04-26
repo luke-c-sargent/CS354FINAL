@@ -26,6 +26,7 @@
 #include <string.h>
 
 #include "Level.h"
+#include "Weapon.h"
 #include <stdio.h>
 
 using std::cout;
@@ -112,6 +113,10 @@ protected:
 
     //Level
     Level * level;
+
+    Weapon * weapon1;
+    Weapon * weapon2;
+    Weapon * weapon3;
 
 
 };

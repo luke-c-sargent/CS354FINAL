@@ -25,6 +25,9 @@ BaseApplication::BaseApplication(void)
     quit_button(0),
     playerState(PlayerState::NoFire),
     weapon(Weapon0),
+    weapon1(0),
+    weapon2(0),
+    weapon3(0),
     scoreboard(0),
     mx(0),my(0),theta(0),phi(0)
 {
@@ -52,20 +55,31 @@ void BaseApplication::createScene(void)
 
     Ogre::StringVector scores;
     scores.push_back("Level");
+    scores.push_back("----------------");
     scores.push_back("Weapon");
+    scores.push_back("Ammo Left");
+    scores.push_back("Ammo Left in Cartridge");
     scores.push_back("Score");
     scores.push_back("Music");
 
     scoreboard = mTrayMgr->createParamsPanel(OgreBites::TL_TOPLEFT, "Scoreboard", 250, scores);
     scoreboard->setParamValue(0, "0");
-    scoreboard->setParamValue(1, "1");
-    scoreboard->setParamValue(2, "0");
-    scoreboard->setParamValue(3, "Off");
+    scoreboard->setParamValue(2, "1");
+    scoreboard->setParamValue(3, "0");
+    scoreboard->setParamValue(4, "0");
+    scoreboard->setParamValue(5, "0");
+    scoreboard->setParamValue(6, "Off");
     mTrayMgr->moveWidgetToTray(scoreboard, OgreBites::TL_TOPLEFT, 0);
     scoreboard->show();
 
-  //level making
-  level->constructLevel();
+    //level making
+    level->constructLevel();
+
+    weapon1 = new Weapon(WeaponState::Weapon0);
+    weapon2 = new Weapon(WeaponState::Weapon1);
+    weapon3 = new Weapon(WeaponState::Weapon2);
+
+
 
     //lighting
 /*
@@ -264,9 +278,19 @@ bool BaseApplication::frameRenderingQueued(const Ogre::FrameEvent& evt)
     mKeyboard->capture();
     mMouse->capture();
 
+
     //need to process input
-    //if(state==Play)
-        processInput();
+    if(state==Play)
+    {
+        cout << weapon1->ammo_left();
+        if (playerState == PlayerState::Fire)
+        {
+            weapon1->fire();
+        }
+        scoreboard->setParamValue(3, std::to_string(weapon1->ammo_left()));
+        scoreboard->setParamValue(4, std::to_string(weapon1->total_ammo_left()));
+    }
+    processInput();
 
     mTrayMgr->frameRenderingQueued(evt);
 
@@ -274,6 +298,7 @@ bool BaseApplication::frameRenderingQueued(const Ogre::FrameEvent& evt)
     {
         mCameraMan->frameRenderingQueued(evt);   // if dialog isn't up, then update the camera
     }
+
     return true;
 }
 //-------------------------------------------------------------------------------------
@@ -414,6 +439,12 @@ bool BaseApplication::mouseMoved( const OIS::MouseEvent &arg )
 
 bool BaseApplication::mousePressed( const OIS::MouseEvent &arg, OIS::MouseButtonID id )
 {
+    if (state==Play){
+        if (id == OIS::MB_Left)
+        {
+            playerState = PlayerState::Fire;
+        }
+    }
     if (mTrayMgr->injectMouseDown(arg, id)) return true;
     //mCameraMan->injectMouseDown(arg, id);
     return true;
@@ -421,6 +452,12 @@ bool BaseApplication::mousePressed( const OIS::MouseEvent &arg, OIS::MouseButton
 
 bool BaseApplication::mouseReleased( const OIS::MouseEvent &arg, OIS::MouseButtonID id )
 {
+    if (state==Play){
+        if (id == OIS::MB_Left)
+        {
+            playerState = PlayerState::NoFire;
+        }
+    }
     if (mTrayMgr->injectMouseUp(arg, id)) return true;
     //mCameraMan->injectMouseUp(arg, id);
     return true;
@@ -489,8 +526,8 @@ void BaseApplication::processInput(){
   mCamera->lookAt(cameraPos+cameraDir);
 
   //cout << "t,p: " << theta << " " << phi << "\n";
-  cout << "pos: {"<<cameraPos.x<<","<<cameraPos.y<<","<<cameraPos.z<<"}\n";
-  cout << "dir: {"<<cameraDir.x<<","<<cameraDir.y<<","<<cameraDir.z<<"}\n";
+  // cout << "pos: {"<<cameraPos.x<<","<<cameraPos.y<<","<<cameraPos.z<<"}\n";
+  // cout << "dir: {"<<cameraDir.x<<","<<cameraDir.y<<","<<cameraDir.z<<"}\n";
 
   //mCamera->rotate(Ogre::Quaternion(Ogre::Degree(0.1),Ogre::Vector3(0,1,0)));
   mx=0;
