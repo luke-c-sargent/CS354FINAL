@@ -73,6 +73,11 @@ void Weapon::fire(void)
 	}
 }
 
+void Weapon::cancelReload(void)
+{
+	reloadBool = false;
+}
+
 void Weapon::reload(void)
 {
 	if (reloadBool == false)

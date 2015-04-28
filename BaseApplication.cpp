@@ -80,9 +80,13 @@ void BaseApplication::createScene(void)
     //level making
     level->constructLevel();
 
+    //setup weapons
+
     weapon1 = new Weapon(WeaponState::Weapon0);
     weapon2 = new Weapon(WeaponState::Weapon1);
     weapon3 = new Weapon(WeaponState::Weapon2);
+
+    equippedweapon = &weapon1;
 
     //lighting
 /*
@@ -288,10 +292,9 @@ bool BaseApplication::frameRenderingQueued(const Ogre::FrameEvent& evt)
         if (playerState == PlayerState::Fire)
         {
             weapon1->fire();
-            // cout << std::to_string(weapon1->ammo_left());
         }
-        scoreboard->setParamValue(3, std::to_string(weapon1->ammo_left()));
-        scoreboard->setParamValue(4, std::to_string(weapon1->total_ammo_left()));   
+        scoreboard->setParamValue(3, std::to_string((*equippedweapon)->total_ammo_left()));
+        scoreboard->setParamValue(4, std::to_string((*equippedweapon)->ammo_left()));   
     }
     processInput();
 
@@ -405,15 +408,18 @@ bool BaseApplication::keyPressed( const OIS::KeyEvent &arg )
         }
         else if(arg.key == OIS::KC_1){
             weapon = WeaponState::Weapon0;
-            scoreboard->setParamValue(1, "Weapon 1");
+            equippedweapon = &weapon1;
+            scoreboard->setParamValue(2, "Weapon 1");
         }
         else if(arg.key == OIS::KC_2){
             weapon = WeaponState::Weapon1;
-            scoreboard->setParamValue(1, "Weapon 2");
+            equippedweapon = &weapon2;
+            scoreboard->setParamValue(2, "Weapon 2");
         }
         else if(arg.key == OIS::KC_3){
             weapon = WeaponState::Weapon2;
-            scoreboard->setParamValue(1, "Weapon 3");
+            equippedweapon = &weapon3;
+            scoreboard->setParamValue(2, "Weapon 3");
         }
         //Monster Code
         //============

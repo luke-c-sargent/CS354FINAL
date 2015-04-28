@@ -14,6 +14,7 @@ public:
 
     void fire();
     void reload();
+    void cancelReload();
     int ammo_left();
     int total_ammo_left();
 

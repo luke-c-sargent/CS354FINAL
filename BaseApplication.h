@@ -95,6 +95,8 @@ protected:
     OgreBites::Button* play_button;
     OgreBites::Button* store_button;
     OgreBites::Button* quit_button;
+
+    // States
     GameState state;
     PlayerState playerState;
     WeaponState weapon;
@@ -115,9 +117,11 @@ protected:
     //Level
     Level * level;
 
+    // Weapons
     Weapon * weapon1;
     Weapon * weapon2;
     Weapon * weapon3;
+    Weapon ** equippedweapon;
 
     //Monster Code
 
