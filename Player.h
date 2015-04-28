@@ -14,6 +14,7 @@ public:
     btScalar getX();
     btScalar getY();
     btScalar getZ();
+    
     // PlayerState playerState;
     // WeaponState weapon;
 };

@@ -12,9 +12,8 @@ public:
     Weapon(const int weapon);
     ~Weapon(void);
 
-    void fire();
-    void reload();
-    void cancelReload();
+    bool fire();
+    bool reload();
     int ammo_left();
     int total_ammo_left();
 

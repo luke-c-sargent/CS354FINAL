@@ -23,6 +23,7 @@ BaseApplication::BaseApplication(void)
     store_button(0),
     quit_button(0),
     playerState(PlayerState::NoFire),
+    last_playerState(PlayerState::NoFire),
     weapon(Weapon0),
     scoreboard(0),
     mx(0),my(0),theta(0),phi(0)
@@ -53,8 +54,7 @@ void BaseApplication::createScene(void)
     scores.push_back("Level");
     scores.push_back("----------------");
     scores.push_back("Weapon");
-    scores.push_back("Ammo Left");
-    scores.push_back("Ammo Left in Cartridge");
+    scores.push_back("Ammunition");
     scores.push_back("Score");
     scores.push_back("Music");
 
@@ -63,8 +63,7 @@ void BaseApplication::createScene(void)
     scoreboard->setParamValue(2, "1");
     scoreboard->setParamValue(3, "0");
     scoreboard->setParamValue(4, "0");
-    scoreboard->setParamValue(5, "0");
-    scoreboard->setParamValue(6, "Off");
+    scoreboard->setParamValue(5, "Off");
     mTrayMgr->moveWidgetToTray(scoreboard, OgreBites::TL_TOPLEFT, 0);
     scoreboard->show();
 
@@ -291,10 +290,20 @@ bool BaseApplication::frameRenderingQueued(const Ogre::FrameEvent& evt)
     {
         if (playerState == PlayerState::Fire)
         {
-            weapon1->fire();
+            if (!(*equippedweapon)->fire())
+            {
+                playerState = PlayerState::Reload;
+                last_playerState = PlayerState::Fire;
+            }
         }
-        scoreboard->setParamValue(3, std::to_string((*equippedweapon)->total_ammo_left()));
-        scoreboard->setParamValue(4, std::to_string((*equippedweapon)->ammo_left()));   
+        else if (playerState == PlayerState::Reload)
+        {
+            if ((*equippedweapon)->reload())
+            {
+                playerState = last_playerState;
+            }
+        }
+        scoreboard->setParamValue(3, std::to_string((*equippedweapon)->ammo_left()) + "/" + std::to_string((*equippedweapon)->total_ammo_left()));
     }
     processInput();
 
@@ -392,6 +401,11 @@ bool BaseApplication::keyPressed( const OIS::KeyEvent &arg )
             mTrayMgr->showCursor();
             play_button = mTrayMgr->createButton(OgreBites::TL_CENTER, "Resume", "Resume");
             quit_button = mTrayMgr->createButton(OgreBites::TL_CENTER, "Exit", "Quit");
+        }
+
+        else if (arg.key == OIS::KC_R)
+        {
+            playerState = PlayerState::Reload;
         }
 
         else if(arg.key == OIS::KC_W){
@@ -522,7 +536,11 @@ bool BaseApplication::mousePressed( const OIS::MouseEvent &arg, OIS::MouseButton
     if (state==Play){
         if (id == OIS::MB_Left)
         {
-            playerState = PlayerState::Fire;
+            last_playerState = PlayerState::Fire;
+            if (playerState != PlayerState::Reload)
+            {
+                playerState = PlayerState::Fire;
+            }
         }
     }
     if (mTrayMgr->injectMouseDown(arg, id)) return true;
@@ -535,7 +553,11 @@ bool BaseApplication::mouseReleased( const OIS::MouseEvent &arg, OIS::MouseButto
     if (state==Play){
         if (id == OIS::MB_Left)
         {
-            playerState = PlayerState::NoFire;
+            last_playerState = PlayerState::NoFire;
+            if (playerState != PlayerState::Reload)
+            {
+                playerState = PlayerState::NoFire;
+            }
         }
     }
     if (mTrayMgr->injectMouseUp(arg, id)) return true;

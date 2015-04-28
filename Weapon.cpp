@@ -13,8 +13,8 @@ Weapon::Weapon(const int weapon)
 			total_ammo = 2000;
 			ammo_cap = 20;
 			total_ammo_cap = 2000;
-			firetime = 200;
-			reloadtime = 2500;
+			firetime = 100;
+			reloadtime = 2000;
 			break;
 		}
 		case WeaponState::Weapon1:
@@ -25,7 +25,7 @@ Weapon::Weapon(const int weapon)
 			ammo_cap = 10;
 			total_ammo_cap = 100;
 			firetime = 500;
-			reloadtime = 3000;
+			reloadtime = 2500;
 			break;
 		}
 		case WeaponState::Weapon2:
@@ -36,7 +36,7 @@ Weapon::Weapon(const int weapon)
 			ammo_cap = 5;
 			total_ammo_cap = 50;
 			firetime = 1000;
-			reloadtime = 3500;
+			reloadtime = 3000;
 			break;
 		}
 	}
@@ -59,46 +59,40 @@ int Weapon::total_ammo_left()
 }
 
 
-void Weapon::fire(void)
+bool Weapon::fire(void)
 {
 	if (ammo == 0)
 	{
-		Weapon::reload();
+		return Weapon::reload();
 	}
 	else if (fireTimer->getMilliseconds() >= firetime)
 	{
 		// FIRE
 		ammo = ammo - 1;
+		total_ammo = total_ammo - 1;
 		fireTimer->reset();
 	}
+	return true;
 }
 
-void Weapon::cancelReload(void)
-{
-	reloadBool = false;
-}
-
-void Weapon::reload(void)
+bool Weapon::reload(void)
 {
 	if (reloadBool == false)
 	{
 		reloadTimer->reset();
 		reloadBool = true;
 	}
-	else if (total_ammo >= 0 && reloadTimer->getMilliseconds() >= reloadtime)
+	else if (ammo == ammo_cap || total_ammo <= 0)
+		return true;
+	else if (reloadTimer->getMilliseconds() >= reloadtime)
 	{
 		reloadBool = false;
 		reloadTimer->reset();
-		int rel = ammo_cap - ammo;
-		if (total_ammo >= rel)
-		{
-			total_ammo = total_ammo - rel;
+		if (total_ammo >= ammo_cap)
 			ammo = ammo_cap;
-		}
 		else
-		{
-			ammo = ammo + total_ammo;
-			total_ammo = 0;
-		}
+			ammo = total_ammo;
+		return true;
 	}
+	return false;
 }

@@ -5,7 +5,8 @@ using std::cout;
 
 //multiplayer stuff
 
-Player::Player(Ogre::SceneManager* smp):
+Player::Player(Ogre::SceneManager* smp, Ogre::String 
+    ):
   l(25),
   w(25),
   h(50)
@@ -95,3 +96,4 @@ btScalar Player::getY(){
 btScalar Player::getZ(){
     return position.getZ();
 }
+

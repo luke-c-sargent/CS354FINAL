@@ -99,6 +99,7 @@ protected:
     // States
     GameState state;
     PlayerState playerState;
+    PlayerState last_playerState;
     WeaponState weapon;
 
     virtual void buttonHit (OgreBites::Button *button) override;
