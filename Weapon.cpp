@@ -2,16 +2,16 @@
 
 Weapon::Weapon(const int weapon)
 {
+	reloadTimer = new Ogre::Timer();
+	fireTimer = new Ogre::Timer();
 	switch (weapon){
-		reloadTimer = new Ogre::Timer();
-		fireTimer = new Ogre::Timer();
 		case WeaponState::Weapon0:
 		{
 			power = 1;
 			ammo = 20;
-			total_ammo = 200;
+			total_ammo = 2000;
 			ammo_cap = 20;
-			total_ammo_cap = 200;
+			total_ammo_cap = 2000;
 			firetime = 200;
 			reloadtime = 2500;
 			break;
@@ -64,7 +64,7 @@ void Weapon::fire(void)
 	{
 		Weapon::reload();
 	}
-	else if (fireTimer->getMilliseconds() >= firetime || fireTimer->getMilliseconds() == 0 )
+	else if (fireTimer->getMilliseconds() >= firetime)
 	{
 		// FIRE
 		ammo = ammo - 1;
@@ -76,7 +76,7 @@ void Weapon::reload(void)
 {
 	if (total_ammo >= 0)
 	{
-		reloadTimer->reset();
+		// reloadTimer->reset();
 		int rel = ammo_cap - ammo;
 		if (total_ammo >= rel)
 		{
@@ -88,6 +88,5 @@ void Weapon::reload(void)
 			ammo = ammo + total_ammo;
 			total_ammo = 0;
 		}
-
 	}
 }

@@ -24,9 +24,6 @@ BaseApplication::BaseApplication(void)
     quit_button(0),
     playerState(PlayerState::NoFire),
     weapon(Weapon0),
-    weapon1(0),
-    weapon2(0),
-    weapon3(0),
     scoreboard(0),
     mx(0),my(0),theta(0),phi(0)
 {
@@ -281,20 +278,21 @@ bool BaseApplication::frameRenderingQueued(const Ogre::FrameEvent& evt)
     //need to process input
     if(state==Play)
     {
-        cout << weapon1->ammo_left();
+        // cout << weapon1->ammo_left();
         if (playerState == PlayerState::Fire)
         {
             weapon1->fire();
+            // cout << std::to_string(weapon1->ammo_left());
         }
         scoreboard->setParamValue(3, std::to_string(weapon1->ammo_left()));
-        scoreboard->setParamValue(4, std::to_string(weapon1->total_ammo_left()));
+        scoreboard->setParamValue(4, std::to_string(weapon1->total_ammo_left()));   
     }
     processInput();
 
     mTrayMgr->frameRenderingQueued(evt);
 
     if (!mTrayMgr->isDialogVisible())
-    {
+    {   
         mCameraMan->frameRenderingQueued(evt);   // if dialog isn't up, then update the camera
     }
 

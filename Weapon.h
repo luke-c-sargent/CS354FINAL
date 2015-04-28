@@ -17,11 +17,12 @@ public:
     int ammo_left();
     int total_ammo_left();
 
-private:
+protected:
     Ogre::Timer* fireTimer;
     Ogre::Timer* reloadTimer;
     Ogre::Real firetime;
     Ogre::Real reloadtime;
+    // Ogre::Real lastCPUtime;
     Ogre::Real power;
     int ammo_cap;
     int total_ammo_cap;
