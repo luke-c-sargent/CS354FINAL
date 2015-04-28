@@ -119,6 +119,15 @@ protected:
     Weapon * weapon2;
     Weapon * weapon3;
 
+    //Monster Code
+
+    int judgement_day;
+    int num_monsters;
+    int spawn_point; //will be between 1 - # of spawn pts
+    Monster* monster_list[3]; //change to # of monster variable
+
+
+    //============
 
 };
 #endif // #ifndef __BaseApplication_h_

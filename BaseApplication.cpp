@@ -68,8 +68,15 @@ void BaseApplication::createScene(void)
     mTrayMgr->moveWidgetToTray(scoreboard, OgreBites::TL_TOPLEFT, 0);
     scoreboard->show();
 
-    Monster* m = new Monster(mSceneMgr);
-    m->initMonster(mSceneMgr);
+
+    //Monster Code
+
+    num_monsters = 0;
+    judgement_day = 0;
+    spawn_point = 1; //initialize to spawn point 1, temporary
+
+    //============
+
     //level making
     level->constructLevel();
 
@@ -278,7 +285,6 @@ bool BaseApplication::frameRenderingQueued(const Ogre::FrameEvent& evt)
     //need to process input
     if(state==Play)
     {
-        // cout << weapon1->ammo_left();
         if (playerState == PlayerState::Fire)
         {
             weapon1->fire();
@@ -290,6 +296,60 @@ bool BaseApplication::frameRenderingQueued(const Ogre::FrameEvent& evt)
     processInput();
 
     mTrayMgr->frameRenderingQueued(evt);
+
+
+    //Monster Code
+
+    int i;
+    if(num_monsters < 3) //change int to an enum based on difficulty
+    {
+        Monster* m = new Monster(mSceneMgr);
+        
+        /*
+        for (i = 0; i < 3; i++)
+        {
+            cout << "\n@@@@@@@@@@@@ CHECK @@@@@@@@@@@@@@";
+            if(monster_list[i] == NULL)
+            {
+                cout << "\n@@@@@@@@@@@@ HELLO @@@@@@@@@@@@@@";
+                
+                monster_list[i] = m;
+                break;       
+            }
+        }
+        */
+
+        //cout << "\n@@@@@@@@@@@@ OUT @@@@@@@@@@@@@@";
+        monster_list[num_monsters] = m;
+        //cout << "\n@@@@@@@@@@@@@@@@ ADDING MONSTER @@@@@@@@@@@@@@@@@@@@@\n";
+        
+        m->initMonster(mSceneMgr, spawn_point);
+        
+        Monster::MONSTER_STATE state = Monster::STATE_WANDER;
+        m->changeState(state, evt);
+        
+        num_monsters++;
+        spawn_point++;
+
+        /*
+        if (spawn_point > 3) //change int to # of spawn points
+        {
+            spawn_point = 1;
+        }
+        */ 
+    }
+
+    int j;
+    for(j = 0; j < num_monsters; j++)
+    {
+        //Monster* m_up = monster_list[j];
+        //m_up->m_animState->addTime(evt.timeSinceLastFrame);
+        monster_list[j]->updateMonsters(evt);
+    }
+    
+
+    //============
+
 
     if (!mTrayMgr->isDialogVisible())
     {   
@@ -355,6 +415,23 @@ bool BaseApplication::keyPressed( const OIS::KeyEvent &arg )
             weapon = WeaponState::Weapon2;
             scoreboard->setParamValue(1, "Weapon 3");
         }
+        //Monster Code
+        //============
+        /*
+        else if(arg.key == OIS::KC_SPACE)
+        {
+         
+            if (judgement_day > num_monsters)
+            {
+                judgement_day = 0;
+            }
+         
+            monster_list[judgement_day++]->killMonster();
+            num_monsters--;
+        }
+        */
+
+        //============
     }
 
     else if (state == Pause)
