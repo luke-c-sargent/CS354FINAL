@@ -28,5 +28,6 @@ protected:
     int total_ammo_cap;
     int ammo;
     int total_ammo;
+    bool reloadBool;
 
 };
