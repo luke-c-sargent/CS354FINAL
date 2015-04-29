@@ -15,6 +15,7 @@ public:
 
     bool fire();
     bool reload();
+    void switch_weapon();
     void cancel_reload();
     int ammo_left();
     int total_ammo_left();
@@ -23,8 +24,10 @@ protected:
     WeaponSound * weaponsound;
     Ogre::Timer* fireTimer;
     Ogre::Timer* reloadTimer;
+    Ogre::Timer* switchTimer;
     Ogre::Real firetime;
     Ogre::Real reloadtime;
+    Ogre::Real switchtime;
     // Ogre::Real lastCPUtime;
     Ogre::Real power;
     int ammo_cap;

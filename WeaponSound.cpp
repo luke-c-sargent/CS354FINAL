@@ -44,6 +44,14 @@ bool WeaponSound::loadMedia()
         success = false;
     }
 
+    switch_sound = Mix_LoadWAV( "switchweapon.wav" );
+    if( switch_sound == NULL )
+    {
+        cout << Mix_GetError();
+        printf( "Failed to load beat music! SDL_mixer Error: %s\n", Mix_GetError() );
+        success = false;
+    }
+
     return success;
 }
 
@@ -51,6 +59,12 @@ void WeaponSound::fire()
 {
     cout << "FIRE\n";
     Mix_PlayChannel( -1, gunshot, 0 );
+}
+
+void WeaponSound::switch_weapon()
+{
+    Mix_HaltChannel ( -1 );
+    Mix_PlayChannel ( -1, switch_sound, 0 );
 }
 
 void WeaponSound::reload()

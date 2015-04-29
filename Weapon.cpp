@@ -4,8 +4,10 @@ Weapon::Weapon(const int weapon)
 {
 	reloadTimer = new Ogre::Timer();
 	fireTimer = new Ogre::Timer();
+	switchTimer = new Ogre::Timer();
 	weaponsound = new WeaponSound(0);
 	reloadBool = false;
+	switchtime = 500;
 	switch (weapon){
 		case WeaponState::Weapon0:
 		{
@@ -62,7 +64,7 @@ int Weapon::total_ammo_left()
 
 bool Weapon::fire(void)
 {
-	if (fireTimer->getMilliseconds() >= firetime)
+	if (fireTimer->getMilliseconds() >= firetime && switchTimer->getMilliseconds() >= switchtime)
 	{
 		if (ammo == 0)
 		{
@@ -83,13 +85,14 @@ bool Weapon::fire(void)
 void Weapon::cancel_reload(void)
 {
 	reloadBool = false;
+	weaponsound->switch_weapon();
 }
 
 bool Weapon::reload(void)
 {
 	if (ammo == ammo_cap || total_ammo <= 0)
 		return true;
-	else if (reloadBool == false)
+	else if (reloadBool == false && switchTimer->getMilliseconds() >= switchtime)
 	{
 		weaponsound->reload();
 		reloadTimer->reset();
@@ -106,4 +109,9 @@ bool Weapon::reload(void)
 		return true;
 	}
 	return false;
+}
+
+void Weapon::switch_weapon(void)
+{
+	switchTimer->reset();
 }

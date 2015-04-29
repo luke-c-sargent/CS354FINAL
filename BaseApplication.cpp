@@ -60,7 +60,7 @@ void BaseApplication::createScene(void)
 
     scoreboard = mTrayMgr->createParamsPanel(OgreBites::TL_TOPLEFT, "Scoreboard", 250, scores);
     scoreboard->setParamValue(0, "0");
-    scoreboard->setParamValue(2, "1");
+    scoreboard->setParamValue(2, "Weapon 1");
     scoreboard->setParamValue(3, "0");
     scoreboard->setParamValue(4, "0");
     scoreboard->setParamValue(5, "On");
@@ -427,17 +427,26 @@ bool BaseApplication::keyPressed( const OIS::KeyEvent &arg )
         }
         else if(arg.key == OIS::KC_1){
             weapon = WeaponState::Weapon0;
+            playerState = PlayerState::NoFire;
+            (*equippedweapon)->cancel_reload();
             equippedweapon = &weapon1;
+            (*equippedweapon)->switch_weapon();
             scoreboard->setParamValue(2, "Weapon 1");
         }
         else if(arg.key == OIS::KC_2){
             weapon = WeaponState::Weapon1;
+            playerState = PlayerState::NoFire;
+            (*equippedweapon)->cancel_reload();
             equippedweapon = &weapon2;
+            (*equippedweapon)->switch_weapon();
             scoreboard->setParamValue(2, "Weapon 2");
         }
         else if(arg.key == OIS::KC_3){
             weapon = WeaponState::Weapon2;
+            playerState = PlayerState::NoFire;
+            (*equippedweapon)->cancel_reload();
             equippedweapon = &weapon3;
+            (*equippedweapon)->switch_weapon();
             scoreboard->setParamValue(2, "Weapon 3");
         }
         //Monster Code

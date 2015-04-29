@@ -14,6 +14,7 @@ public:
 	bool loadMedia();
 	void closeMedia();
 	void fire();
+	void switch_weapon();
 	void reload();
 
 protected:	
@@ -26,4 +27,5 @@ private:
 	//The music that will be played
 	Mix_Chunk *gunshot = NULL;
 	Mix_Chunk *reload_sound = NULL;
+	Mix_Chunk *switch_sound = NULL;
 };
