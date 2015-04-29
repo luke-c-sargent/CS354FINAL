@@ -43,9 +43,14 @@ void Tile::genTile(int id, int xi, int yi, int zi){
 
   cout << "generating " << tileID <<"="<<id<<" at ";
   cout << offset.x << "," << offset.y << "," << offset.z <<"\n";
-
+/* 
+  tiles:
+    0. no tile  1. no wall  2. north  3. south 4. east  5. west
+    6. north-e  7. north-w  8. south-e  9. south-w
+    10. nse 11. nsw 12. new 13. sew
+*/
   switch(id){
-    case(0):
+    case(0)://no tile
       break;
     case(1):
       bindTileEntity(defaultTile, tileID,offset);

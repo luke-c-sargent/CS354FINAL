@@ -12,7 +12,7 @@ Simulator::Simulator(){
     solver = new btSequentialImpulseConstraintSolver();
     dynamicsWorld = new btDiscreteDynamicsWorld( dispatcher, broadphase, solver,collisionConfig);
     //create world
-    dynamicsWorld->setGravity(btVector3(0,-386, 0));//386.09 inches/s^2 = 9.8m/s^2
+    dynamicsWorld->setGravity(btVector3(0,-9.8, 0));//386.09 inches/s^2 = 9.8m/s^2
 }
 
 void Simulator::stepSimulation(const Ogre::Real elapsedTime, int maxSubSteps, const Ogre::Real fixedTimestep) {
@@ -32,5 +32,4 @@ btDiscreteDynamicsWorld* Simulator::getWorld(){
 void Simulator::addObject (GameObject* o) {
     objList.push_back(o);
     dynamicsWorld->addRigidBody(o->getBody());
-}
-
+};

@@ -30,7 +30,7 @@ BaseApplication::BaseApplication(void)
 {
   cameraDir=Ogre::Vector3(0,-1,-1);
   cameraPos=Ogre::Vector3(0,0,0);
-  mSensitivity=0.1;
+  mSensitivity=0.05;
 }
 
 //-------------------------------------------------------------------------------------
@@ -127,10 +127,7 @@ void BaseApplication::createCamera(void)
 {
     // Create the camera
     mCamera = mSceneMgr->createCamera("PlayerCam");
-
-    // Position it at 500 in Z direction
     mCamera->setPosition(cameraPos);
-    // Look back along -Z
     mCamera->lookAt(cameraPos+cameraDir);
     mCamera->setNearClipDistance(1);
 
@@ -316,7 +313,7 @@ bool BaseApplication::frameRenderingQueued(const Ogre::FrameEvent& evt)
     if(num_monsters < 3) //change int to an enum based on difficulty
     {
         Monster* m = new Monster(mSceneMgr);
-        
+
         /*
         for (i = 0; i < 3; i++)
         {
@@ -324,9 +321,9 @@ bool BaseApplication::frameRenderingQueued(const Ogre::FrameEvent& evt)
             if(monster_list[i] == NULL)
             {
                 cout << "\n@@@@@@@@@@@@ HELLO @@@@@@@@@@@@@@";
-                
+
                 monster_list[i] = m;
-                break;       
+                break;
             }
         }
         */
@@ -334,12 +331,12 @@ bool BaseApplication::frameRenderingQueued(const Ogre::FrameEvent& evt)
         //cout << "\n@@@@@@@@@@@@ OUT @@@@@@@@@@@@@@";
         monster_list[num_monsters] = m;
         //cout << "\n@@@@@@@@@@@@@@@@ ADDING MONSTER @@@@@@@@@@@@@@@@@@@@@\n";
-        
+
         m->initMonster(mSceneMgr, spawn_point);
-        
+
         Monster::MONSTER_STATE state = Monster::STATE_WANDER;
         m->changeState(state, evt);
-        
+
         num_monsters++;
         spawn_point++;
 
@@ -348,7 +345,7 @@ bool BaseApplication::frameRenderingQueued(const Ogre::FrameEvent& evt)
         {
             spawn_point = 1;
         }
-        */ 
+        */
     }
 
     int j;
@@ -358,13 +355,13 @@ bool BaseApplication::frameRenderingQueued(const Ogre::FrameEvent& evt)
         //m_up->m_animState->addTime(evt.timeSinceLastFrame);
         monster_list[j]->updateMonsters(evt);
     }
-    
+
 
     //============
 
 
     if (!mTrayMgr->isDialogVisible())
-    {   
+    {
         mCameraMan->frameRenderingQueued(evt);   // if dialog isn't up, then update the camera
     }
 
@@ -440,12 +437,12 @@ bool BaseApplication::keyPressed( const OIS::KeyEvent &arg )
         /*
         else if(arg.key == OIS::KC_SPACE)
         {
-         
+
             if (judgement_day > num_monsters)
             {
                 judgement_day = 0;
             }
-         
+
             monster_list[judgement_day++]->killMonster();
             num_monsters--;
         }
@@ -500,7 +497,8 @@ void BaseApplication::buttonHit (OgreBites::Button *button)
         {
             //generate level
             level=new Level(mSceneMgr);
-            level->generateLevel(4,3,1);
+            level->generateRoom(4,3);
+            level->printLevel();
             // Create the scene
             createScene();
         }
@@ -600,36 +598,49 @@ void BaseApplication::processInput(){
   theta-=my*mSensitivity;//to not invert mouse
   float r90=3.1400/2.0; // just shy of 90*
   if(theta>r90){
-      cout << "too big at" << theta;
       theta=r90;}
   else if(theta<=-1*r90){
-      cout << "too small at" <<theta;
       theta=-1*r90;}
 
-  cameraDir=Ogre::Vector3(sin(phi)*cos(theta),sin(phi)*sin(theta),cos(phi));
+  if(phi>3.14159*2)
+    phi-=3.14159*2;
+  if(phi<0*2)
+    phi+=3.14159*2;
+
+  //cameraDir=Ogre::Vector3(sin(phi)*cos(theta),sin(phi)*sin(theta),cos(phi));
+  cameraDir=Ogre::Vector3(sin(phi)*cos(theta),sin(theta),cos(phi)*cos(theta));
+
+
+
+  //cameraDir=Ogre::Vector3(cos(theta),sin(theta)*sin(phi),sin(theta)*cos(phi));
+  //cameraDir=Ogre::Vector3(sin(phi)*sin(theta),cos(phi),sin(phi)*cos(theta));
+  //cameraDir=Ogre::Vector3(sin(phi)*cos(theta),cos(phi),sin(phi)*sin(theta));
 
   //move camera with keyboard
-  float cameraSpeed=0.01;
+  float cameraSpeed=0.03;
   if(up){
     cameraPos+=cameraSpeed*cameraDir;
   }
   if(down)
     cameraPos-=cameraSpeed*cameraDir;
   if(left){
-    cameraPos.x-=cameraSpeed*cos(phi+90);
-    cameraPos.z-=cameraSpeed*sin(phi+90);
+    //cameraDir.x*xi+cameraDir.z*zi=0
+
+
+    cameraPos.x+=cameraSpeed*cos(phi);
+    cameraPos.z-=cameraSpeed*sin(phi);
   }
   if(right){
-      cameraPos.x+=cameraSpeed*cos(phi+90);
-      cameraPos.z+=cameraSpeed*sin(phi+90);
+      cameraPos.x-=cameraSpeed*cos(phi);
+      cameraPos.z+=cameraSpeed*sin(phi);
   }
 
   mCamera->setPosition(cameraPos);
   mCamera->lookAt(cameraPos+cameraDir);
 
-  //cout << "t,p: " << theta << " " << phi << "\n";
+  cout << "t,p: " << theta << " " << phi << "\n";
   // cout << "pos: {"<<cameraPos.x<<","<<cameraPos.y<<","<<cameraPos.z<<"}\n";
-  // cout << "dir: {"<<cameraDir.x<<","<<cameraDir.y<<","<<cameraDir.z<<"}\n";
+   //cout << "dir: {"<<cameraDir.x<<","<<cameraDir.y<<","<<cameraDir.z<<"}\n";
 
   //mCamera->rotate(Ogre::Quaternion(Ogre::Degree(0.1),Ogre::Vector3(0,1,0)));
   mx=0;

@@ -32,6 +32,8 @@ class Level
   //LevelTemplate* levelTemplate;
 
 public:
+  void generateRoom(int xi,int yi);
+  void printLevel();
   Level();
   Level(Ogre::SceneManager* smptr);
   ~Level();
