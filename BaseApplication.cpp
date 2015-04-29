@@ -63,7 +63,7 @@ void BaseApplication::createScene(void)
     scoreboard->setParamValue(2, "1");
     scoreboard->setParamValue(3, "0");
     scoreboard->setParamValue(4, "0");
-    scoreboard->setParamValue(5, "Off");
+    scoreboard->setParamValue(5, "On");
     mTrayMgr->moveWidgetToTray(scoreboard, OgreBites::TL_TOPLEFT, 0);
     scoreboard->show();
 
@@ -78,6 +78,9 @@ void BaseApplication::createScene(void)
 
     //level making
     level->constructLevel();
+
+    //setup music
+    bgmusic = new BGMusic();
 
     //setup weapons
 
@@ -384,10 +387,6 @@ bool BaseApplication::keyPressed( const OIS::KeyEvent &arg )
             {
                 sounds->pauseMusic();
             }
-        else if(arg.key == OIS::KC_M)
-            {
-                sounds->playEffect(1);
-            }
         else if(arg.key == OIS::KC_1)
             {
                 sounds->enableSound();
@@ -399,6 +398,15 @@ bool BaseApplication::keyPressed( const OIS::KeyEvent &arg )
             play_button = mTrayMgr->createButton(OgreBites::TL_CENTER, "Resume", "Resume");
             quit_button = mTrayMgr->createButton(OgreBites::TL_CENTER, "Exit", "Quit");
         }
+
+        else if(arg.key == OIS::KC_M)
+            {
+                bgmusic->playOrPause();
+                if (scoreboard->getParamValue(5) == "Off")
+                    scoreboard->setParamValue(5, "On");
+                else
+                    scoreboard->setParamValue(5, "Off");
+            }
 
         else if (arg.key == OIS::KC_R)
         {

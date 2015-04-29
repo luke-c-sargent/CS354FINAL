@@ -4,6 +4,7 @@
 #include <GameObject.h>
 #include "GameEnums.h"
 #include <stdio.h>
+#include "WeaponSound.h"
 
 using std::cout;
 
@@ -14,10 +15,12 @@ public:
 
     bool fire();
     bool reload();
+    void cancel_reload();
     int ammo_left();
     int total_ammo_left();
 
 protected:
+    WeaponSound * weaponsound;
     Ogre::Timer* fireTimer;
     Ogre::Timer* reloadTimer;
     Ogre::Real firetime;
