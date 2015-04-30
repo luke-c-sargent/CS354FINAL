@@ -29,6 +29,7 @@
 #include "Level.h"
 #include "Weapon.h"
 #include "BGMusic.h"
+#include "Player.h"
 #include <stdio.h>
 
 using std::cout;
@@ -119,6 +120,7 @@ protected:
 
     //Level
     Level * level;
+    Player * player1;
 
     //Music
     BGMusic * bgmusic;

@@ -50,12 +50,6 @@ void BaseApplication::createScene(void)
 	mSceneMgr->setAmbientLight(Ogre::ColourValue(0.6f,0.6f,0.6f));
 	mSceneMgr->setShadowTechnique(Ogre::SHADOWTYPE_STENCIL_ADDITIVE);
 
-  //physics
-  cout <<"\n\n!!!!!!!!!!BEFORE SIM\n\n";
-  sim = new Simulator();
-  cout <<"\n\n!!!!!!!!!!AFTER SIM\n\n";
-
-
     Ogre::StringVector scores;
     scores.push_back("Level");
     scores.push_back("----------------");
@@ -84,6 +78,10 @@ void BaseApplication::createScene(void)
 
     //level making
     level->constructLevel();
+
+    //add objects to sim
+    sim->addObject(player1);
+    sim->addObject(level);
 
     //setup music
     bgmusic = new BGMusic();
@@ -313,6 +311,13 @@ bool BaseApplication::frameRenderingQueued(const Ogre::FrameEvent& evt)
     }
     processInput();
 
+    //step sim after processing input
+    if(state==Play){
+      player1->getBody()->setLinearVelocity(player1->playerLV);
+      sim->stepSimulation(evt.timeSinceLastFrame,10,1./60.);
+
+    }
+
     mTrayMgr->frameRenderingQueued(evt);
 
 
@@ -523,6 +528,14 @@ void BaseApplication::buttonHit (OgreBites::Button *button)
             level=new Level(mSceneMgr);
             level->generateRoom(4,3);
             level->printLevel();
+
+            //create player
+            player1= new Player(mSceneMgr);
+
+            //physics
+            sim = new Simulator();
+
+            cout << "\ndone adding\n";
             // Create the scene
             createScene();
         }

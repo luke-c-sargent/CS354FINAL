@@ -17,10 +17,11 @@ Simulator::Simulator(){
 
 void Simulator::stepSimulation(const Ogre::Real elapsedTime, int maxSubSteps, const Ogre::Real fixedTimestep) {
     dynamicsWorld->stepSimulation(elapsedTime,maxSubSteps,fixedTimestep);
-
     //update in ogre
     for(int i=0; i < objList.size();i++){
         objList[i]->updateTransform();
+        cout << objList[i]->getName()<<":";
+        objList[i]->printpos();
 
     }
 }
@@ -30,6 +31,9 @@ btDiscreteDynamicsWorld* Simulator::getWorld(){
 }
 
 void Simulator::addObject (GameObject* o) {
+  cout << "\nADDING"<< o<<"\n";
     objList.push_back(o);
+    cout << "\ngetting body...   \n";
     dynamicsWorld->addRigidBody(o->getBody());
+    cout << " ... got body\n";
 };

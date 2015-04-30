@@ -32,6 +32,7 @@ void GameObject::updateTransform(){
     btTransform tr;
     ms->getWorldTransform(tr);
     if(this->name.compare("Court")!=0){
+      cout << "updating "<<this->name<<"\n";
     rootNode->setPosition(tr.getOrigin().getX(),
                           tr.getOrigin().getY(),
                           tr.getOrigin().getZ());

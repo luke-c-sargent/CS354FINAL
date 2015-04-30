@@ -9,6 +9,8 @@ Level::Level(Ogre::SceneManager* smptr)
 {
   cout <<"\n\nCreating level...\n\n";
   x=y=z=0;
+  btTransform bt;bt.setIdentity();
+  ms = new btDefaultMotionState(bt);
   sceneMgr=smptr;
   mass=0;
   name="Level";
@@ -46,11 +48,11 @@ void Level::constructLevel(){
   }
   btTransform transform;
   transform.setIdentity();
-  btDefaultMotionState* comp_motion_state = new btDefaultMotionState( transform );
+  ms = new btDefaultMotionState( transform );
   btVector3 localInertia(0,0,0);
   tileBodies->calculateLocalInertia(mass,localInertia);
 
-  btRigidBody::btRigidBodyConstructionInfo comp_cInfo( mass, comp_motion_state, tileBodies, localInertia );
+  btRigidBody::btRigidBodyConstructionInfo comp_cInfo( mass, ms, tileBodies, localInertia );
   body= new btRigidBody( comp_cInfo );
 }//void constructLevel()
 

@@ -104,7 +104,8 @@ am_OgreApp_OBJECTS = OgreApp-BaseApplication.$(OBJEXT) \
 	OgreApp-GameObject.$(OBJEXT) OgreApp-Simulator.$(OBJEXT) \
 	OgreApp-Level.$(OBJEXT) OgreApp-Tile.$(OBJEXT) \
 	OgreApp-Weapon.$(OBJEXT) OgreApp-Monster.$(OBJEXT) \
-	OgreApp-BGMusic.$(OBJEXT) OgreApp-WeaponSound.$(OBJEXT)
+	OgreApp-BGMusic.$(OBJEXT) OgreApp-WeaponSound.$(OBJEXT) \
+	OgreApp-Player.$(OBJEXT)
 OgreApp_OBJECTS = $(am_OgreApp_OBJECTS)
 am__DEPENDENCIES_1 =
 OgreApp_DEPENDENCIES = $(am__DEPENDENCIES_1) $(am__DEPENDENCIES_1) \
@@ -337,8 +338,8 @@ top_build_prefix = @top_build_prefix@
 top_builddir = @top_builddir@
 top_srcdir = @top_srcdir@
 ACLOCAL_AMFLAGS = -I m4
-noinst_HEADERS = BaseApplication.h GameObject.h Simulator.h Level.h Tile.h Weapon.h Monster.h BGMusic.h WeaponSound.h
-OgreApp_SOURCES = BaseApplication.cpp GameObject.cpp Simulator.cpp Level.cpp Tile.cpp Weapon.cpp Monster.cpp BGMusic.cpp WeaponSound.cpp
+noinst_HEADERS = BaseApplication.h GameObject.h Simulator.h Level.h Tile.h Weapon.h Monster.h BGMusic.h WeaponSound.h Player.h
+OgreApp_SOURCES = BaseApplication.cpp GameObject.cpp Simulator.cpp Level.cpp Tile.cpp Weapon.cpp Monster.cpp BGMusic.cpp WeaponSound.cpp Player.cpp
 OgreApp_CPPFLAGS = -I$(top_srcdir)
 OgreApp_CXXFLAGS = $(OGRE_CFLAGS) $(OIS_CFLAGS) $(bullet_CFLAGS) $(CEGUI_CFLAGS) $(CEGUI_OGRE_CFLAGS) $(sdl_CFLAGS)
 OgreApp_LDADD = $(OGRE_LIBS) $(OIS_LIBS) $(bullet_LIBS) $(CEGUI_LIBS) $(CEGUI_OGRE_LIBS) $(sdl_LIBS)
@@ -464,6 +465,7 @@ distclean-compile:
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/OgreApp-GameObject.Po@am__quote@
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/OgreApp-Level.Po@am__quote@
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/OgreApp-Monster.Po@am__quote@
+@AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/OgreApp-Player.Po@am__quote@
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/OgreApp-Simulator.Po@am__quote@
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/OgreApp-Tile.Po@am__quote@
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/OgreApp-Weapon.Po@am__quote@
@@ -615,6 +617,20 @@ OgreApp-WeaponSound.obj: WeaponSound.cpp
 @AMDEP_TRUE@@am__fastdepCXX_FALSE@	$(AM_V_CXX)source='WeaponSound.cpp' object='OgreApp-WeaponSound.obj' libtool=no @AMDEPBACKSLASH@
 @AMDEP_TRUE@@am__fastdepCXX_FALSE@	DEPDIR=$(DEPDIR) $(CXXDEPMODE) $(depcomp) @AMDEPBACKSLASH@
 @am__fastdepCXX_FALSE@	$(AM_V_CXX@am__nodep@)$(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(OgreApp_CPPFLAGS) $(CPPFLAGS) $(OgreApp_CXXFLAGS) $(CXXFLAGS) -c -o OgreApp-WeaponSound.obj `if test -f 'WeaponSound.cpp'; then $(CYGPATH_W) 'WeaponSound.cpp'; else $(CYGPATH_W) '$(srcdir)/WeaponSound.cpp'; fi`
+
+OgreApp-Player.o: Player.cpp
+@am__fastdepCXX_TRUE@	$(AM_V_CXX)$(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(OgreApp_CPPFLAGS) $(CPPFLAGS) $(OgreApp_CXXFLAGS) $(CXXFLAGS) -MT OgreApp-Player.o -MD -MP -MF $(DEPDIR)/OgreApp-Player.Tpo -c -o OgreApp-Player.o `test -f 'Player.cpp' || echo '$(srcdir)/'`Player.cpp
+@am__fastdepCXX_TRUE@	$(AM_V_at)$(am__mv) $(DEPDIR)/OgreApp-Player.Tpo $(DEPDIR)/OgreApp-Player.Po
+@AMDEP_TRUE@@am__fastdepCXX_FALSE@	$(AM_V_CXX)source='Player.cpp' object='OgreApp-Player.o' libtool=no @AMDEPBACKSLASH@
+@AMDEP_TRUE@@am__fastdepCXX_FALSE@	DEPDIR=$(DEPDIR) $(CXXDEPMODE) $(depcomp) @AMDEPBACKSLASH@
+@am__fastdepCXX_FALSE@	$(AM_V_CXX@am__nodep@)$(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(OgreApp_CPPFLAGS) $(CPPFLAGS) $(OgreApp_CXXFLAGS) $(CXXFLAGS) -c -o OgreApp-Player.o `test -f 'Player.cpp' || echo '$(srcdir)/'`Player.cpp
+
+OgreApp-Player.obj: Player.cpp
+@am__fastdepCXX_TRUE@	$(AM_V_CXX)$(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(OgreApp_CPPFLAGS) $(CPPFLAGS) $(OgreApp_CXXFLAGS) $(CXXFLAGS) -MT OgreApp-Player.obj -MD -MP -MF $(DEPDIR)/OgreApp-Player.Tpo -c -o OgreApp-Player.obj `if test -f 'Player.cpp'; then $(CYGPATH_W) 'Player.cpp'; else $(CYGPATH_W) '$(srcdir)/Player.cpp'; fi`
+@am__fastdepCXX_TRUE@	$(AM_V_at)$(am__mv) $(DEPDIR)/OgreApp-Player.Tpo $(DEPDIR)/OgreApp-Player.Po
+@AMDEP_TRUE@@am__fastdepCXX_FALSE@	$(AM_V_CXX)source='Player.cpp' object='OgreApp-Player.obj' libtool=no @AMDEPBACKSLASH@
+@AMDEP_TRUE@@am__fastdepCXX_FALSE@	DEPDIR=$(DEPDIR) $(CXXDEPMODE) $(depcomp) @AMDEPBACKSLASH@
+@am__fastdepCXX_FALSE@	$(AM_V_CXX@am__nodep@)$(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(OgreApp_CPPFLAGS) $(CPPFLAGS) $(OgreApp_CXXFLAGS) $(CXXFLAGS) -c -o OgreApp-Player.obj `if test -f 'Player.cpp'; then $(CYGPATH_W) 'Player.cpp'; else $(CYGPATH_W) '$(srcdir)/Player.cpp'; fi`
 
 mostlyclean-libtool:
 	-rm -f *.lo

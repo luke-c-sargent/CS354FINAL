@@ -5,8 +5,7 @@ using std::cout;
 
 //multiplayer stuff
 
-Player::Player(Ogre::SceneManager* smp, Ogre::String 
-    ):
+Player::Player(Ogre::SceneManager* smp, Ogre::String inname   ):
   l(25),
   w(25),
   h(50)
@@ -16,25 +15,23 @@ Player::Player(Ogre::SceneManager* smp, Ogre::String
 {
     //set scene manager pointer
     sceneMgr=smp;
-
+    playerLV=btVector3(0,0,0);
     //physical constants
-    l=25;
-    w=25;
-    h=50;
+    l=1;
+    w=1;
+    h=2;
 
-    pos0=btVector3(0,-120+h/2.0,180);
-    pos1=btVector3(-60,-120+h/2.0,180);
-    pos2=btVector3(60,-120+h/2.0,180);
+    ori=btVector3(0,2,0);
 
     restitution=1.0;//avg of allowable extremes
 
     name=inname;
 
-    position = btVector3(pos0);
+    position = btVector3(ori);
     inertia= btVector3(0,0,0);
     rotation=btQuaternion(0,0,0,1);
 
-    mass=1000.0f;
+    mass=100.0f;
     restitution=1.0;
     friction=0;
 
@@ -75,7 +72,6 @@ Player::Player(Ogre::SceneManager* smp, Ogre::String
     btTransform btt;
     ms->getWorldTransform(btt);
     btVector3 org=btt.getOrigin();
-    cout <<"\n" << org.getY() <<"\n";
 }
 
 
@@ -96,4 +92,3 @@ btScalar Player::getY(){
 btScalar Player::getZ(){
     return position.getZ();
 }
-
