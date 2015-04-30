@@ -313,13 +313,15 @@ bool BaseApplication::frameRenderingQueued(const Ogre::FrameEvent& evt)
 
     //step sim after processing input
     if(state==Play){
-      player1->getBody()->setLinearVelocity(player1->playerLV);
+      player1->getBody()->setLinearVelocity(btVector3(player1->playerLV.x(),0.000001,player1->playerLV.z()));
       sim->stepSimulation(evt.timeSinceLastFrame,10,1./60.);
-
+      player1->playerLV=btVector3(0,0,0);
+      cameraPos=player1->getPos()-3*cameraDir + Ogre::Vector3(0,1,0);
+      mCamera->setPosition(cameraPos);
+      mCamera->lookAt(cameraPos+cameraDir);
     }
 
     mTrayMgr->frameRenderingQueued(evt);
-
 
     //Monster Code
 
@@ -647,26 +649,30 @@ void BaseApplication::processInput(){
   cameraDir=Ogre::Vector3(sin(phi)*cos(theta),sin(theta),cos(phi)*cos(theta));
 
   //move camera with keyboard
-  float cameraSpeed=0.03;
+  float cameraSpeed=2.5;
   if(up){
-    cameraPos+=cameraSpeed*cameraDir;
+    //cameraPos+=cameraSpeed*cameraDir;
+    player1->setLV((cameraSpeed*cameraDir));
   }
   if(down)
-    cameraPos-=cameraSpeed*cameraDir;
+    //cameraPos-=cameraSpeed*cameraDir;
+    player1->setLV(-1*cameraSpeed*cameraDir);
   if(left){
     //cameraDir.x*xi+cameraDir.z*zi=0
-
-
-    cameraPos.x+=cameraSpeed*cos(phi);
-    cameraPos.z-=cameraSpeed*sin(phi);
+    player1->playerLV.setX(player1->playerLV.x()+cameraSpeed*cos(phi));
+    player1->playerLV.setZ(player1->playerLV.z()-cameraSpeed*sin(phi));
+    //cameraPos.x+=cameraSpeed*cos(phi);
+    //cameraPos.z-=cameraSpeed*sin(phi);
   }
   if(right){
-      cameraPos.x-=cameraSpeed*cos(phi);
-      cameraPos.z+=cameraSpeed*sin(phi);
+    player1->playerLV.setX(player1->playerLV.x()-cameraSpeed*cos(phi));
+    player1->playerLV.setZ(player1->playerLV.z()+cameraSpeed*sin(phi));
+    //  cameraPos.x-=cameraSpeed*cos(phi);
+      //cameraPos.z+=cameraSpeed*sin(phi);
   }
 
-  mCamera->setPosition(cameraPos);
-  mCamera->lookAt(cameraPos+cameraDir);
+  //mCamera->setPosition(cameraPos);
+  //mCamera->lookAt(cameraPos+cameraDir);
 
   //cout << "t,p: " << theta << " " << phi << "\n";
   // cout << "pos: {"<<cameraPos.x<<","<<cameraPos.y<<","<<cameraPos.z<<"}\n";

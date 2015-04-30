@@ -21,7 +21,7 @@ Player::Player(Ogre::SceneManager* smp, Ogre::String inname   ):
     w=1;
     h=2;
 
-    ori=btVector3(0,2,0);
+    ori=btVector3(0,1,0);
 
     restitution=1.0;//avg of allowable extremes
 
@@ -74,6 +74,14 @@ Player::Player(Ogre::SceneManager* smp, Ogre::String inname   ):
     btVector3 org=btt.getOrigin();
 }
 
+void Player::setLV(btVector3 lvin){
+  playerLV=lvin;
+}
+
+void Player::setLV(Ogre::Vector3 lvin){
+
+  playerLV=btVector3(lvin.x,lvin.y,lvin.z);
+}
 
 void Player::setPos(Ogre::Vector3 pos){
     position = btVector3(pos.x,pos.y,pos.z);

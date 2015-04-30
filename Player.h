@@ -14,6 +14,8 @@ public:
     btScalar getX();
     btScalar getY();
     btScalar getZ();
+    void setLV(btVector3 lvin);
+    void setLV(Ogre::Vector3 lvin);
 
     // PlayerState playerState;
     // WeaponState weapon;

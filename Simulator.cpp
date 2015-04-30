@@ -20,8 +20,8 @@ void Simulator::stepSimulation(const Ogre::Real elapsedTime, int maxSubSteps, co
     //update in ogre
     for(int i=0; i < objList.size();i++){
         objList[i]->updateTransform();
-        cout << objList[i]->getName()<<":";
-        objList[i]->printpos();
+        //cout << objList[i]->getName()<<":";
+        //objList[i]->printpos();
 
     }
 }
