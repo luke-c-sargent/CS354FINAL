@@ -65,3 +65,18 @@ material tiledfloor
 		}
 	}
 }
+
+material Ninja
+{
+	technique
+	{
+		pass
+		{
+
+			texture_unit
+			{
+				texture nskingr.jpg
+			}
+		}
+	}
+}
