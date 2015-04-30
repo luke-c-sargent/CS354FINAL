@@ -50,6 +50,12 @@ void BaseApplication::createScene(void)
 	mSceneMgr->setAmbientLight(Ogre::ColourValue(0.6f,0.6f,0.6f));
 	mSceneMgr->setShadowTechnique(Ogre::SHADOWTYPE_STENCIL_ADDITIVE);
 
+  //physics
+  cout <<"\n\n!!!!!!!!!!BEFORE SIM\n\n";
+  sim = new Simulator();
+  cout <<"\n\n!!!!!!!!!!AFTER SIM\n\n";
+
+
     Ogre::StringVector scores;
     scores.push_back("Level");
     scores.push_back("----------------");
@@ -512,6 +518,7 @@ void BaseApplication::buttonHit (OgreBites::Button *button)
         mTrayMgr->destroyAllWidgets();
         if (state == Main)
         {
+            cout << "\n\nLEVEL GEN\n\n";
             //generate level
             level=new Level(mSceneMgr);
             level->generateRoom(4,3);
@@ -624,14 +631,7 @@ void BaseApplication::processInput(){
   if(phi<0*2)
     phi+=3.14159*2;
 
-  //cameraDir=Ogre::Vector3(sin(phi)*cos(theta),sin(phi)*sin(theta),cos(phi));
   cameraDir=Ogre::Vector3(sin(phi)*cos(theta),sin(theta),cos(phi)*cos(theta));
-
-
-
-  //cameraDir=Ogre::Vector3(cos(theta),sin(theta)*sin(phi),sin(theta)*cos(phi));
-  //cameraDir=Ogre::Vector3(sin(phi)*sin(theta),cos(phi),sin(phi)*cos(theta));
-  //cameraDir=Ogre::Vector3(sin(phi)*cos(theta),cos(phi),sin(phi)*sin(theta));
 
   //move camera with keyboard
   float cameraSpeed=0.03;
@@ -655,7 +655,7 @@ void BaseApplication::processInput(){
   mCamera->setPosition(cameraPos);
   mCamera->lookAt(cameraPos+cameraDir);
 
-  cout << "t,p: " << theta << " " << phi << "\n";
+  //cout << "t,p: " << theta << " " << phi << "\n";
   // cout << "pos: {"<<cameraPos.x<<","<<cameraPos.y<<","<<cameraPos.z<<"}\n";
    //cout << "dir: {"<<cameraDir.x<<","<<cameraDir.y<<","<<cameraDir.z<<"}\n";
 

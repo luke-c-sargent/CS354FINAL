@@ -6,7 +6,7 @@
 using std::cout;
 
 GameObject::GameObject() :
-    name(0),
+    name(""),
     rootNode(0),
     geom(0),
     simulator(0),
@@ -15,6 +15,7 @@ GameObject::GameObject() :
     body(0),
     position(0.0f,0.0f,0.0f),
     rotation(0.0f,0.0f,0.0f,0.0f){
+      cout << "\n\nGame object made\n\n";
 }
 
 void GameObject::setPos(btVector3 pos){

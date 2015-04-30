@@ -5,6 +5,7 @@
 #include <OgreRoot.h>
 #include <OgreEntity.h>
 #include <OgreSceneManager.h>
+#include <btBulletDynamicsCommon.h>
 
 #define TSIZE 5.0 //cube dimensions
 #define WALLSIZE 0.3 //wall thickness
@@ -30,11 +31,13 @@ class Tile
   static const string wallMesh;
   Ogre::SceneNode * levelNode;
   Ogre::SceneManager * smp;
+  btCompoundShape* lvlBodies;
 
   TileInput defaultTile,nTile,sTile,wTile,eTile;
   TileInput n_eTile, n_wTile, s_eTile, s_wTile;
   TileInput n_s_eTile, n_s_wTile, n_e_wTile, s_e_wTile;
 
+  btCollisionShape* boxShape;
 
   //static
   static const int x = TSIZE;
@@ -46,9 +49,11 @@ class Tile
 
 public:
 
-  Tile(Ogre::SceneNode * lvlptr, Ogre::SceneManager * smptr);
+  Tile(Ogre::SceneNode * lvlptr, Ogre::SceneManager * smptr, btCompoundShape* tb);
   Tile();
   void genTile(int id, int xi, int yi, int zi);
   //return pointer to first tile
   Tile* getList();
 };
+
+btVector3 o2bVector3(Ogre::Vector3 in);

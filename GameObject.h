@@ -9,6 +9,7 @@ class OgreMotionState;
 class GameObject {
 protected:
     Ogre::String name;
+    Ogre::SceneManager* sceneMgr;
     Ogre::SceneNode* rootNode;
     Ogre::Entity* geom;
 

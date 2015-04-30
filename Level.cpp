@@ -1,16 +1,22 @@
-#include "Level.h"
+#include <Level.h>
 #include <stdlib.h>
 #include "GameEnums.h"
 
-Level::Level(){}
+Level::Level(){
+}
 
 Level::Level(Ogre::SceneManager* smptr)
 {
+  cout <<"\n\nCreating level...\n\n";
   x=y=z=0;
-  smp=smptr;
-  levelNode = smp->getRootSceneNode()->createChildSceneNode("Level_node");
-  tileset=new Tile(levelNode, smp);
-  cout << "\n\nLEVEL MADE: "<<levelNode<<"\n\n";
+  sceneMgr=smptr;
+  mass=0;
+  name="Level";
+  rootNode = sceneMgr->getRootSceneNode()->createChildSceneNode("Level_node");
+  tileBodies = new btCompoundShape();
+  tileset=new Tile(rootNode, sceneMgr,tileBodies);
+  cout << "\n\nLEVEL MADE: "<<rootNode<<"\n\n";
+
 
 }
 
@@ -38,6 +44,14 @@ void Level::constructLevel(){
       }
     }
   }
+  btTransform transform;
+  transform.setIdentity();
+  btDefaultMotionState* comp_motion_state = new btDefaultMotionState( transform );
+  btVector3 localInertia(0,0,0);
+  tileBodies->calculateLocalInertia(mass,localInertia);
+
+  btRigidBody::btRigidBodyConstructionInfo comp_cInfo( mass, comp_motion_state, tileBodies, localInertia );
+  body= new btRigidBody( comp_cInfo );
 }//void constructLevel()
 
 /*

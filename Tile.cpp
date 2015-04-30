@@ -4,12 +4,13 @@
 const std::string Tile::wallMesh="cube.mesh";
 
 Tile::Tile(){
-  levelNode=(Ogre::SceneNode *)2;
+  levelNode=(Ogre::SceneNode *)2;//what?
 }
 
-Tile::Tile(Ogre::SceneNode * lvlptr, Ogre::SceneManager * smptr):
+Tile::Tile(Ogre::SceneNode * lvlptr, Ogre::SceneManager * smptr, btCompoundShape* tb):
   levelNode(lvlptr),
-  smp(smptr)
+  smp(smptr),
+  lvlBodies(tb)
 {
   defaultTile={0,0,0,0,0,0,0,0};
   nTile={1,0,0,0,0,0,0,0};
@@ -24,6 +25,9 @@ Tile::Tile(Ogre::SceneNode * lvlptr, Ogre::SceneManager * smptr):
   n_s_wTile={1,1,0,1,0,0,0,0};
   n_e_wTile={1,0,1,1,0,0,0,0};
   s_e_wTile={0,1,1,1,0,0,0,0};
+
+
+  boxShape = new btBoxShape(btVector3(TSIZE,WALLSIZE,TSIZE));
 
   cout << "\n\nTILE MADE"<<levelNode<<"\n\n";
 }
@@ -43,7 +47,7 @@ void Tile::genTile(int id, int xi, int yi, int zi){
 
   cout << "generating " << tileID <<"="<<id<<" at ";
   cout << offset.x << "," << offset.y << "," << offset.z <<"\n";
-/* 
+/*
   tiles:
     0. no tile  1. no wall  2. north  3. south 4. east  5. west
     6. north-e  7. north-w  8. south-e  9. south-w
@@ -100,9 +104,8 @@ void Tile::genTile(int id, int xi, int yi, int zi){
 
 void Tile::bindTileEntity(TileInput t, std::string id, Ogre::Vector3 tileOffset){
   //cube transform to rectangular prism floor centered at origin
-  cout << "BINDING TILE ";
-  cout << id;
-  cout <<"\n";
+  cout << "BINDING TILE "<<id<<"\n";
+
   float cubescale=TSIZE/100.0;// 5m rooms/ 100unit cube
   float xscale=cubescale;
   float yscale=cubescale*(WALLSIZE/TSIZE);
@@ -120,16 +123,21 @@ void Tile::bindTileEntity(TileInput t, std::string id, Ogre::Vector3 tileOffset)
 
   Ogre::SceneNode* tileNode = levelNode->createChildSceneNode(tilename + "_node");
 
-  //create floor
+//create floor
+  //visuals
   Ogre::SceneNode* fNode=tileNode->createChildSceneNode(tilename+"_f_node");
   Ogre::Entity* entity = smp->createEntity(tilename+"_floor","cube.mesh");
   fNode->attachObject(entity);
-
   fNode->scale(cubeScale);
   fNode->translate(floorTranslate);
   entity->setMaterialName("tiledfloor");
+  //physics bodies
+  btTransform tf;
+  tf.setIdentity();
+  tf.setOrigin(o2bVector3(tileOffset+floorTranslate));
+  lvlBodies->addChildShape(tf,boxShape);
 
-  //create ceiling
+//create ceiling
 
 
   float wallscale=(1.0-WALLSIZE/TSIZE);
@@ -214,6 +222,10 @@ void Tile::makeWall(string pos, string name,
   node->scale(cs);
   node->translate(tv);
   node->rotate(rq);
+}
+
+btVector3 o2bVector3(Ogre::Vector3 in){
+  return btVector3(in.x,in.y,in.z);
 }
 
 //void makeSmallWall

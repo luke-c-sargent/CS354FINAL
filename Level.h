@@ -3,8 +3,9 @@
 #include <OgreRoot.h>
 #include <vector>
 #include <stdio.h>
-
-#include "Tile.h"
+#include <btBulletDynamicsCommon.h>
+#include <GameObject.h>
+#include <Tile.h>
 //#include "LevelTemplate"
 
 using std::vector;
@@ -13,15 +14,14 @@ using std::cout;
 //class Tile;
 //class LevelTemplate;
 
-class Level
-{
+class Level:public GameObject{
 
   int x,y,z;
   //static class variables
 
-  static vector<Tile*> tile_palette;//actual tiles
-  Ogre::SceneManager* smp;
-  Ogre::SceneNode * levelNode;
+  btCompoundShape* tileBodies;//actual tiles
+  //Ogre::SceneManager* smp;
+  //Ogre::SceneNode * levelNode;
 
   Tile *tileset;
 

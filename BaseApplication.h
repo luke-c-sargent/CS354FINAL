@@ -91,6 +91,7 @@ protected:
     bool mCursorWasVisible;                    // was cursor visible before dialog appeared
     bool mShutDown;
 
+
     // GUI Stuff
     OgreBites::ParamsPanel* scoreboard;    // displays scores
     OgreBites::Button* play_button;
@@ -135,6 +136,9 @@ protected:
     int spawn_point; //will be between 1 - # of spawn pts
     Monster* monster_list[3]; //change to # of monster variable
 
+
+    //physics
+    Simulator* sim;
 
     //============
 
