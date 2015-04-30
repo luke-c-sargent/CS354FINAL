@@ -45,7 +45,7 @@ class Tile
   static const int z = TSIZE;
 
   void bindTileEntity(TileInput t, string id, Ogre::Vector3 tileOffset);
-  void makeWall(string pos, string name, Ogre::SceneNode * tn, Ogre::Vector3 cs);
+  void makeWall(string pos, string name, Ogre::SceneNode * tn, Ogre::Vector3 cs, Ogre::Vector3 offset);
 
 public:
 

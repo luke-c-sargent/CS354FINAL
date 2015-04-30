@@ -147,50 +147,43 @@ void Tile::bindTileEntity(TileInput t, std::string id, Ogre::Vector3 tileOffset)
   //create walls
   if(t.n){
      makeWall("n", tilename + "_north_wall",tileNode,
-      Ogre::Vector3(cubeScale.x,cubeScale.y,cubeScale.z*wallscale));
+      Ogre::Vector3(cubeScale.x,cubeScale.y,cubeScale.z*wallscale), tileOffset);
    }
   if(t.s){
     makeWall("s", tilename + "_south_wall",tileNode,
-      Ogre::Vector3(cubeScale.x,cubeScale.y,cubeScale.z*wallscale));
+      Ogre::Vector3(cubeScale.x,cubeScale.y,cubeScale.z*wallscale), tileOffset);
   }
   //if(t.e){  makeWall("e", tilename + "_east_wall",tileNode,cubeScale);   }
   //if(t.w){  makeWall("w", tilename + "_west_wall",tileNode,cubeScale);  }
 
   if(t.e && !t.n && !t.s){
     makeWall("e", tilename + "_east_wall",tileNode,
-      Ogre::Vector3(cubeScale.x*wallscale,cubeScale.y,cubeScale.z));
+      Ogre::Vector3(cubeScale.x*wallscale,cubeScale.y,cubeScale.z), tileOffset);
   }
   if(t.w && !t.n && !t.s){
     makeWall("w", tilename + "_west_wall",tileNode,
-      Ogre::Vector3(cubeScale.x*wallscale,cubeScale.y,cubeScale.z));
+      Ogre::Vector3(cubeScale.x*wallscale,cubeScale.y,cubeScale.z), tileOffset);
   }
 
   if(t.e && (t.n || t.s)){
     //cubeScale.x=cubescale*wallscale;
     //cubeScale.z=cubescale*wallscale2x;
     makeWall("e", tilename + "_east_wall",tileNode,
-      Ogre::Vector3(cubeScale.x*wallscale,cubeScale.y,cubeScale.z*wallscale2x));
+      Ogre::Vector3(cubeScale.x*wallscale,cubeScale.y,cubeScale.z*wallscale2x), tileOffset);
   }
   if(t.w && (t.n || t.s)){
     //cubeScale.x=cubescale*wallscale;
     //cubeScale.z=cubescale*wallscale2x;
     makeWall("w", tilename + "_west_wall",tileNode,
-      Ogre::Vector3(cubeScale.x*wallscale,cubeScale.y,cubeScale.z*wallscale2x));
+      Ogre::Vector3(cubeScale.x*wallscale,cubeScale.y,cubeScale.z*wallscale2x), tileOffset);
 
   }
 
-  //if(t.e && t.n && !t.s){}
-  //if(t.e && t.s && !t.n){}
-//*/
-
-/*  if(t.w){  makeWall();  }
-*/
   tileNode->translate(tileOffset);
 }
 
 void Tile::makeWall(string pos, string name,
-                    Ogre::SceneNode * tn, Ogre::Vector3 cs){ //rotation
-
+                    Ogre::SceneNode * tn, Ogre::Vector3 cs, Ogre::Vector3 offset){ //rotation
   Ogre::Vector3 tv;
   Ogre::Quaternion rq;
   Ogre::Vector3 xv,yv,zv;
@@ -223,6 +216,14 @@ void Tile::makeWall(string pos, string name,
   node->scale(cs);
   node->translate(tv);
   node->rotate(rq);
+
+  //physics bodies
+  btTransform tf;
+  tf.setIdentity();
+  tf.setRotation(btQuaternion(rq.x,rq.y,rq.z,rq.w));
+  tf.setOrigin(o2bVector3(offset+tv));
+  lvlBodies->addChildShape(tf,boxShape);
+
 }
 
 btVector3 o2bVector3(Ogre::Vector3 in){
