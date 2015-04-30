@@ -17,7 +17,7 @@ Weapon::Weapon(const int weapon)
 			ammo_cap = 20;
 			total_ammo_cap = 2000;
 			firetime = 100;
-			reloadtime = 2000;
+			reloadtime = 3500;
 			break;
 		}
 		case WeaponState::Weapon1:
@@ -28,7 +28,7 @@ Weapon::Weapon(const int weapon)
 			ammo_cap = 10;
 			total_ammo_cap = 100;
 			firetime = 500;
-			reloadtime = 2500;
+			reloadtime = 3500;
 			break;
 		}
 		case WeaponState::Weapon2:
@@ -39,7 +39,7 @@ Weapon::Weapon(const int weapon)
 			ammo_cap = 5;
 			total_ammo_cap = 50;
 			firetime = 1000;
-			reloadtime = 3000;
+			reloadtime = 3500;
 			break;
 		}
 	}
