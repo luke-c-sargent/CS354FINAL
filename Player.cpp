@@ -31,7 +31,7 @@ Player::Player(Ogre::SceneManager* smp, Ogre::String inname   ):
     inertia= btVector3(0,0,0);
     rotation=btQuaternion(0,0,0,1);
 
-    mass=100.0f;
+    mass=1000.0f;
     restitution=1.0;
     friction=0;
 
