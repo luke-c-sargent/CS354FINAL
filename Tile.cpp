@@ -104,6 +104,7 @@ void Tile::genTile(int id, int xi, int yi, int zi){
 
 void Tile::bindTileEntity(TileInput t, std::string id, Ogre::Vector3 tileOffset){
   //cube transform to rectangular prism floor centered at origin
+  tileOffset.x*=-1;
   cout << "BINDING TILE "<<id<<"\n";
 
   float cubescale=TSIZE/100.0;// 5m rooms/ 100unit cube

@@ -319,6 +319,7 @@ bool BaseApplication::frameRenderingQueued(const Ogre::FrameEvent& evt)
       cameraPos=player1->getPos()-3*cameraDir + Ogre::Vector3(0,1,0);
       mCamera->setPosition(cameraPos);
       mCamera->lookAt(cameraPos+cameraDir);
+      cout <<cameraDir.x<<","<<cameraDir.y<<","<<cameraDir.z<<"\n";
     }
 
     mTrayMgr->frameRenderingQueued(evt);
@@ -649,7 +650,7 @@ void BaseApplication::processInput(){
   cameraDir=Ogre::Vector3(sin(phi)*cos(theta),sin(theta),cos(phi)*cos(theta));
 
   //move camera with keyboard
-  float cameraSpeed=2.5;
+  float cameraSpeed=5;
   if(up){
     //cameraPos+=cameraSpeed*cameraDir;
     player1->setLV((cameraSpeed*cameraDir));
