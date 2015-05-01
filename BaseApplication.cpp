@@ -319,7 +319,7 @@ bool BaseApplication::frameRenderingQueued(const Ogre::FrameEvent& evt)
       cameraPos=player1->getPos()-3*cameraDir + Ogre::Vector3(0,1,0);
       mCamera->setPosition(cameraPos);
       mCamera->lookAt(cameraPos+cameraDir);
-      cout <<cameraDir.x<<","<<cameraDir.y<<","<<cameraDir.z<<"\n";
+      //cout <<cameraDir.x<<","<<cameraDir.y<<","<<cameraDir.z<<"\n";
     }
 
     mTrayMgr->frameRenderingQueued(evt);
@@ -529,7 +529,10 @@ void BaseApplication::buttonHit (OgreBites::Button *button)
             cout << "\n\nLEVEL GEN\n\n";
             //generate level
             level=new Level(mSceneMgr);
-            level->generateRoom(4,3);
+            //level->generateRoom(4,3);
+            //level->proceduralLevelGen(1);
+            level->testLevelGen();
+            cout << "\nprinting level:\n";
             level->printLevel();
 
             //create player
@@ -538,7 +541,6 @@ void BaseApplication::buttonHit (OgreBites::Button *button)
             //physics
             sim = new Simulator();
 
-            cout << "\ndone adding\n";
             // Create the scene
             createScene();
         }

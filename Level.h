@@ -32,12 +32,15 @@ class Level:public GameObject{
   //LevelTemplate* levelTemplate;
 
 public:
-  void generateRoom(int xi,int yi);
+  void proceduralLevelGen(int nRooms);
+  void generateRoom(int xi,int yi, int tilex=0, int tiley=0);
   void printLevel();
   Level();
   Level(Ogre::SceneManager* smptr);
   ~Level();
-  short getTile(int, int, int);
+  void testLevelGen();
+  short getTile(int xi, int yi, int zi=0);
+  void setTile(short val, int xi, int yi, int zi=0);
   Ogre::Vector3 getStart();
   void constructLevel();
   int generateLevel(int xi=1, int yi=1, int zi=1);

@@ -5,7 +5,7 @@ using std::cout;
 
 //multiplayer stuff
 
-Player::Player(Ogre::SceneManager* smp, Ogre::String inname   ):
+Player::Player(Ogre::SceneManager* smp, Ogre::String inname, Ogre::Vector3 startPos   ):
   l(25),
   w(25),
   h(50)
@@ -21,7 +21,7 @@ Player::Player(Ogre::SceneManager* smp, Ogre::String inname   ):
     w=1;
     h=2;
 
-    ori=btVector3(0,1,0);
+    ori=btVector3(startPos.x,startPos.y,startPos.z);
 
     restitution=1.0;//avg of allowable extremes
 
