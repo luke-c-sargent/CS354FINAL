@@ -4,6 +4,28 @@
 
 using std::cout;
 
+struct ContactCallback:public btCollisionWorld::ContactResultCallback
+{
+  GameObject* ptr, *a,*b;
+  ContactCallback(GameObject* ptri) {ptr=ptri;}
+
+  btScalar addSingleResult(btManifoldPoint& cp,
+      const btCollisionObjectWrapper* colObj0Wrap,
+      int partId0,
+      int index0,
+      const btCollisionObjectWrapper* colObj1Wrap,
+      int partId1,
+      int/*t*/ index1)
+  {
+      //context->blerp
+      cout << a->getName() << " hit "<<b->getName()<< "\n";
+  }
+  void setAB(GameObject*ai,GameObject*bi){
+    a=ai;
+    b=bi;
+  }
+};
+
 Simulator::Simulator(){
     //initialize bullet world
     collisionConfig = new btDefaultCollisionConfiguration();
@@ -13,10 +35,16 @@ Simulator::Simulator(){
     dynamicsWorld = new btDiscreteDynamicsWorld( dispatcher, broadphase, solver,collisionConfig);
     //create world
     dynamicsWorld->setGravity(btVector3(0,-90.8, 0));//386.09 inches/s^2 = 9.8m/s^2
+
+    //contact callback context
+    ccp=new ContactCallback(objList[0]);
+
 }
 
 void Simulator::stepSimulation(const Ogre::Real elapsedTime, int maxSubSteps, const Ogre::Real fixedTimestep) {
     dynamicsWorld->stepSimulation(elapsedTime,maxSubSteps,fixedTimestep);
+    ccp->setAB(objList[0],objList[1]);
+    dynamicsWorld->contactPairTest(objList[0]->getBody(),objList[1]->getBody(),*ccp);
     //update in ogre
     for(int i=0; i < objList.size();i++){
         objList[i]->updateTransform();

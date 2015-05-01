@@ -4,11 +4,13 @@
 #include <btBulletDynamicsCommon.h>
 
 class GameObject;
+struct ContactCallback;
 
 class Simulator{
 protected:
     btDefaultCollisionConfiguration* collisionConfig;
     btCollisionDispatcher* dispatcher;
+    ContactCallback* ccp;
     btBroadphaseInterface* broadphase;
     btSequentialImpulseConstraintSolver* solver;
     btDiscreteDynamicsWorld* dynamicsWorld; //inherits from CollisionWorld
