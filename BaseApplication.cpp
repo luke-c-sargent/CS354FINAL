@@ -26,7 +26,7 @@ BaseApplication::BaseApplication(void)
     last_playerState(PlayerState::NoFire),
     weapon(Weapon0),
     scoreboard(0),
-    mx(0),my(0),theta(0),phi(0)
+    mx(0),my(0),mz(0),scrollMax(4),scrollMin(0),theta(0),phi(0)
 {
   cameraDir=Ogre::Vector3(0,-1,-1);
   cameraPos=Ogre::Vector3(0,0,0);
@@ -47,8 +47,9 @@ BaseApplication::~BaseApplication(void)
 
 void BaseApplication::createScene(void)
 {
-	mSceneMgr->setAmbientLight(Ogre::ColourValue(0.6f,0.6f,0.6f));
+	mSceneMgr->setAmbientLight(Ogre::ColourValue(0.3f,0.2f,0.25f));
 	mSceneMgr->setShadowTechnique(Ogre::SHADOWTYPE_STENCIL_ADDITIVE);
+
 
     Ogre::StringVector scores;
     scores.push_back("Level");
@@ -95,11 +96,14 @@ void BaseApplication::createScene(void)
     equippedweapon = &weapon1;
 
     //lighting
-/*
+
 	Ogre::Light * light = mSceneMgr->createLight("light1");
-	light->setPosition(Ogre::Vector3(0,500,500));
+  light->setType(Ogre::Light::LT_POINT);
+
 	light->setDiffuseColour(1.0, 1.0, 1.0);
-	light->setSpecularColour(1.0, 0.0, 0.0);*/
+	light->setSpecularColour(1.0, 0.0, 0.0);
+
+  light->setPosition(Ogre::Vector3(0,20,20));
 }
 
 //-------------------------------------------------------------------------------------
@@ -316,7 +320,13 @@ bool BaseApplication::frameRenderingQueued(const Ogre::FrameEvent& evt)
       player1->getBody()->setLinearVelocity(btVector3(player1->playerLV.x(),0.000001,player1->playerLV.z()));
       sim->stepSimulation(evt.timeSinceLastFrame,10,1./60.);
       player1->playerLV=btVector3(0,0,0);
-      cameraPos=player1->getPos()-3*cameraDir + Ogre::Vector3(0,1,0);
+      float scrollSens=1000;
+      if(mz>scrollSens)
+        mz=scrollSens;
+      if(mz<0)
+        mz=0;
+      float scrollMod=scrollMax*(mz/scrollSens);
+      cameraPos=player1->getPos()-(3+scrollMod)*cameraDir + Ogre::Vector3(0,1,0);
       mCamera->setPosition(cameraPos);
       mCamera->lookAt(cameraPos+cameraDir);
       //cout <<cameraDir.x<<","<<cameraDir.y<<","<<cameraDir.z<<"\n";
@@ -562,6 +572,7 @@ bool BaseApplication::mouseMoved( const OIS::MouseEvent &arg )
     if(state==Play){
     mx=(float)arg.state.X.rel;
     my=(float)arg.state.Y.rel;
+    mz-=(float)arg.state.Z.rel;
     }
     if (state == Main || state == Pause){
         mTrayMgr->injectMouseMove(arg);
@@ -655,11 +666,15 @@ void BaseApplication::processInput(){
   float cameraSpeed=5;
   if(up){
     //cameraPos+=cameraSpeed*cameraDir;
-    player1->setLV((cameraSpeed*cameraDir));
+    //player1->setLV((cameraSpeed*cameraDir));
+    player1->playerLV.setX(cameraSpeed*sin(phi));
+    player1->playerLV.setZ(cameraSpeed*cos(phi));
   }
-  if(down)
+  if(down){
     //cameraPos-=cameraSpeed*cameraDir;
-    player1->setLV(-1*cameraSpeed*cameraDir);
+    player1->playerLV.setX(-1*cameraSpeed*sin(phi));
+    player1->playerLV.setZ(-1*cameraSpeed*cos(phi));
+  }
   if(left){
     //cameraDir.x*xi+cameraDir.z*zi=0
     player1->playerLV.setX(player1->playerLV.x()+cameraSpeed*cos(phi));
@@ -684,6 +699,7 @@ void BaseApplication::processInput(){
   //mCamera->rotate(Ogre::Quaternion(Ogre::Degree(0.1),Ogre::Vector3(0,1,0)));
   mx=0;
   my=0;
+  //mz=0;
 
 }
 

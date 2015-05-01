@@ -27,7 +27,7 @@ Tile::Tile(Ogre::SceneNode * lvlptr, Ogre::SceneManager * smptr, btCompoundShape
   s_e_wTile={0,1,1,1,0,0,0,0};
 
 
-  boxShape = new btBoxShape(btVector3(TSIZE,WALLSIZE,TSIZE));
+  boxShape = new btBoxShape(btVector3(TSIZE/2.0,WALLSIZE/2.0,TSIZE/2.0));
 
   cout << "\n\nTILE MADE"<<levelNode<<"\n\n";
 }
