@@ -17,8 +17,8 @@ struct ContactCallback:public btCollisionWorld::ContactResultCallback
       int partId1,
       int/*t*/ index1)
   {
-      //context->blerp
-      cout << a->getName() << " hit "<<b->getName()<< "\n";
+      //cout << a->getName() << " hit "<<b->getName()<< "\n";
+      //cout << index0 << " " << index1 << "\n";
   }
   void setAB(GameObject*ai,GameObject*bi){
     a=ai;

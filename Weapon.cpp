@@ -2,15 +2,25 @@
 
 Weapon::Weapon(const int weapon)
 {
+
+	float bulletsize = 0.1;
+
+
+	//physics geom
+
+
 	reloadTimer = new Ogre::Timer();
 	fireTimer = new Ogre::Timer();
 	switchTimer = new Ogre::Timer();
 	weaponsound = new WeaponSound(0);
 	reloadBool = false;
 	switchtime = 500;
+	bulletSize=0.1;
+	bulletSpeed=1.0;
 	switch (weapon){
 		case WeaponState::Weapon0:
 		{
+			name = "weapon 0";
 			power = 1;
 			ammo = 20;
 			total_ammo = 2000;
@@ -18,10 +28,12 @@ Weapon::Weapon(const int weapon)
 			total_ammo_cap = 2000;
 			firetime = 100;
 			reloadtime = 3500;
+			bulletSize=0.1;
 			break;
 		}
 		case WeaponState::Weapon1:
 		{
+			name = "weapon 1";
 			power = 2;
 			ammo = 10;
 			total_ammo = 100;
@@ -29,10 +41,12 @@ Weapon::Weapon(const int weapon)
 			total_ammo_cap = 100;
 			firetime = 500;
 			reloadtime = 3500;
+			bulletSize=0.2;
 			break;
 		}
 		case WeaponState::Weapon2:
 		{
+			name = "weapon 2";
 			power = 3;
 			ammo = 5;
 			total_ammo = 50;
@@ -40,9 +54,15 @@ Weapon::Weapon(const int weapon)
 			total_ammo_cap = 50;
 			firetime = 1000;
 			reloadtime = 3500;
+			bulletSize=0.3;
 			break;
 		}
 	}
+	col_shape=new btSphereShape(bulletSize);
+}
+
+void Weapon::setSMP(Ogre::SceneManager* smp){
+	sceneMgr=smp;
 }
 
 Weapon::~Weapon()
@@ -77,6 +97,7 @@ bool Weapon::fire(void)
 			total_ammo = total_ammo - 1;
 			weaponsound->fire();
 			fireTimer->reset();
+			//spawnBullet();
 		}
 	}
 	return true;
@@ -86,6 +107,12 @@ void Weapon::cancel_reload(void)
 {
 	reloadBool = false;
 	weaponsound->switch_weapon();
+}
+
+Bullet* Weapon::spawnBullet(btVector3 playerPos, btVector3 dir, Simulator* simulator, int count){
+	Bullet * b = new Bullet(this,sceneMgr,simulator,playerPos, dir,std::to_string(count));
+	
+	return b;
 }
 
 bool Weapon::reload(void)

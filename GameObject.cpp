@@ -47,6 +47,10 @@ void GameObject::setTransform(Ogre::Vector3 tr){
     ms->setWorldTransform(trans);
 }
 
+btVector3 GameObject::getPosbt(){
+  return position;
+}
+
 void GameObject::setTransform(btVector3 tr){
     const btTransform trans=btTransform(rotation,tr);
     ms->setWorldTransform(trans);

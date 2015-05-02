@@ -2,6 +2,7 @@
 
 #include <Ogre.h>
 #include <btBulletDynamicsCommon.h>
+#include <vector>
 
 class GameObject;
 struct ContactCallback;

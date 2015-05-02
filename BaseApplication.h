@@ -131,6 +131,9 @@ protected:
     Weapon * weapon3;
     Weapon ** equippedweapon;
 
+    // bullets
+    vector<Bullet * > bulletVector;
+
     //Monster Code
 
     int judgement_day;

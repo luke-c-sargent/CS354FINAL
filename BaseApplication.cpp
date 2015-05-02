@@ -93,6 +93,11 @@ void BaseApplication::createScene(void)
     weapon2 = new Weapon(WeaponState::Weapon1);
     weapon3 = new Weapon(WeaponState::Weapon2);
 
+    weapon1->setSMP(mSceneMgr);
+    weapon2->setSMP(mSceneMgr);
+    weapon3->setSMP(mSceneMgr);
+
+
     equippedweapon = &weapon1;
 
     //lighting
@@ -300,8 +305,14 @@ bool BaseApplication::frameRenderingQueued(const Ogre::FrameEvent& evt)
         {
             if (!(*equippedweapon)->fire())
             {
+
                 playerState = PlayerState::Reload;
                 last_playerState = PlayerState::Fire;
+            }
+            else{
+              cout << "firing!\n";
+              btVector3 dir = btVector3(cameraDir.x,cameraDir.y,cameraDir.z);
+              bulletVector.push_back((*equippedweapon)->spawnBullet(player1->getPosbt(),dir,sim,bulletVector.size()));
             }
         }
         else if (playerState == PlayerState::Reload)
@@ -313,11 +324,26 @@ bool BaseApplication::frameRenderingQueued(const Ogre::FrameEvent& evt)
         }
         scoreboard->setParamValue(3, std::to_string((*equippedweapon)->ammo_left()) + "/" + std::to_string((*equippedweapon)->total_ammo_left()));
     }
-    processInput();
+    processInput();// move up?
 
     //step sim after processing input
     if(state==Play){
+      //set player speed
       player1->getBody()->setLinearVelocity(btVector3(player1->playerLV.x(),0.000001,player1->playerLV.z()));
+      //set projectile speeds
+      for(int i=0; i < bulletVector.size();i++){
+        btVector3 lv = (bulletVector[i])->linvel();
+        if(i==0){
+          cout << "b1:["<<bulletVector[i]->getPos().x<<","
+            <<bulletVector[i]->getPos().y<<","<<bulletVector[i]->getPos().z<<"]\n";
+            cout <<lv.getX()<<","<<lv.getY()<<","<<lv.getZ()<<"\n";
+          }
+
+        bulletVector[i]->getBody()->setLinearVelocity(lv);
+
+      }
+
+
       sim->stepSimulation(evt.timeSinceLastFrame,10,1./60.);
       player1->playerLV=btVector3(0,0,0);
       float scrollSens=1000;
@@ -696,7 +722,6 @@ void BaseApplication::processInput(){
   // cout << "pos: {"<<cameraPos.x<<","<<cameraPos.y<<","<<cameraPos.z<<"}\n";
    //cout << "dir: {"<<cameraDir.x<<","<<cameraDir.y<<","<<cameraDir.z<<"}\n";
 
-  //mCamera->rotate(Ogre::Quaternion(Ogre::Degree(0.1),Ogre::Vector3(0,1,0)));
   mx=0;
   my=0;
   //mz=0;

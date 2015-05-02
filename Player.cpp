@@ -11,7 +11,6 @@ Player::Player(Ogre::SceneManager* smp, Ogre::String inname, Ogre::Vector3 start
   h(50)
   // playerState(PlayerState::NoFire),
   // weapon(Weapon0)
-
 {
     //set scene manager pointer
     sceneMgr=smp;
