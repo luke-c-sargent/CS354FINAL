@@ -58,7 +58,7 @@ protected:
 struct Bullet:public GameObject{
 
   Bullet(Weapon* weap,Ogre::SceneManager* smp, Simulator* sim,btVector3 pos, btVector3 dir, Ogre::String count){
-    //std::cout <<dir.getX()<<","<<dir.getY()<<","<<dir.getZ()<<"\n";
+    std::cout <<dir.getX()<<","<<dir.getY()<<","<<dir.getZ()<<"\n";
     sceneMgr=smp;
     simulator=sim;
     position=pos;
@@ -77,8 +77,8 @@ struct Bullet:public GameObject{
     shape->setMargin(0);
     btRigidBody::btRigidBodyConstructionInfo bodyCI(mass, ms, shape, inertia);
     body = new btRigidBody(bodyCI);
-    body->setGravity(btVector3(0,0,0));
     sim->addObject(this);
+    body->setGravity(btVector3(0,0,0));
 
     name="bullet";
     Ogre::String outname = weapon->name+"_"+name+"_"+count;
@@ -89,13 +89,14 @@ struct Bullet:public GameObject{
     rootNode->scale(ratio,ratio,ratio);
     rootNode->translate(position.getX(),position.getY(),position.getZ());
   }
+
   ~Bullet()
   {
-    cout << "\ndis4.5\n";
+    //cout << "\ndis4.5\n";
     sceneMgr->destroySceneNode(rootNode);
     delete body;
     delete ms;
-    cout << "\ndis5\n";
+    //cout << "\ndis5\n";
   }
 
   btVector3 linvel(){

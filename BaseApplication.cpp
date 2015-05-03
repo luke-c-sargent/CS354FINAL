@@ -312,7 +312,7 @@ bool BaseApplication::frameRenderingQueued(const Ogre::FrameEvent& evt)
             else{
               cout << "firing!\n";
               btVector3 dir = btVector3(cameraDir.x,cameraDir.y,cameraDir.z);
-              btVector3 pos = player1->getPosbt() + btVector3(0,1,0);
+              btVector3 pos = player1->getPosbt() + btVector3(0,1,0) + dir/2.0;
               bulletVector.push_back((*equippedweapon)->spawnBullet(pos,dir,sim));
             }
         }

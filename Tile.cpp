@@ -169,13 +169,13 @@ void Tile::bindTileEntity(TileInput t, std::string id, Ogre::Vector3 tileOffset)
     //cubeScale.x=cubescale*wallscale;
     //cubeScale.z=cubescale*wallscale2x;
     makeWall("e", tilename + "_east_wall",tileNode,
-      Ogre::Vector3(cubeScale.x*wallscale,cubeScale.y,cubeScale.z*wallscale2x), tileOffset);
+      Ogre::Vector3(cubeScale.x*wallscale,cubeScale.y,cubeScale.z*wallscale/*2x*/), tileOffset);
   }
   if(t.w && (t.n || t.s)){
     //cubeScale.x=cubescale*wallscale;
     //cubeScale.z=cubescale*wallscale2x;
     makeWall("w", tilename + "_west_wall",tileNode,
-      Ogre::Vector3(cubeScale.x*wallscale,cubeScale.y,cubeScale.z*wallscale2x), tileOffset);
+      Ogre::Vector3(cubeScale.x*wallscale,cubeScale.y,cubeScale.z*wallscale/*2x*/), tileOffset);
 
   }
 
