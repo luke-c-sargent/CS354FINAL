@@ -303,13 +303,15 @@ bool BaseApplication::frameRenderingQueued(const Ogre::FrameEvent& evt)
     {
         if (playerState == PlayerState::Fire)
         {
-            if (!(*equippedweapon)->fire())
+            int val = (*equippedweapon)->fire();
+            if (val == 0)
             {
 
                 playerState = PlayerState::Reload;
                 last_playerState = PlayerState::Fire;
             }
-            else{
+            else if (val == 1)
+            {
               cout << "firing!\n";
               btVector3 dir = btVector3(cameraDir.x,cameraDir.y,cameraDir.z);
               btVector3 pos = player1->getPosbt() + btVector3(0,1,0);
@@ -471,7 +473,7 @@ bool BaseApplication::keyPressed( const OIS::KeyEvent &arg )
         else if(arg.key == OIS::KC_D){
             right=true;
         }
-        else if(arg.key == OIS::KC_1){
+        else if(arg.key == OIS::KC_1 && weapon != WeaponState::Weapon0){
             weapon = WeaponState::Weapon0;
             playerState = PlayerState::NoFire;
             (*equippedweapon)->cancel_reload();
@@ -479,7 +481,7 @@ bool BaseApplication::keyPressed( const OIS::KeyEvent &arg )
             (*equippedweapon)->switch_weapon();
             scoreboard->setParamValue(2, "Weapon 1");
         }
-        else if(arg.key == OIS::KC_2){
+        else if(arg.key == OIS::KC_2 && weapon != WeaponState::Weapon1){
             weapon = WeaponState::Weapon1;
             playerState = PlayerState::NoFire;
             (*equippedweapon)->cancel_reload();
@@ -487,7 +489,7 @@ bool BaseApplication::keyPressed( const OIS::KeyEvent &arg )
             (*equippedweapon)->switch_weapon();
             scoreboard->setParamValue(2, "Weapon 2");
         }
-        else if(arg.key == OIS::KC_3){
+        else if(arg.key == OIS::KC_3 && weapon != WeaponState::Weapon2){
             weapon = WeaponState::Weapon2;
             playerState = PlayerState::NoFire;
             (*equippedweapon)->cancel_reload();
