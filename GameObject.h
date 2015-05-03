@@ -34,6 +34,7 @@ public:
     void printpos();
     Ogre::SceneNode* getNode();
     Ogre::String getName();
+    Ogre::SceneManager* getSMP();
     void updateTransform();
     void setTransform(Ogre::Vector3 tr);
     void setTransform(btVector3 tr);

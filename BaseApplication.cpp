@@ -312,7 +312,8 @@ bool BaseApplication::frameRenderingQueued(const Ogre::FrameEvent& evt)
             else{
               cout << "firing!\n";
               btVector3 dir = btVector3(cameraDir.x,cameraDir.y,cameraDir.z);
-              bulletVector.push_back((*equippedweapon)->spawnBullet(player1->getPosbt(),dir,sim,bulletVector.size()));
+              btVector3 pos = player1->getPosbt() + btVector3(0,1,0);
+              bulletVector.push_back((*equippedweapon)->spawnBullet(pos,dir,sim));
             }
         }
         else if (playerState == PlayerState::Reload)
@@ -333,11 +334,6 @@ bool BaseApplication::frameRenderingQueued(const Ogre::FrameEvent& evt)
       //set projectile speeds
       for(int i=0; i < bulletVector.size();i++){
         btVector3 lv = (bulletVector[i])->linvel();
-        if(i==0){
-          cout << "b1:["<<bulletVector[i]->getPos().x<<","
-            <<bulletVector[i]->getPos().y<<","<<bulletVector[i]->getPos().z<<"]\n";
-            cout <<lv.getX()<<","<<lv.getY()<<","<<lv.getZ()<<"\n";
-          }
 
         bulletVector[i]->getBody()->setLinearVelocity(lv);
 

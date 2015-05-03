@@ -1,6 +1,10 @@
 #include "Simulator.h"
 #include "GameObject.h"
+#include "Weapon.h"
 #include <stdio.h>
+#include <vector>
+
+using std::vector;
 
 using std::cout;
 
@@ -17,10 +21,11 @@ struct ContactCallback:public btCollisionWorld::ContactResultCallback
       int partId1,
       int/*t*/ index1)
   {
-      //cout << a->getName() << " hit "<<b->getName()<< "\n";
-      //cout << index0 << " " << index1 << "\n";
+      cout << a->getName() << " hit "<<b->getName()<< "\n";
+      //return 666;
+    ((Bullet*)b)->hit=true;
   }
-  void setAB(GameObject*ai,GameObject*bi){
+  void setAB(GameObject* ai,GameObject* bi){
     a=ai;
     b=bi;
   }
@@ -43,14 +48,30 @@ Simulator::Simulator(){
 
 void Simulator::stepSimulation(const Ogre::Real elapsedTime, int maxSubSteps, const Ogre::Real fixedTimestep) {
     dynamicsWorld->stepSimulation(elapsedTime,maxSubSteps,fixedTimestep);
-    ccp->setAB(objList[0],objList[1]);
-    dynamicsWorld->contactPairTest(objList[0]->getBody(),objList[1]->getBody(),*ccp);
+    GameObject * a = objList[1];//level
     //update in ogre
+    vector<int> deadBullets;
     for(int i=0; i < objList.size();i++){
-        objList[i]->updateTransform();
+        if(!(objList[i]->getName()).compare("bullet")){
+          ccp->setAB(a,objList[i]);
+          dynamicsWorld->contactPairTest(a->getBody(),objList[i]->getBody(),*ccp);
+          if(((Bullet*)objList[i])->hit)
+            deadBullets.push_back(i);
+          else
+            objList[i]->updateTransform();
+        }
+        else
+          objList[i]->updateTransform();
+
         //cout << objList[i]->getName()<<":";
         //objList[i]->printpos();
 
+    }
+    for(int i=deadBullets.size()-1; i >=0;i--){
+      Bullet * go=(Bullet*)objList[deadBullets[i]];
+      //delete objList[deadBullets[i]];
+      go->getSMP()->destroySceneNode(go->getNode());
+      objList.erase(objList.begin()+deadBullets[i]);
     }
 }
 
@@ -59,9 +80,9 @@ btDiscreteDynamicsWorld* Simulator::getWorld(){
 }
 
 void Simulator::addObject (GameObject* o) {
-  cout << "\nADDING"<< o<<"\n";
+  //cout << "\nADDING"<< o<<"\n";
     objList.push_back(o);
-    cout << "\ngetting body...   \n";
+    //cout << "\ngetting body...   \n";
     dynamicsWorld->addRigidBody(o->getBody());
-    cout << " ... got body\n";
+    //cout << " ... got body\n";
 };

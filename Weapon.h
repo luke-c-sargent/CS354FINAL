@@ -16,6 +16,7 @@ public:
     Weapon(const int weapon);
     ~Weapon(void);
 
+    int count;
     GameObject * playerptr;
     Ogre::String name;
     bool fire();
@@ -25,7 +26,7 @@ public:
     int ammo_left();
     int total_ammo_left();
     Ogre::SceneManager* sceneMgr;
-    Bullet* spawnBullet(btVector3 playerPos, btVector3 dir,Simulator* simulator, int count);
+    Bullet* spawnBullet(btVector3 playerPos, btVector3 dir,Simulator* simulator);
 
     void setSMP(Ogre::SceneManager* smp);
 
@@ -65,23 +66,36 @@ struct Bullet:public GameObject{
     weapon=weap;
     age=0;
     rotation=btQuaternion(0,0,0,1);
+    hit=false;
 
     //physics stuffs
     inertia= btVector3(0,0,0);
-    mass=0.01;
+    mass=10;
+    shape=weapon->col_shape;
     weapon->col_shape->calculateLocalInertia(mass,inertia);
     ms = new btDefaultMotionState(btTransform(rotation, position));
+    shape->setMargin(0);
     btRigidBody::btRigidBodyConstructionInfo bodyCI(mass, ms, shape, inertia);
     body = new btRigidBody(bodyCI);
+    body->setGravity(btVector3(0,0,0));
     sim->addObject(this);
 
-    name=weapon->name+"_bullet_"+count;
-    rootNode=sceneMgr->getRootSceneNode()->createChildSceneNode(name +Ogre::String()+ "Node");
-    Ogre::Entity * entity=sceneMgr->createEntity(name,"sphere.mesh");
+    name="bullet";
+    Ogre::String outname = weapon->name+"_"+name+"_"+count;
+    rootNode=sceneMgr->getRootSceneNode()->createChildSceneNode(outname +Ogre::String()+ "Node");
+    Ogre::Entity * entity=sceneMgr->createEntity(outname,"sphere.mesh");
     rootNode->attachObject(entity);
     float ratio = weapon->bulletSize/200.0;
     rootNode->scale(ratio,ratio,ratio);
     rootNode->translate(position.getX(),position.getY(),position.getZ());
+  }
+  ~Bullet()
+  {
+    cout << "\ndis4.5\n";
+    sceneMgr->destroySceneNode(rootNode);
+    delete body;
+    delete ms;
+    cout << "\ndis5\n";
   }
 
   btVector3 linvel(){
@@ -91,5 +105,6 @@ struct Bullet:public GameObject{
   Weapon * weapon;
   btVector3 direction;
   float age;
+  bool hit;
 
 };

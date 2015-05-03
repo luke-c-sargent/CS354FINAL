@@ -16,7 +16,8 @@ Weapon::Weapon(const int weapon)
 	reloadBool = false;
 	switchtime = 500;
 	bulletSize=0.1;
-	bulletSpeed=1.0;
+	bulletSpeed=5.0;
+	count=0;
 	switch (weapon){
 		case WeaponState::Weapon0:
 		{
@@ -26,7 +27,7 @@ Weapon::Weapon(const int weapon)
 			total_ammo = 2000;
 			ammo_cap = 20;
 			total_ammo_cap = 2000;
-			firetime = 100;
+			firetime = 500;
 			reloadtime = 3500;
 			bulletSize=0.1;
 			break;
@@ -39,7 +40,7 @@ Weapon::Weapon(const int weapon)
 			total_ammo = 100;
 			ammo_cap = 10;
 			total_ammo_cap = 100;
-			firetime = 500;
+			firetime = 1000;
 			reloadtime = 3500;
 			bulletSize=0.2;
 			break;
@@ -52,7 +53,7 @@ Weapon::Weapon(const int weapon)
 			total_ammo = 50;
 			ammo_cap = 5;
 			total_ammo_cap = 50;
-			firetime = 1000;
+			firetime = 1500;
 			reloadtime = 3500;
 			bulletSize=0.3;
 			break;
@@ -109,9 +110,12 @@ void Weapon::cancel_reload(void)
 	weaponsound->switch_weapon();
 }
 
-Bullet* Weapon::spawnBullet(btVector3 playerPos, btVector3 dir, Simulator* simulator, int count){
+Bullet* Weapon::spawnBullet(btVector3 playerPos, btVector3 dir, Simulator* simulator){
+
 	Bullet * b = new Bullet(this,sceneMgr,simulator,playerPos, dir,std::to_string(count));
-	
+	count++;
+	if(count<0)
+		count=0;
 	return b;
 }
 
