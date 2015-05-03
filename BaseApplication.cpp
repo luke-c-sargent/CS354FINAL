@@ -562,8 +562,8 @@ void BaseApplication::buttonHit (OgreBites::Button *button)
             //generate level
             level=new Level(mSceneMgr);
             //level->generateRoom(4,3);
-            //level->proceduralLevelGen(1);
-            level->testLevelGen();
+            level->proceduralLevelGen(1);
+            //level->testLevelGen();
             cout << "\nprinting level:\n";
             level->printLevel();
 
