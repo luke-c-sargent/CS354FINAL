@@ -16,7 +16,7 @@ Weapon::Weapon(const int weapon)
 	reloadBool = false;
 	switchtime = 500;
 	bulletSize=0.1;
-	bulletSpeed=5.0;
+	bulletSpeed=100.0;
 	count=0;
 	switch (weapon){
 		case WeaponState::Weapon0:
@@ -83,7 +83,7 @@ int Weapon::total_ammo_left()
 }
 
 
-bool Weapon::fire(void)
+int Weapon::fire(void)
 {
 	if (fireTimer->getMilliseconds() >= firetime && switchTimer->getMilliseconds() >= switchtime)
 	{
@@ -98,10 +98,11 @@ bool Weapon::fire(void)
 			total_ammo = total_ammo - 1;
 			weaponsound->fire();
 			fireTimer->reset();
+			return 1;
 			//spawnBullet();
 		}
 	}
-	return true;
+	return 2;
 }
 
 void Weapon::cancel_reload(void)

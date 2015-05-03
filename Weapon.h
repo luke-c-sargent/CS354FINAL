@@ -19,7 +19,7 @@ public:
     int count;
     GameObject * playerptr;
     Ogre::String name;
-    bool fire();
+    int fire();
     bool reload();
     void switch_weapon();
     void cancel_reload();
