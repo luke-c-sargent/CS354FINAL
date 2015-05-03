@@ -15,6 +15,7 @@ Player::Player(Ogre::SceneManager* smp, Ogre::String inname, Ogre::Vector3 start
     //set scene manager pointer
     sceneMgr=smp;
     playerLV=btVector3(0,0,0);
+    
     //physical constants
     l=1;
     w=1;

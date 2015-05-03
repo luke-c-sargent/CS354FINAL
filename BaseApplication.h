@@ -31,6 +31,8 @@
 #include "BGMusic.h"
 #include "Player.h"
 #include <stdio.h>
+#include <cstdlib>
+#include <ctime>
 
 using std::cout;
 

@@ -1,4 +1,5 @@
 #include "BaseApplication.h"
+
 //-------------------------------------------------------------------------------------
 BaseApplication::BaseApplication(void)
     : mRoot(0),
@@ -73,7 +74,8 @@ void BaseApplication::createScene(void)
 
     num_monsters = 0;
     judgement_day = 0;
-    spawn_point = 1; //initialize to spawn point 1, temporary
+    srand(time(0));
+    //spawn_point = 1; //initialize to spawn point 1, temporary
 
     //============
 
@@ -326,6 +328,64 @@ bool BaseApplication::frameRenderingQueued(const Ogre::FrameEvent& evt)
             }
         }
         scoreboard->setParamValue(3, std::to_string((*equippedweapon)->ammo_left()) + "/" + std::to_string((*equippedweapon)->total_ammo_left()));
+
+        //Monster Code
+
+
+        int i;
+        if(num_monsters < 3) //change int to an enum based on difficulty
+        {
+            Monster* m = new Monster(mSceneMgr);
+            //sim->addObject(m);
+            /*
+            for (i = 0; i < 3; i++)
+            {
+                cout << "\n@@@@@@@@@@@@ CHECK @@@@@@@@@@@@@@";
+                if(monster_list[i] == NULL)
+                {
+                    cout << "\n@@@@@@@@@@@@ HELLO @@@@@@@@@@@@@@";
+
+                    monster_list[i] = m;
+                    break;
+                }
+            }
+            */
+
+            monster_list[num_monsters] = m;
+            
+            
+            spawn_point = rand() % 3 + 1;
+            
+            
+            cout << "\n\n";
+            cout << spawn_point;
+            cout << "\n\n";
+
+            m->initMonster(mSceneMgr, spawn_point);
+
+            Monster::MONSTER_STATE state = Monster::STATE_WANDER;
+            m->changeState(state, evt);
+
+            num_monsters++;
+
+            /*
+            if (spawn_point > 3) //change int to # of spawn points
+            {
+                spawn_point = 1;
+            }
+            */
+        }
+
+        int j;
+        for(j = 0; j < num_monsters; j++)
+        {
+            //Monster* m_up = monster_list[j];
+            //m_up->m_animState->addTime(evt.timeSinceLastFrame);
+            monster_list[j]->updateMonsters(evt);
+        }
+
+
+        //============
     }
     processInput();// move up?
 
@@ -358,57 +418,7 @@ bool BaseApplication::frameRenderingQueued(const Ogre::FrameEvent& evt)
 
     mTrayMgr->frameRenderingQueued(evt);
 
-    //Monster Code
 
-    int i;
-    if(num_monsters < 3) //change int to an enum based on difficulty
-    {
-        Monster* m = new Monster(mSceneMgr);
-
-        /*
-        for (i = 0; i < 3; i++)
-        {
-            cout << "\n@@@@@@@@@@@@ CHECK @@@@@@@@@@@@@@";
-            if(monster_list[i] == NULL)
-            {
-                cout << "\n@@@@@@@@@@@@ HELLO @@@@@@@@@@@@@@";
-
-                monster_list[i] = m;
-                break;
-            }
-        }
-        */
-
-        //cout << "\n@@@@@@@@@@@@ OUT @@@@@@@@@@@@@@";
-        monster_list[num_monsters] = m;
-        //cout << "\n@@@@@@@@@@@@@@@@ ADDING MONSTER @@@@@@@@@@@@@@@@@@@@@\n";
-
-        m->initMonster(mSceneMgr, spawn_point);
-
-        Monster::MONSTER_STATE state = Monster::STATE_WANDER;
-        m->changeState(state, evt);
-
-        num_monsters++;
-        spawn_point++;
-
-        /*
-        if (spawn_point > 3) //change int to # of spawn points
-        {
-            spawn_point = 1;
-        }
-        */
-    }
-
-    int j;
-    for(j = 0; j < num_monsters; j++)
-    {
-        //Monster* m_up = monster_list[j];
-        //m_up->m_animState->addTime(evt.timeSinceLastFrame);
-        monster_list[j]->updateMonsters(evt);
-    }
-
-
-    //============
 
 
     if (!mTrayMgr->isDialogVisible())

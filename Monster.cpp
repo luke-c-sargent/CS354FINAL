@@ -31,6 +31,35 @@ Monster::Monster(Ogre::SceneManager* sceneMgr)
 	m_entity = sceneMgr->createEntity("ninja.mesh");
 	m_entity->setMaterialName("Ninja");
 
+	//Copied from Player.cpp
+
+    // restitution=1.0;//avg of allowable extremes
+
+    // //position = btVector3(ori);
+    // inertia= btVector3(0,0,0);
+    // rotation=btQuaternion(0,0,0,1);
+
+    // mass=1000.0f;
+    // restitution=1.0;
+    // friction=0;
+
+    // ms = new btDefaultMotionState(btTransform(rotation, position));
+
+    // btRigidBody::btRigidBodyConstructionInfo bodyCI(mass, ms, shape, inertia);
+
+    // //add other physics constants
+    // bodyCI.m_restitution=restitution;
+    // bodyCI.m_friction=friction;
+    // bodyCI.m_rollingFriction=0.2;//!!!
+
+    // body = new btRigidBody(bodyCI);
+    // body->setActivationState(DISABLE_DEACTIVATION);
+    // btTransform btt;
+    // ms->getWorldTransform(btt);
+    // btVector3 org=btt.getOrigin();
+
+    //=======================
+
 
 /*
 	movingSpeed(70.0),
@@ -64,27 +93,21 @@ void Monster::initMonster(Ogre::SceneManager* smp, int spawn_point)
 	if(spawn_point == 1)
 	{
 		m_node->setPosition(m_spawnPt1);
-
-		m_walkList.push_back(m_spawnPt2);
-		m_walkList.push_back(m_spawnPt3);
-		m_walkList.push_back(m_spawnPt1);
+		setWalkList();
 
 	}
 	else if (spawn_point == 2)
 	{
 		m_node->setPosition(m_spawnPt2);
 
-		m_walkList.push_back(m_spawnPt3);
-		m_walkList.push_back(m_spawnPt1);
-		m_walkList.push_back(m_spawnPt2);
+		setWalkList();
+
 	}
 	else //spawn_point == 3
 	{
 		m_node->setPosition(m_spawnPt3);
-
-		m_walkList.push_back(m_spawnPt1);
-		m_walkList.push_back(m_spawnPt2);
-		m_walkList.push_back(m_spawnPt3);
+		setWalkList();
+		
 	}
 
 
@@ -98,6 +121,27 @@ void Monster::initMonster(Ogre::SceneManager* smp, int spawn_point)
 
 }
 
+void Monster::setWalkList()
+{
+	int i, next;
+	
+	for(i = 0; i < 100; i++)
+	{
+		next = rand() % 3 + 1;
+		if (next == 1)
+		{
+			m_walkList.push_back(m_spawnPt1);			
+		}
+		else if (next == 2)
+		{
+			m_walkList.push_back(m_spawnPt2);
+		}
+		else if (next == 3)
+		{
+			m_walkList.push_back(m_spawnPt3);
+		}
+	}
+}
 void Monster::changeState(MONSTER_STATE state, const Ogre::FrameEvent& evt)
 {
 
@@ -123,7 +167,6 @@ void Monster::changeState(MONSTER_STATE state, const Ogre::FrameEvent& evt)
 
 void Monster::updateMonsters(const Ogre::FrameEvent& evt)
 {
-	//cout << "\n@@@@@@@@@@@@@         HELLO         @@@@@@@@@@@@@\n";
 	//smooth out movement
 	Ogre::Real move = m_walkSpeed * evt.timeSinceLastFrame;
 
@@ -134,6 +177,7 @@ void Monster::updateMonsters(const Ogre::FrameEvent& evt)
 	if(m_distance <= 0.0f)
 	{
 
+		//cout << "\nDestination reached\n";
 		m_node->setPosition(m_destinationVector); //place monster at destination
 		m_directionVector = Ogre::Vector3::ZERO; //set to 0 so next part of path can be started
 

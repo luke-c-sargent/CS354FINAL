@@ -9,7 +9,7 @@
 
 using std::cout;
 
-class Monster
+class Monster//: public GameObject
 {
 public:
 	
@@ -26,6 +26,7 @@ public:
 
 	Monster(Ogre::SceneManager* sceneMgr);
 	void initMonster(Ogre::SceneManager* smp, int spawn_point);
+	void setWalkList();
 	void changeState(MONSTER_STATE state, const Ogre::FrameEvent& evt);
 	void moveMonster();
 	bool nextLocation();
@@ -35,10 +36,10 @@ public:
 
 	//Monster Spawn Points 
 	/*	MIGHT MOVE THIS TO DIFFERENT Location	*/
-	Ogre::Vector3 m_spawnPt1 = Ogre::Vector3(0, -2.2, -2);
-	Ogre::Vector3 m_spawnPt2 = Ogre::Vector3(0, -2.2, 10);
-	Ogre::Vector3 m_spawnPt3 = Ogre::Vector3(16, -2.2, 10);
-
+	Ogre::Vector3 m_spawnPt1 = Ogre::Vector3(-10, -2.2, 20);
+	Ogre::Vector3 m_spawnPt2 = Ogre::Vector3(0, -2.2, 0);
+	Ogre::Vector3 m_spawnPt3 = Ogre::Vector3(-10, -2.2, 0);
+	int num_spawnPoints = 3;
 
 	//Monster's Ogre Implementation Variables
 	Ogre::Entity* m_entity;
