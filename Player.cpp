@@ -5,7 +5,7 @@ using std::cout;
 
 //multiplayer stuff
 
-Player::Player(Ogre::SceneManager* smp, Ogre::String inname, Ogre::Vector3 startPos   ):
+Player::Player(Ogre::SceneManager* smp, Ogre::String inname, Ogre::Vector3 startPos):
   l(25),
   w(25),
   h(50)
@@ -38,7 +38,7 @@ Player::Player(Ogre::SceneManager* smp, Ogre::String inname, Ogre::Vector3 start
     //bind player
 
     rootNode=sceneMgr->getRootSceneNode()->createChildSceneNode(name + "Node");
-    Ogre::Entity * entity=sceneMgr->createEntity(inname,"cube.mesh");
+    Ogre::Entity * entity=sceneMgr->createEntity(inname,"ninja.mesh");
     rootNode->attachObject(entity);
 
     //purdiness

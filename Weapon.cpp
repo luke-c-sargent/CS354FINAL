@@ -16,25 +16,25 @@ Weapon::Weapon(const int weapon)
 	reloadBool = false;
 	switchtime = 500;
 	bulletSize=0.1;
-	bulletSpeed=100.0;
+	bulletSpeed=10.0;
 	count=0;
 	switch (weapon){
 		case WeaponState::Weapon0:
 		{
-			name = "weapon 0";
+			name = "Machine Gun";
 			power = 1;
 			ammo = 20;
 			total_ammo = 2000;
 			ammo_cap = 20;
 			total_ammo_cap = 2000;
-			firetime = 500;
+			firetime = 100;
 			reloadtime = 3500;
 			bulletSize=0.1;
 			break;
 		}
 		case WeaponState::Weapon1:
 		{
-			name = "weapon 1";
+			name = "Shotgun";
 			power = 2;
 			ammo = 10;
 			total_ammo = 100;
@@ -47,7 +47,7 @@ Weapon::Weapon(const int weapon)
 		}
 		case WeaponState::Weapon2:
 		{
-			name = "weapon 2";
+			name = "Pistol";
 			power = 3;
 			ammo = 5;
 			total_ammo = 50;

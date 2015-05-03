@@ -100,6 +100,7 @@ protected:
     OgreBites::Button* play_button;
     OgreBites::Button* store_button;
     OgreBites::Button* quit_button;
+    OgreBites::Button* resume_button;
 
     // States
     GameState state;

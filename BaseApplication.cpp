@@ -23,6 +23,7 @@ BaseApplication::BaseApplication(void)
     play_button(0),
     store_button(0),
     quit_button(0),
+    resume_button(0),
     playerState(PlayerState::NoFire),
     last_playerState(PlayerState::NoFire),
     weapon(Weapon0),
@@ -57,12 +58,11 @@ void BaseApplication::createScene(void)
     scores.push_back("----------------");
     scores.push_back("Weapon");
     scores.push_back("Ammunition");
-    scores.push_back("Score");
+    scores.push_back("Monsters Left: ");
     scores.push_back("Music");
 
     scoreboard = mTrayMgr->createParamsPanel(OgreBites::TL_TOPLEFT, "Scoreboard", 250, scores);
     scoreboard->setParamValue(0, "0");
-    scoreboard->setParamValue(2, "Weapon 1");
     scoreboard->setParamValue(3, "0");
     scoreboard->setParamValue(4, "0");
     scoreboard->setParamValue(5, "On");
@@ -101,6 +101,7 @@ void BaseApplication::createScene(void)
 
 
     equippedweapon = &weapon1;
+    scoreboard->setParamValue(2, (*equippedweapon)->name);
 
     //lighting
 
@@ -328,6 +329,7 @@ bool BaseApplication::frameRenderingQueued(const Ogre::FrameEvent& evt)
             }
         }
         scoreboard->setParamValue(3, std::to_string((*equippedweapon)->ammo_left()) + "/" + std::to_string((*equippedweapon)->total_ammo_left()));
+        scoreboard->setParamValue(4, std::to_string(num_monsters));
 
         //Monster Code
 
@@ -383,9 +385,6 @@ bool BaseApplication::frameRenderingQueued(const Ogre::FrameEvent& evt)
             //m_up->m_animState->addTime(evt.timeSinceLastFrame);
             monster_list[j]->updateMonsters(evt);
         }
-
-
-        //============
     }
     processInput();// move up?
 
@@ -453,7 +452,7 @@ bool BaseApplication::keyPressed( const OIS::KeyEvent &arg )
         {
             state = Pause;
             mTrayMgr->showCursor();
-            play_button = mTrayMgr->createButton(OgreBites::TL_CENTER, "Resume", "Resume");
+            resume_button = mTrayMgr->createButton(OgreBites::TL_CENTER, "Resume", "Resume");
             quit_button = mTrayMgr->createButton(OgreBites::TL_CENTER, "Exit", "Quit");
         }
 
@@ -489,7 +488,7 @@ bool BaseApplication::keyPressed( const OIS::KeyEvent &arg )
             (*equippedweapon)->cancel_reload();
             equippedweapon = &weapon1;
             (*equippedweapon)->switch_weapon();
-            scoreboard->setParamValue(2, "Weapon 1");
+            scoreboard->setParamValue(2, (*equippedweapon)->name);
         }
         else if(arg.key == OIS::KC_2 && weapon != WeaponState::Weapon1){
             weapon = WeaponState::Weapon1;
@@ -497,7 +496,7 @@ bool BaseApplication::keyPressed( const OIS::KeyEvent &arg )
             (*equippedweapon)->cancel_reload();
             equippedweapon = &weapon2;
             (*equippedweapon)->switch_weapon();
-            scoreboard->setParamValue(2, "Weapon 2");
+            scoreboard->setParamValue(2, (*equippedweapon)->name);
         }
         else if(arg.key == OIS::KC_3 && weapon != WeaponState::Weapon2){
             weapon = WeaponState::Weapon2;
@@ -505,7 +504,7 @@ bool BaseApplication::keyPressed( const OIS::KeyEvent &arg )
             (*equippedweapon)->cancel_reload();
             equippedweapon = &weapon3;
             (*equippedweapon)->switch_weapon();
-            scoreboard->setParamValue(2, "Weapon 3");
+            scoreboard->setParamValue(2, (*equippedweapon)->name);
         }
         //Monster Code
         //============
@@ -531,7 +530,8 @@ bool BaseApplication::keyPressed( const OIS::KeyEvent &arg )
         if (arg.key == OIS::KC_P)
         {
             mTrayMgr->clearTray(OgreBites::TL_CENTER);
-            mTrayMgr->destroyAllWidgets();
+            mTrayMgr->destroyWidget(resume_button);
+            mTrayMgr->destroyWidget(quit_button);
             mTrayMgr->hideCursor();
             state = Play;
         }
@@ -568,26 +568,31 @@ void BaseApplication::buttonHit (OgreBites::Button *button)
         // Create the scene
         mTrayMgr->clearTray(OgreBites::TL_CENTER);
         mTrayMgr->destroyAllWidgets();
-        if (state == Main)
-        {
-            cout << "\n\nLEVEL GEN\n\n";
-            //generate level
-            level=new Level(mSceneMgr);
-            //level->generateRoom(4,3);
-            level->proceduralLevelGen(1);
-            //level->testLevelGen();
-            cout << "\nprinting level:\n";
-            level->printLevel();
+        cout << "\n\nLEVEL GEN\n\n";
+        //generate level
+        level=new Level(mSceneMgr);
+        //level->generateRoom(4,3);
+        level->proceduralLevelGen(1);
+        //level->testLevelGen();
+        cout << "\nprinting level:\n";
+        level->printLevel();
 
-            //create player
-            player1= new Player(mSceneMgr);
+        //create player
+        player1= new Player(mSceneMgr);
 
-            //physics
-            sim = new Simulator();
+        //physics
+        sim = new Simulator();
 
-            // Create the scene
-            createScene();
-        }
+        // Create the scene
+        createScene();
+        mTrayMgr->hideCursor();
+        state = Play;
+    }
+    else if (button == resume_button)
+    {
+        mTrayMgr->clearTray(OgreBites::TL_CENTER);
+        mTrayMgr->destroyWidget(resume_button);
+        mTrayMgr->destroyWidget(quit_button);
         mTrayMgr->hideCursor();
         state = Play;
     }
