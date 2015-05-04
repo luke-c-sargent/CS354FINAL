@@ -1,3 +1,4 @@
+
 #ifndef __gameenums_h__
 #define __gameenums_h__
 
@@ -33,5 +34,6 @@ enum Tiles{
 	NE,NW,SE,SW,
 	NSE,NSW,NEW,SEW
 };
+
 
 #endif

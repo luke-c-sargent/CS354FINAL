@@ -7,6 +7,9 @@
 #include <OgreFrameListener.h>
 #include <stdio.h>
 
+#include "Player.h"
+#include "Level.h"
+
 using std::cout;
 
 class Monster: public GameObject
@@ -24,14 +27,15 @@ public:
 
 
 
-	Monster(Ogre::SceneManager* sceneMgr);
+	Monster(Ogre::SceneManager* sceneMgr, Ogre::Vector3 spawn_point, Ogre::Vector3 direction);
 	void initMonster(Ogre::SceneManager* smp, int spawn_point);
 	void setWalkList();
-	void changeState(MONSTER_STATE state, const Ogre::FrameEvent& evt);
+	void changeState(MONSTER_STATE state);
 	void moveMonster();
 	bool nextLocation();
-	void updateMonsters(const Ogre::FrameEvent& evt);
+	void updateMonsters(Level* level, const Ogre::FrameEvent& evt);
 	void killMonster();
+	
 	
 
 	//Monster Spawn Points 

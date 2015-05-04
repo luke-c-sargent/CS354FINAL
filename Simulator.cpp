@@ -67,7 +67,7 @@ void Simulator::stepSimulation(const Ogre::Real elapsedTime, int maxSubSteps, co
           else
             objList[i]->updateTransform();
         }
-        else{
+        else {
           objList[i]->updateTransform();
         }
 

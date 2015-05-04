@@ -16,7 +16,7 @@ using std::cout;
 
 class Level:public GameObject{
 
-  int x,y,z;
+  
   //static class variables
 
   btCompoundShape* tileBodies;//actual tiles
@@ -24,9 +24,6 @@ class Level:public GameObject{
   //Ogre::SceneNode * levelNode;
 
   Tile *tileset;
-
-  //instance variables
-  vector<short> tile_map;//3d tile index
 
   Ogre::Vector3 start;
   //LevelTemplate* levelTemplate;
@@ -44,4 +41,14 @@ public:
   Ogre::Vector3 getStart();
   void constructLevel();
   int generateLevel(int xi=1, int yi=1, int zi=1);
+
+  //Added for Monster code
+  int getTileMapSize();
+
+
+  int x,y,z;
+  
+  //instance variables
+  vector<short> tile_map;//3d tile index
+
 };

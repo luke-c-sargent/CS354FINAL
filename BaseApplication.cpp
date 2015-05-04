@@ -51,6 +51,45 @@ BaseApplication::~BaseApplication(void)
     delete mRoot;
 }
 
+Monster* BaseApplication::spawnMonster()
+{
+    /* NOTE: for movement, ninja, every 'x' frames checks tile_map for a new, valid destination*/
+
+    int player_y = player1->getY();
+    
+    //cout << "\n\nTILE MAP SIZE " << level->x*5 << " x " << level->y*5 << " x " << level->z*5 << "\n\n";
+
+    //Calculate total 2-D dimensions of level (x, y) and randomly choose (x,y) coordinates to be used to pick random tile
+    int tile_x_sp = rand() % level->x*5 + 1;
+    int tile_y_sp = rand() % level->y*5 + 1;
+
+
+    cout << "\nChosen [x,y]: [" << tile_x_sp << ", " << tile_y_sp << "]\n";
+    
+    cout << "\nCHOSEN TILE: " << (short) level->getTile(tile_x_sp/5, tile_y_sp/5) << "\n";
+    
+    Ogre::Vector3 spawn_point;
+    
+    //Check validity of chosen tile, currently this should always work, should put in while loop when more validity conditions are implemented
+    //Further validity checks: no other monster on tile, not near player, only tiles with no walls
+    if((short)level->getTile(tile_x_sp/5, tile_y_sp/5) != 0)
+    {
+        cout << "\nVALID TILE\n";
+        
+        //Make spawn point the approximate position of the tile
+        //Currently hacked the y coordinate to bring ninja's closer to the ground    
+        spawn_point = Ogre::Vector3(tile_x_sp*-1, player_y-3, tile_y_sp);
+    }
+
+    int tile_x_dir = rand() % level->x*5 + 1;
+    int tile_y_dir = rand() % level->y*5 + 1;
+
+    Ogre::Vector3 direction = Ogre::Vector3(tile_x_dir*-1, -2.2, tile_y_dir);
+    //create new monster
+    Monster* m = new Monster(mSceneMgr, spawn_point, direction);
+    return m;
+}
+
 void BaseApplication::createScene(void)
 {
 	mSceneMgr->setAmbientLight(Ogre::ColourValue(0.3f,0.2f,0.25f));
@@ -81,6 +120,13 @@ void BaseApplication::createScene(void)
     srand(time(0));
     spawn_point = 1; //initialize to spawn point 1, temporary
 
+    for (int i = 0; i < 3; i++)
+    {
+        Monster* m = spawnMonster();
+        monster_list.push_back(m);
+        num_monsters++;
+    }
+
     //============
 
     //level making
@@ -110,12 +156,12 @@ void BaseApplication::createScene(void)
     //lighting
 
 	Ogre::Light * light = mSceneMgr->createLight("light1");
-  light->setType(Ogre::Light::LT_POINT);
+    light->setType(Ogre::Light::LT_POINT);
 
 	light->setDiffuseColour(1.0, 1.0, 1.0);
 	light->setSpecularColour(1.0, 0.0, 0.0);
 
-  light->setPosition(Ogre::Vector3(0,20,20));
+    light->setPosition(Ogre::Vector3(0,20,20));
 }
 
 //-------------------------------------------------------------------------------------
@@ -338,25 +384,12 @@ bool BaseApplication::frameRenderingQueued(const Ogre::FrameEvent& evt)
 
         //Monster Code
 
-
+        /*
         int i;
-        if(num_monsters < 3/*3*/) //change int to an enum based on difficulty
+        if(num_monsters < 3) //change int to an enum based on difficulty
         {
             Monster* m = new Monster(mSceneMgr);
-            /*
-            for (i = 0; i < 3; i++)
-            {
-                cout << "\n@@@@@@@@@@@@ CHECK @@@@@@@@@@@@@@";
-                if(monster_list[i] == NULL)
-                {
-                    cout << "\n@@@@@@@@@@@@ HELLO @@@@@@@@@@@@@@";
-
-                    monster_list[i] = m;
-                    break;
-                }
-            }
-            */
-
+        
             monster_list[num_monsters] = m;
 
             //spawn_point = rand() % 3 + 1;
@@ -383,6 +416,7 @@ bool BaseApplication::frameRenderingQueued(const Ogre::FrameEvent& evt)
             }
             
         }
+        */
 
         int j;
         for(j = 0; j < num_monsters; j++)
@@ -390,7 +424,7 @@ bool BaseApplication::frameRenderingQueued(const Ogre::FrameEvent& evt)
             //Monster* m_up = monster_list[j];
             //m_up->m_animState->addTime(evt.timeSinceLastFrame);
             //cout << "updating monster"<<j<<"\n";
-            monster_list[j]->updateMonsters(evt);
+            monster_list.at(j)->updateMonsters(level, evt);
         }
         //cout << "monsters updated\n";
     }
@@ -451,6 +485,7 @@ bool BaseApplication::frameRenderingQueued(const Ogre::FrameEvent& evt)
     return true;
 }
 //-------------------------------------------------------------------------------------
+
 bool BaseApplication::keyPressed( const OIS::KeyEvent &arg )
 {
     if (mTrayMgr->isDialogVisible()) return true;   // don't process any more keys if dialog is up

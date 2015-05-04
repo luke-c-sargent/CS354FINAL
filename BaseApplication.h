@@ -142,8 +142,9 @@ protected:
     int judgement_day;
     int num_monsters;
     int spawn_point; //will be between 1 - # of spawn pts
-    Monster* monster_list[10]; //change to # of monster variable
-
+    //Monster* monster_list[10]; //change to # of monster variable
+    vector<Monster*> monster_list;
+    Monster* spawnMonster();
 
     //physics
     Simulator* sim;

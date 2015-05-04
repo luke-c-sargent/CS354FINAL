@@ -23,6 +23,12 @@ Level::Level(Ogre::SceneManager* smptr)
 
 }
 
+//Added for Monster code
+int Level::getTileMapSize()
+{
+  return tile_map.size();
+}
+
 short Level::getTile(int xi, int yi, int zi)
 {
   return tile_map[xi + yi*x + zi*y*x]; //linear to 3d storage
