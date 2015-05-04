@@ -36,9 +36,11 @@ public:
 
 	//Monster Spawn Points 
 	/*	MIGHT MOVE THIS TO DIFFERENT Location	*/
-	Ogre::Vector3 m_spawnPt1 = Ogre::Vector3(-4, -2.2, 4);
-	Ogre::Vector3 m_spawnPt2 = Ogre::Vector3(0, -2.2, 0);
-	Ogre::Vector3 m_spawnPt3 = Ogre::Vector3(-4, -2.2, 0);
+	Ogre::Vector3 m_spawnPt1 = Ogre::Vector3(-2, 1, 2);
+
+	//Ogre::Vector3 m_spawnPt1 = Ogre::Vector3(0, 1, 0);
+	Ogre::Vector3 m_spawnPt2 = Ogre::Vector3(-4, 1, 4);
+	Ogre::Vector3 m_spawnPt3 = Ogre::Vector3(-6, 1, 6);
 
 	int num_spawnPoints = 3;
 

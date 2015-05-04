@@ -54,6 +54,7 @@ void Simulator::stepSimulation(const Ogre::Real elapsedTime, int maxSubSteps, co
 
     GameObject * a = objList[1];//level
     GameObject * p = objList[0];//player
+    p->printpos();
     //update in ogre
     vector<int> deadBullets;
     for(int i=0; i < objList.size();i++){//step through all objects

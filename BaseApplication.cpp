@@ -340,10 +340,9 @@ bool BaseApplication::frameRenderingQueued(const Ogre::FrameEvent& evt)
 
 
         int i;
-        if(num_monsters < 1/*3*/) //change int to an enum based on difficulty
+        if(num_monsters < 3/*3*/) //change int to an enum based on difficulty
         {
             Monster* m = new Monster(mSceneMgr);
-            //sim->addObject(m);
             /*
             for (i = 0; i < 3; i++)
             {
@@ -363,9 +362,7 @@ bool BaseApplication::frameRenderingQueued(const Ogre::FrameEvent& evt)
             //spawn_point = rand() % 3 + 1;
             
             
-            cout << "\n\n";
-            cout << spawn_point;
-            cout << "\n\n";
+            cout << "\n spawn point:"<< spawn_point << "\n\n";
 
             cout << "monster init\n";
             m->initMonster(mSceneMgr, spawn_point);
@@ -404,6 +401,8 @@ bool BaseApplication::frameRenderingQueued(const Ogre::FrameEvent& evt)
       //set player speed
         //cout << player1->playerLV.x()<<","<<player1->playerLV.z()<<"\n";
       player1->getBody()->setLinearVelocity(btVector3(player1->playerLV.x(),0.000001,player1->playerLV.z()));
+      cout << phi << "\n";
+      player1->setRotation(btQuaternion(btVector3(0,1,0),phi ));
       //set projectile speeds
       /*for(int i=0; i < bulletVector.size();i++){
         btVector3 lv = (bulletVector[i])->linvel();
@@ -712,6 +711,7 @@ void BaseApplication::processInput(){
   //move camera with mouse
   phi-=mx*mSensitivity;
   theta-=my*mSensitivity;//to not invert mouse
+
   float r90=3.1400/2.0; // just shy of 90*
   if(theta>r90){
       theta=r90;}
@@ -722,6 +722,7 @@ void BaseApplication::processInput(){
     phi-=3.14159*2;
   if(phi<0*2)
     phi+=3.14159*2;
+
 
   cameraDir=Ogre::Vector3(sin(phi)*cos(theta),sin(theta),cos(phi)*cos(theta));
 

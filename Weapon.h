@@ -33,6 +33,7 @@ public:
     float bulletSpeed;
     float bulletSize;
     btCollisionShape* col_shape;
+    float mass;
 protected:
 
     WeaponSound * weaponsound;
@@ -70,7 +71,7 @@ struct Bullet:public GameObject{
 
     //physics stuffs
     inertia= btVector3(0,0,0);
-    mass=10;
+    mass=weapon->mass;
     shape=weapon->col_shape;
     weapon->col_shape->calculateLocalInertia(mass,inertia);
     ms = new btDefaultMotionState(btTransform(rotation, position));

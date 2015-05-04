@@ -8,7 +8,7 @@ Weapon::Weapon(const int weapon)
 
 	//physics geom
 
-
+	mass = 100;
 	reloadTimer = new Ogre::Timer();
 	fireTimer = new Ogre::Timer();
 	switchTimer = new Ogre::Timer();
@@ -21,7 +21,7 @@ Weapon::Weapon(const int weapon)
 	switch (weapon){
 		case WeaponState::Weapon0:
 		{
-			name = "Machine Gun";
+			name = "Weak";
 			power = 1;
 			ammo = 20;
 			total_ammo = 2000;
@@ -30,11 +30,12 @@ Weapon::Weapon(const int weapon)
 			firetime = 100;
 			reloadtime = 3500;
 			bulletSize=0.1;
+			mass=10;
 			break;
 		}
 		case WeaponState::Weapon1:
 		{
-			name = "Shotgun";
+			name = "Medium";
 			power = 2;
 			ammo = 10;
 			total_ammo = 100;
@@ -43,11 +44,12 @@ Weapon::Weapon(const int weapon)
 			firetime = 1000;
 			reloadtime = 3500;
 			bulletSize=0.2;
+			mass=100;
 			break;
 		}
 		case WeaponState::Weapon2:
 		{
-			name = "Pistol";
+			name = "Strong";
 			power = 3;
 			ammo = 5;
 			total_ammo = 50;
@@ -56,6 +58,7 @@ Weapon::Weapon(const int weapon)
 			firetime = 1500;
 			reloadtime = 3500;
 			bulletSize=0.3;
+			mass=1000;
 			break;
 		}
 	}

@@ -17,9 +17,9 @@ Player::Player(Ogre::SceneManager* smp, Ogre::String inname, Ogre::Vector3 start
     playerLV=btVector3(0,0,0);
     
     //physical constants
-    l=1;
-    w=1;
-    h=2;
+    l=.5;
+    w=.6;
+    h=1.6;
 
     ori=btVector3(startPos.x,startPos.y,startPos.z);
     cout << "player start position: "<<startPos.x<<" "<<startPos.y<<" "<<startPos.z<<"\n";
@@ -48,10 +48,10 @@ Player::Player(Ogre::SceneManager* smp, Ogre::String inname, Ogre::Vector3 start
     if(namest.compare("player")==0)
       entity->setMaterialName("PlayerWire");
     else
-    entity->setMaterialName("PlayerWire2");
-    rootNode->translate(position.getX(),position.getY(),position.getZ());
+        entity->setMaterialName("PlayerWire2");
+    rootNode->translate(position.getX(),position.getY()-1.2,position.getZ());
 
-    rootNode->scale(w/100,h/100,l/100);
+    rootNode->scale(1.0/100.,1.0/100.,1.0/100.);
 
     //bt values
     shape = new btBoxShape(btVector3(w/2.,h/2.,l/2.));

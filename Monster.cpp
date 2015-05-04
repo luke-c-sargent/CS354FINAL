@@ -41,7 +41,7 @@ Monster::Monster(Ogre::SceneManager* sceneMgr)
     inertia= btVector3(0,0,0);
     rotation=btQuaternion(0,0,0,1);
 
-    // mass=1000.0f;
+    mass=1000.0f;
     // restitution=1.0;
     // friction=0;
 
@@ -92,22 +92,28 @@ void Monster::initMonster(Ogre::SceneManager* smp, int spawn_point)
 	Ogre::SceneManager* sceneMgr = smp;
 	rootNode = sceneMgr->getRootSceneNode()->createChildSceneNode();
 
+	btVector3 btspawn;
 	if(spawn_point == 1)
 	{
 		rootNode->setPosition(m_spawnPt1);
+		btspawn = btVector3(m_spawnPt1.x,m_spawnPt1.y,m_spawnPt1.z);
+		position=btspawn;
 		setWalkList();
 
 	}
 	else if (spawn_point == 2)
 	{
 		rootNode->setPosition(m_spawnPt2);
-
+		btspawn = btVector3(m_spawnPt2.x,m_spawnPt2.y,m_spawnPt2.z);
+		position=btspawn;
 		setWalkList();
 
 	}
 	else //spawn_point == 3
 	{
 		rootNode->setPosition(m_spawnPt3);
+		btspawn = btVector3(m_spawnPt3.x,m_spawnPt3.y,m_spawnPt3.z);
+		position=btspawn;
 		setWalkList();
 		
 	}
@@ -146,7 +152,7 @@ void Monster::setWalkList()
 {
 	int i, next;
 	
-	for(i = 0; i < 100; i++)
+	for(i = 0; i < 10; i++)
 	{
 		next = rand() % 3 + 1;
 		if (next == 1)
@@ -191,15 +197,19 @@ void Monster::updateMonsters(const Ogre::FrameEvent& evt)
 	//smooth out movement
 	Ogre::Real move = m_walkSpeed * evt.timeSinceLastFrame;
 
+	Ogre::Vector3 posOgre= Ogre::Vector3(position.getX(),position.getY(),position.getZ());
+	m_distance=(posOgre-m_destinationVector).length();
 	//update distance left to travel
-	m_distance -= move;
+	//m_distance -= move;
 
 	//check if monster reached destination
-	if(m_distance <= 0.0f)
+	
+	if(m_distance <= 0.1f)
 	{
 
 		//cout << "\nDestination reached\n";
 		rootNode->setPosition(m_destinationVector); //place monster at destination
+		position=btVector3(m_destinationVector.x,m_destinationVector.y,m_destinationVector.z);
 		m_directionVector = Ogre::Vector3::ZERO; //set to 0 so next part of path can be started
 
 		m_destinationVector = m_walkList.front(); //update monster's next destination (front of the queue)
@@ -208,7 +218,13 @@ void Monster::updateMonsters(const Ogre::FrameEvent& evt)
 
 		m_directionVector = m_destinationVector - rootNode->getPosition(); //set new direction vector
 		// ^ linear velocity
-		m_distance = m_directionVector.normalise();
+
+		if(m_directionVector==Ogre::Vector3(0,0,0)){
+			cout << "zero norm\n";
+			m_directionVector=Ogre::Vector3::ZERO;
+		}
+		//else
+			//m_distance = m_directionVector.normalise();
 
 		//There should be rotation code here?
 
@@ -226,7 +242,7 @@ void Monster::updateMonsters(const Ogre::FrameEvent& evt)
 	}
 	else
 	{
-		rootNode->translate(m_directionVector * move);
+		//rootNode->translate(m_directionVector * move);
 	}
 	m_animState->addTime(evt.timeSinceLastFrame);
 }
@@ -251,6 +267,7 @@ void Monster::moveMonster()
 */
 bool Monster::nextLocation()
 {
+	
 	if (m_walkList.empty()) //this should not happen right now
 	{
 		return false;
@@ -261,7 +278,13 @@ bool Monster::nextLocation()
 	m_walkList.push_back(m_destinationVector);
 
 	m_directionVector = m_destinationVector - rootNode->getPosition();
-	m_distance = m_directionVector.normalise();
+	if(m_directionVector==Ogre::Vector3(0,0,0)){
+		cout << "zero norm\n";
+		m_directionVector=Ogre::Vector3::ZERO;
+	}
+	else
+		m_distance = m_directionVector.normalise();
+
 
 	return true;
 
