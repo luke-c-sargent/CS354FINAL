@@ -24,4 +24,6 @@ public:
     bool checkHit(int o);
     btDiscreteDynamicsWorld* getWorld();
     void addObject(GameObject* o);
+    GameObject * getObjectPtr(int i);
+    int getObjectListSize();
 };

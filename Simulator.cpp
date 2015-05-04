@@ -21,9 +21,9 @@ struct ContactCallback:public btCollisionWorld::ContactResultCallback
       int partId1,
       int/*t*/ index1)
   {
-      cout << a->getName() << " hit "<<b->getName()<< "\n";
+      //cout << a->getName() << " hit "<<b->getName()<< "\n";
       //return 666;
-    ((Bullet*)b)->hit=true;
+    b->hit=true;
   }
   void setAB(GameObject* ai,GameObject* bi){
     a=ai;
@@ -47,32 +47,41 @@ Simulator::Simulator(){
 }
 
 void Simulator::stepSimulation(const Ogre::Real elapsedTime, int maxSubSteps, const Ogre::Real fixedTimestep) {
+    cout << objList.size()<<"\n";
+    //cout << "about to step\n";
     dynamicsWorld->stepSimulation(elapsedTime,maxSubSteps,fixedTimestep);
+    //cout << "stepped\n";
+
     GameObject * a = objList[1];//level
+    GameObject * p = objList[0];//player
     //update in ogre
     vector<int> deadBullets;
-    for(int i=0; i < objList.size();i++){
-        if(!(objList[i]->getName()).compare("bullet")){
+    for(int i=0; i < objList.size();i++){//step through all objects
+        if((objList[i]->getName()).compare("bullet")==0){
           ccp->setAB(a,objList[i]);
           dynamicsWorld->contactPairTest(a->getBody(),objList[i]->getBody(),*ccp);
+
           if(((Bullet*)objList[i])->hit)
             deadBullets.push_back(i);
           else
             objList[i]->updateTransform();
         }
-        else
+        else{
           objList[i]->updateTransform();
+        }
 
         //cout << objList[i]->getName()<<":";
         //objList[i]->printpos();
 
     }
+    //cout << "for list one ended\n";
     for(int i=deadBullets.size()-1; i >=0;i--){
       Bullet * go=(Bullet*)objList[deadBullets[i]];
       //delete objList[deadBullets[i]];
       go->getSMP()->destroySceneNode(go->getNode());
       objList.erase(objList.begin()+deadBullets[i]);
     }
+    //cout << "end stepsim\n";
 }
 
 btDiscreteDynamicsWorld* Simulator::getWorld(){
@@ -85,4 +94,12 @@ void Simulator::addObject (GameObject* o) {
     //cout << "\ngetting body...   \n";
     dynamicsWorld->addRigidBody(o->getBody());
     //cout << " ... got body\n";
-};
+}
+
+GameObject * Simulator::getObjectPtr(int i){
+        return objList[i];
+}
+
+int Simulator::getObjectListSize(){
+  return objList.size();
+}

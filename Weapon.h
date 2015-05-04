@@ -106,6 +106,4 @@ struct Bullet:public GameObject{
   Weapon * weapon;
   btVector3 direction;
   float age;
-  bool hit;
-
 };

@@ -33,12 +33,11 @@ void GameObject::updateTransform(){
 
     btTransform tr;
     ms->getWorldTransform(tr);
-    if(this->name.compare("Court")!=0){
-      //cout << "updating "<<this->name<<"\n";
+    //cout << "updating "<<this->name<<" rootNode:"<<this->rootNode<<" position:"<<tr.getOrigin().getX() <<" "<<tr.getOrigin().getY() <<" "<<tr.getOrigin().getZ() <<" " <<"\n";
     rootNode->setPosition(tr.getOrigin().getX(),
                           tr.getOrigin().getY(),
                           tr.getOrigin().getZ());
-    }
+
     position=btVector3(tr.getOrigin().getX(),
                        tr.getOrigin().getY(),
                        tr.getOrigin().getZ());

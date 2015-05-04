@@ -35,6 +35,10 @@ BaseApplication::BaseApplication(void)
   mSensitivity=0.05;
 }
 
+btVector3 o2bVector3(Ogre::Vector3 in){
+  return btVector3(in.x,in.y,in.z);
+}
+
 //-------------------------------------------------------------------------------------
 BaseApplication::~BaseApplication(void)
 {
@@ -75,7 +79,7 @@ void BaseApplication::createScene(void)
     num_monsters = 0;
     judgement_day = 0;
     srand(time(0));
-    //spawn_point = 1; //initialize to spawn point 1, temporary
+    spawn_point = 1; //initialize to spawn point 1, temporary
 
     //============
 
@@ -318,7 +322,8 @@ bool BaseApplication::frameRenderingQueued(const Ogre::FrameEvent& evt)
               cout << "firing!\n";
               btVector3 dir = btVector3(cameraDir.x,cameraDir.y,cameraDir.z);
               btVector3 pos = player1->getPosbt() + btVector3(0,1,0) + dir/2.0;
-              bulletVector.push_back((*equippedweapon)->spawnBullet(pos,dir,sim));
+              //bulletVector.push_back((*equippedweapon)->spawnBullet(pos,dir,sim));
+              (*equippedweapon)->spawnBullet(pos,dir,sim);
             }
         }
         else if (playerState == PlayerState::Reload)
@@ -335,7 +340,7 @@ bool BaseApplication::frameRenderingQueued(const Ogre::FrameEvent& evt)
 
 
         int i;
-        if(num_monsters < 3) //change int to an enum based on difficulty
+        if(num_monsters < 1/*3*/) //change int to an enum based on difficulty
         {
             Monster* m = new Monster(mSceneMgr);
             //sim->addObject(m);
@@ -354,28 +359,32 @@ bool BaseApplication::frameRenderingQueued(const Ogre::FrameEvent& evt)
             */
 
             monster_list[num_monsters] = m;
-            
-            
-            spawn_point = rand() % 3 + 1;
+
+            //spawn_point = rand() % 3 + 1;
             
             
             cout << "\n\n";
             cout << spawn_point;
             cout << "\n\n";
 
+            cout << "monster init\n";
             m->initMonster(mSceneMgr, spawn_point);
-
+            
+            cout << "monster adding to sim\n";
+            sim->addObject(m);
+            cout << "monster added to sim\n";
             Monster::MONSTER_STATE state = Monster::STATE_WANDER;
             m->changeState(state, evt);
+            cout << "monster state changed\n";
 
             num_monsters++;
-
-            /*
+            spawn_point++;
+            
             if (spawn_point > 3) //change int to # of spawn points
             {
                 spawn_point = 1;
             }
-            */
+            
         }
 
         int j;
@@ -383,23 +392,38 @@ bool BaseApplication::frameRenderingQueued(const Ogre::FrameEvent& evt)
         {
             //Monster* m_up = monster_list[j];
             //m_up->m_animState->addTime(evt.timeSinceLastFrame);
+            //cout << "updating monster"<<j<<"\n";
             monster_list[j]->updateMonsters(evt);
         }
+        //cout << "monsters updated\n";
     }
     processInput();// move up?
 
     //step sim after processing input
     if(state==Play){
       //set player speed
+        //cout << player1->playerLV.x()<<","<<player1->playerLV.z()<<"\n";
       player1->getBody()->setLinearVelocity(btVector3(player1->playerLV.x(),0.000001,player1->playerLV.z()));
       //set projectile speeds
-      for(int i=0; i < bulletVector.size();i++){
+      /*for(int i=0; i < bulletVector.size();i++){
         btVector3 lv = (bulletVector[i])->linvel();
 
         bulletVector[i]->getBody()->setLinearVelocity(lv);
 
-      }
+      }*/
 
+        GameObject * go;
+        for(int i=0; i <sim->getObjectListSize();i++){
+            go=sim->getObjectPtr(i);
+            //cout << "object "<< go->getName()<<"\n";
+            if((go->getName()).compare("bullet")==0){
+                btVector3 lv = ((Bullet*)go)->linvel();
+                go->getBody()->setLinearVelocity(lv);
+            }else if((go->getName()).compare("ninja")==0){
+                btVector3 lv =o2bVector3(((Monster*)go)->m_directionVector);
+                go->getBody()->setLinearVelocity(lv);
+            }
+        }
 
       sim->stepSimulation(evt.timeSinceLastFrame,10,1./60.);
       player1->playerLV=btVector3(0,0,0);

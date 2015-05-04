@@ -225,9 +225,9 @@ void Tile::makeWall(string pos, string name,
   lvlBodies->addChildShape(tf,boxShape);
 
 }
-
+/*
 btVector3 o2bVector3(Ogre::Vector3 in){
   return btVector3(in.x,in.y,in.z);
-}
+}*/
 
 //void makeSmallWall

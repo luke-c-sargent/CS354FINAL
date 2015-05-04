@@ -22,6 +22,7 @@ Player::Player(Ogre::SceneManager* smp, Ogre::String inname, Ogre::Vector3 start
     h=2;
 
     ori=btVector3(startPos.x,startPos.y,startPos.z);
+    cout << "player start position: "<<startPos.x<<" "<<startPos.y<<" "<<startPos.z<<"\n";
 
     restitution=1.0;//avg of allowable extremes
 

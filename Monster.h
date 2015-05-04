@@ -9,7 +9,7 @@
 
 using std::cout;
 
-class Monster//: public GameObject
+class Monster: public GameObject
 {
 public:
 	
@@ -36,9 +36,10 @@ public:
 
 	//Monster Spawn Points 
 	/*	MIGHT MOVE THIS TO DIFFERENT Location	*/
-	Ogre::Vector3 m_spawnPt1 = Ogre::Vector3(-10, -2.2, 20);
+	Ogre::Vector3 m_spawnPt1 = Ogre::Vector3(-4, -2.2, 4);
 	Ogre::Vector3 m_spawnPt2 = Ogre::Vector3(0, -2.2, 0);
-	Ogre::Vector3 m_spawnPt3 = Ogre::Vector3(-10, -2.2, 0);
+	Ogre::Vector3 m_spawnPt3 = Ogre::Vector3(-4, -2.2, 0);
+
 	int num_spawnPoints = 3;
 
 	//Monster's Ogre Implementation Variables

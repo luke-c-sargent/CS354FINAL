@@ -31,19 +31,21 @@ Monster::Monster(Ogre::SceneManager* sceneMgr)
 	m_entity = sceneMgr->createEntity("ninja.mesh");
 	m_entity->setMaterialName("Ninja");
 
+	name="ninja";
+
 	//Copied from Player.cpp
 
     // restitution=1.0;//avg of allowable extremes
 
-    // //position = btVector3(ori);
-    // inertia= btVector3(0,0,0);
-    // rotation=btQuaternion(0,0,0,1);
+    position = btVector3(0,0,0);
+    inertia= btVector3(0,0,0);
+    rotation=btQuaternion(0,0,0,1);
 
     // mass=1000.0f;
     // restitution=1.0;
     // friction=0;
 
-    // ms = new btDefaultMotionState(btTransform(rotation, position));
+    ms = new btDefaultMotionState(btTransform(rotation, position));
 
     // btRigidBody::btRigidBodyConstructionInfo bodyCI(mass, ms, shape, inertia);
 
@@ -88,36 +90,55 @@ Monster::Monster(Ogre::SceneManager* sceneMgr)
 void Monster::initMonster(Ogre::SceneManager* smp, int spawn_point)
 {
 	Ogre::SceneManager* sceneMgr = smp;
-	m_node = sceneMgr->getRootSceneNode()->createChildSceneNode();
+	rootNode = sceneMgr->getRootSceneNode()->createChildSceneNode();
 
 	if(spawn_point == 1)
 	{
-		m_node->setPosition(m_spawnPt1);
+		rootNode->setPosition(m_spawnPt1);
 		setWalkList();
 
 	}
 	else if (spawn_point == 2)
 	{
-		m_node->setPosition(m_spawnPt2);
+		rootNode->setPosition(m_spawnPt2);
 
 		setWalkList();
 
 	}
 	else //spawn_point == 3
 	{
-		m_node->setPosition(m_spawnPt3);
+		rootNode->setPosition(m_spawnPt3);
 		setWalkList();
 		
 	}
 
 
-	m_node->setScale(0.01, 0.01, 0.01);
+	rootNode->setScale(0.01, 0.01, 0.01);
     //Ogre::Entity* m_entity = sceneMgr->createEntity("robot.mesh");
-    m_node->attachObject(m_entity);
+    rootNode->attachObject(m_entity);
 
     m_destinationVector = m_walkList.front();
 	m_walkList.pop_front();
 	m_walkList.push_back(m_destinationVector);
+
+	//bullet stuff
+	shape = new btBoxShape(btVector3(.5,1.9,.5));
+    shape->calculateLocalInertia(mass,inertia);
+
+    ms = new btDefaultMotionState(btTransform(rotation, position));
+
+    btRigidBody::btRigidBodyConstructionInfo bodyCI(mass, ms, shape, inertia);
+
+    //add other physics constants
+    bodyCI.m_restitution=restitution;
+    bodyCI.m_friction=friction;
+
+    body = new btRigidBody(bodyCI);
+    //body->setActivationState(DISABLE_DEACTIVATION);
+    btTransform btt;
+    ms->getWorldTransform(btt);
+
+
 
 }
 
@@ -178,33 +199,34 @@ void Monster::updateMonsters(const Ogre::FrameEvent& evt)
 	{
 
 		//cout << "\nDestination reached\n";
-		m_node->setPosition(m_destinationVector); //place monster at destination
+		rootNode->setPosition(m_destinationVector); //place monster at destination
 		m_directionVector = Ogre::Vector3::ZERO; //set to 0 so next part of path can be started
 
 		m_destinationVector = m_walkList.front(); //update monster's next destination (front of the queue)
 		m_walkList.pop_front(); //remove the destination from the queue
 		m_walkList.push_back(m_destinationVector); //push destination back at end of queue
 
-		m_directionVector = m_destinationVector - m_node->getPosition(); //set new direction vector
+		m_directionVector = m_destinationVector - rootNode->getPosition(); //set new direction vector
+		// ^ linear velocity
 		m_distance = m_directionVector.normalise();
 
 		//There should be rotation code here?
 
-		Ogre::Vector3 src = m_node->getOrientation()*Ogre::Vector3::UNIT_X;
+		Ogre::Vector3 src = rootNode->getOrientation()*Ogre::Vector3::UNIT_X;
 
 		if ((1.0f + src.dotProduct(m_directionVector)) < 0.0001f)
 		{
-			m_node->yaw(Ogre::Degree(180));
+			rootNode->yaw(Ogre::Degree(180));
 		}
 		else
 		{
 			Ogre::Quaternion quat = src.getRotationTo(m_directionVector);
-			m_node->rotate(quat);
+			rootNode->rotate(quat);
 		}
 	}
 	else
 	{
-		m_node->translate(m_directionVector * move);
+		rootNode->translate(m_directionVector * move);
 	}
 	m_animState->addTime(evt.timeSinceLastFrame);
 }
@@ -238,7 +260,7 @@ bool Monster::nextLocation()
 	m_walkList.pop_front();
 	m_walkList.push_back(m_destinationVector);
 
-	m_directionVector = m_destinationVector - m_node->getPosition();
+	m_directionVector = m_destinationVector - rootNode->getPosition();
 	m_distance = m_directionVector.normalise();
 
 	return true;
@@ -251,7 +273,7 @@ void Monster::killMonster()
 	m_animState = m_entity->getAnimationState("Death1");
 	m_animState->setEnabled(true);
 
-	m_node->detachObject(m_entity);
+	rootNode->detachObject(m_entity);
 
 
 }

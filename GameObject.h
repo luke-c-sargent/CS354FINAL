@@ -27,6 +27,7 @@ protected:
     btQuaternion rotation;
 
 public:
+    bool hit;
     GameObject();
     void addToSimulator();
     btRigidBody* getBody();
