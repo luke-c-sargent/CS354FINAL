@@ -91,3 +91,5 @@ Ogre::Vector3 GameObject::getPos(){
 void GameObject::setRotation(btQuaternion rot){
   rotation=rot;
 }
+
+

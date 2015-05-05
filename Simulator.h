@@ -4,6 +4,8 @@
 #include <btBulletDynamicsCommon.h>
 #include <vector>
 
+//#include "Monster.h"
+
 class GameObject;
 struct ContactCallback;
 

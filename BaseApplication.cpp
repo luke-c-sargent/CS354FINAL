@@ -56,7 +56,7 @@ Monster* BaseApplication::spawnMonster()
     /* NOTE: for movement, ninja, every 'x' frames checks tile_map for a new, valid destination*/
 
     int player_y = player1->getY();
-    
+    float y_pos = -2.2; //make this a global constant?
     //cout << "\n\nTILE MAP SIZE " << level->x*5 << " x " << level->y*5 << " x " << level->z*5 << "\n\n";
 
     //Calculate total 2-D dimensions of level (x, y) and randomly choose (x,y) coordinates to be used to pick random tile
@@ -66,27 +66,27 @@ Monster* BaseApplication::spawnMonster()
 
     cout << "\nChosen [x,y]: [" << tile_x_sp << ", " << tile_y_sp << "]\n";
     
-    cout << "\nCHOSEN TILE: " << (short) level->getTile(tile_x_sp/5, tile_y_sp/5) << "\n";
-    
+    cout << "CHOSEN TILE: " << (short) level->getTile(tile_x_sp/5, tile_y_sp/5) << "\n";
     Ogre::Vector3 spawn_point;
-    
+        
     //Check validity of chosen tile, currently this should always work, should put in while loop when more validity conditions are implemented
     //Further validity checks: no other monster on tile, not near player, only tiles with no walls
     if((short)level->getTile(tile_x_sp/5, tile_y_sp/5) != 0)
     {
-        cout << "\nVALID TILE\n";
+        cout << "VALID TILE\n";
         
         //Make spawn point the approximate position of the tile
         //Currently hacked the y coordinate to bring ninja's closer to the ground    
-        spawn_point = Ogre::Vector3(tile_x_sp*-1, player_y-3, tile_y_sp);
+        spawn_point = Ogre::Vector3(tile_x_sp*-1, y_pos, tile_y_sp);
     }
 
     int tile_x_dir = rand() % level->x*5 + 1;
     int tile_y_dir = rand() % level->y*5 + 1;
 
-    Ogre::Vector3 direction = Ogre::Vector3(tile_x_dir*-1, -2.2, tile_y_dir);
+    Ogre::Vector3 destination = Ogre::Vector3(tile_x_dir*-1, y_pos, tile_y_dir);
+    
     //create new monster
-    Monster* m = new Monster(mSceneMgr, spawn_point, direction);
+    Monster* m = new Monster(mSceneMgr, spawn_point, destination);
     return m;
 }
 
@@ -135,6 +135,11 @@ void BaseApplication::createScene(void)
     //add objects to sim
     sim->addObject(player1);
     sim->addObject(level);
+
+    for (int i = 0; i < num_monsters; i++)
+    {
+        sim->addObject(monster_list.at(i));
+    }
 
     //setup music
     bgmusic = new BGMusic();

@@ -1,5 +1,6 @@
 #include "Simulator.h"
 #include "GameObject.h"
+#include "Monster.h"
 #include "Weapon.h"
 #include <stdio.h>
 #include <vector>
@@ -67,6 +68,28 @@ void Simulator::stepSimulation(const Ogre::Real elapsedTime, int maxSubSteps, co
           else
             objList[i]->updateTransform();
         }
+        //Monster Code
+        /*
+        else if((objList[i]->getName()).compare("ninja") == 0)
+        {
+          ccp->setAB(a, objList[i]);
+          //Need to differentiate from tile and wall of level
+          dynamicsWorld->contactPairTest(a->getBody(),objList[i]->getBody(),*ccp);
+
+          //btVector3 position = btVector3(objList[i]->getPosbt());
+          
+          //short tile_characteristic = ((Level*)a)->getTile((int)position.getX()/5, (int)position.getY()/5, (int)position.getZ()/5);
+          //cout << tile_characteristic << "\n";
+          if(((Bullet*)objList[i])->hit)// && tile_characteristic > NOWALL)
+          {
+            //cout << "Hit a wall, change destination\n";
+            ((Monster*)objList[i])->changeDestination(((Level*)a));
+          }
+          else
+            objList[i]->updateTransform();
+        }
+        //===========
+        */
         else {
           objList[i]->updateTransform();
         }

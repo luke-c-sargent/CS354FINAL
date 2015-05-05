@@ -27,7 +27,7 @@ public:
 
 
 
-	Monster(Ogre::SceneManager* sceneMgr, Ogre::Vector3 spawn_point, Ogre::Vector3 direction);
+	Monster(Ogre::SceneManager* sceneMgr, Ogre::Vector3 spawn_point, Ogre::Vector3 destination);
 	void initMonster(Ogre::SceneManager* smp, int spawn_point);
 	void setWalkList();
 	void changeState(MONSTER_STATE state);
@@ -35,6 +35,7 @@ public:
 	bool nextLocation();
 	void updateMonsters(Level* level, const Ogre::FrameEvent& evt);
 	void killMonster();
+	void changeDestination(Level* level);
 	
 	
 
