@@ -53,6 +53,7 @@ void Simulator::stepSimulation(const Ogre::Real elapsedTime, int maxSubSteps, co
     dynamicsWorld->stepSimulation(elapsedTime,maxSubSteps,fixedTimestep);
     //cout << "stepped\n";
 
+    btVector3 start, end;
     GameObject * a = objList[1];//level
     GameObject * p = objList[0];//player
     p->printpos();
@@ -72,17 +73,35 @@ void Simulator::stepSimulation(const Ogre::Real elapsedTime, int maxSubSteps, co
         
         else if((objList[i]->getName()).compare("ninja") == 0)
         {
-          ccp->setAB(a, objList[i]);
+          //ccp->setAB(a, objList[i]);
           //Need to differentiate from tile and wall of level
-          dynamicsWorld->contactPairTest(a->getBody(),objList[i]->getBody(),*ccp);
+          //dynamicsWorld->contactPairTest(a->getBody(),objList[i]->getBody(),*ccp);
+          start = objList[i]->getPosbt();
+          Monster* m = (Monster*)objList[i];
+          end = btVector3(m->m_destinationVector.x, m->m_destinationVector.y, m->m_destinationVector.z);
+          
+          btCollisionWorld::ClosestRayResultCallback rayCallBack(start, end);
 
+          dynamicsWorld->rayTest(start, end, rayCallBack);
+
+          if(rayCallBack.hasHit())
+          {
+            btVector3 hit = rayCallBack.m_hitPointWorld;
+            btScalar distance = (start - hit).length();
+
+            if (distance < 5.0f)
+            {
+              ((Monster*)objList[i])->changeDestination(((Level*)a));
+            }
+            cout << "\nrayCallBack hit something \n" << distance << " meters away!!\n";
+          }
           //btVector3 position = btVector3(objList[i]->getPosbt());
           
           //short tile_characteristic = ((Level*)a)->getTile((int)position.getX()/5, (int)position.getY()/5, (int)position.getZ()/5);
           //cout << tile_characteristic << "\n";
           if(((Monster*)objList[i])->hit)// && tile_characteristic > NOWALL)
           {
-            cout << "Hit a wall, change destination\n";
+            //cout << "Hit a wall, change destination\n";
             //((Monster*)objList[i])->changeDestination(((Level*)a));
             objList[i]->updateTransform();
           }

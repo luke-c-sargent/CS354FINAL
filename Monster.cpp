@@ -217,53 +217,6 @@ void Monster::updateMonsters(Level* level, const Ogre::FrameEvent& evt)
 	
 	m_animState->addTime(evt.timeSinceLastFrame);
 }
-/*
-void Monster::moveMonster()
-{
-	if(m_directionVector == Ogre::Vector3::ZERO)
-	{
-		if(nextLocation())
-		{
-	    	m_animState = m_entity->getAnimationState("Walk");
-   	 		m_animState->setLoop(true);
-    		m_animState->setEnabled(true);
-		}
-	}
-	else
-	{
-		Ogre::Real move = m_walkSpeed * evt.timeSinceLastFrame;
-  		m_distance -= move;
-	}
-}
-*/
-
-/*
-bool Monster::nextLocation()
-{
-	
-	if (m_walkList.empty()) //this should not happen right now
-	{
-		return false;
-	}
-
-	m_destinationVector = m_walkList.front();
-	m_walkList.pop_front();
-	m_walkList.push_back(m_destinationVector);
-
-	m_directionVector = m_destinationVector - rootNode->getPosition();
-	if(m_directionVector==Ogre::Vector3(0,0,0)){
-		cout << "zero norm\n";
-		m_directionVector=Ogre::Vector3::ZERO;
-	}
-	else
-		m_distance = m_directionVector.normalise();
-
-
-	return true;
-
-
-}
-*/
 
 void Monster::killMonster()
 {

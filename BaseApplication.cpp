@@ -120,7 +120,7 @@ void BaseApplication::createScene(void)
     srand(time(0));
     spawn_point = 1; //initialize to spawn point 1, temporary
 
-    for (int i = 0; i < 3; i++)
+    for (int i = 0; i < 1; i++)
     {
         Monster* m = spawnMonster();
         monster_list.push_back(m);
