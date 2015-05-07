@@ -15,7 +15,7 @@ Monster::Monster(Ogre::SceneManager* sceneMgr, Ogre::Vector3 spawn_point, Ogre::
 	//Monster's Vision/Location
 	m_seePlayer = false;
 	m_lastSeenPosition = Ogre::Vector3::ZERO;
-	m_destinationVector = 0;
+	m_destinationVector = Ogre::Vector3::ZERO;
 	m_directionVector = Ogre::Vector3::ZERO;
 	m_distance = 0;
 	m_walkSpeed = 1.0f;
@@ -68,8 +68,9 @@ Monster::Monster(Ogre::SceneManager* sceneMgr, Ogre::Vector3 spawn_point, Ogre::
     m_destinationVector = destination;
     
     //linear velocity
-    m_directionVector = m_destinationVector - rootNode->getPosition(); //set new direction vector
-    m_distance = m_directionVector.normalise();    
+    Ogre::Vector3 posOgre= Ogre::Vector3(position.getX(),position.getY(),position.getZ());
+    m_directionVector = m_destinationVector - posOgre; //set new direction vector
+    m_distance = m_directionVector.normalise();
     
 	//bullet stuff
 	shape = new btBoxShape(btVector3(.5,1.9,.5));
@@ -144,7 +145,6 @@ void Monster::updateMonsters(Level* level, const Ogre::FrameEvent& evt)
 {
 	//smooth out movement
 	Ogre::Real move = m_walkSpeed * evt.timeSinceLastFrame;
-
 	//update distance left to travel
 	Ogre::Vector3 posOgre= Ogre::Vector3(position.getX(),position.getY(),position.getZ());
 	m_distance=(posOgre-m_destinationVector).length();	
@@ -279,6 +279,8 @@ void Monster::changeDestination(Level* level)
 {
 	int x = rand() % level->x*5 + 1;
 	int z = rand() % level->y*5 + 1;
+
+	Ogre::Vector3 posOgre= Ogre::Vector3(position.getX(),position.getY(),position.getZ());
 
 	Ogre::Vector3 destination = Ogre::Vector3(x*-1, -2.2, z); //update y position to constant
 	m_destinationVector = destination;

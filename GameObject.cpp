@@ -14,8 +14,9 @@ GameObject::GameObject() :
     shape(0),
     body(0),
     position(0.0f,0.0f,0.0f),
-    rotation(0.0f,0.0f,0.0f,0.0f){
-}
+    rotation(0.0f,0.0f,0.0f,0.0f),
+    hit(0)
+{}
 
 void GameObject::setPos(btVector3 pos){
   position=pos;
@@ -91,5 +92,3 @@ Ogre::Vector3 GameObject::getPos(){
 void GameObject::setRotation(btQuaternion rot){
   rotation=rot;
 }
-
-

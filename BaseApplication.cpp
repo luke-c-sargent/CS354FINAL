@@ -64,9 +64,9 @@ Monster* BaseApplication::spawnMonster()
     int tile_y_sp = rand() % level->y*5 + 1;
 
 
-    cout << "\nChosen [x,y]: [" << tile_x_sp << ", " << tile_y_sp << "]\n";
+    //cout << "\nChosen [x,y]: [" << tile_x_sp << ", " << tile_y_sp << "]\n";
     
-    cout << "CHOSEN TILE: " << (short) level->getTile(tile_x_sp/5, tile_y_sp/5) << "\n";
+    //cout << "CHOSEN TILE: " << (short) level->getTile(tile_x_sp/5, tile_y_sp/5) << "\n";
     Ogre::Vector3 spawn_point;
         
     //Check validity of chosen tile, currently this should always work, should put in while loop when more validity conditions are implemented
@@ -388,47 +388,14 @@ bool BaseApplication::frameRenderingQueued(const Ogre::FrameEvent& evt)
         scoreboard->setParamValue(4, std::to_string(num_monsters));
 
         //Monster Code
-
-        /*
-        int i;
-        if(num_monsters < 3) //change int to an enum based on difficulty
-        {
-            Monster* m = new Monster(mSceneMgr);
-        
-            monster_list[num_monsters] = m;
-
-            //spawn_point = rand() % 3 + 1;
-            
-            
-            cout << "\n spawn point:"<< spawn_point << "\n\n";
-
-            cout << "monster init\n";
-            m->initMonster(mSceneMgr, spawn_point);
-            
-            cout << "monster adding to sim\n";
-            sim->addObject(m);
-            cout << "monster added to sim\n";
-            Monster::MONSTER_STATE state = Monster::STATE_WANDER;
-            m->changeState(state, evt);
-            cout << "monster state changed\n";
-
-            num_monsters++;
-            spawn_point++;
-            
-            if (spawn_point > 3) //change int to # of spawn points
-            {
-                spawn_point = 1;
-            }
-            
-        }
-        */
-
         int j;
         for(j = 0; j < num_monsters; j++)
         {
             //Monster* m_up = monster_list[j];
             //m_up->m_animState->addTime(evt.timeSinceLastFrame);
             //cout << "updating monster"<<j<<"\n";
+            if(!j)
+                monster_list.at(j)->printpos();
             monster_list.at(j)->updateMonsters(level, evt);
         }
         //cout << "monsters updated\n";
@@ -440,7 +407,7 @@ bool BaseApplication::frameRenderingQueued(const Ogre::FrameEvent& evt)
       //set player speed
         //cout << player1->playerLV.x()<<","<<player1->playerLV.z()<<"\n";
       player1->getBody()->setLinearVelocity(btVector3(player1->playerLV.x(),0.000001,player1->playerLV.z()));
-      cout << phi << "\n";
+      //cout << phi << "\n";
       player1->setRotation(btQuaternion(btVector3(0,1,0),phi ));
       //set projectile speeds
       /*for(int i=0; i < bulletVector.size();i++){
