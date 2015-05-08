@@ -9,7 +9,7 @@ the player as long as the player is still in range
 //Add monsters during createscene()
 //Get monster position, divide x/z by 5 and get current tile type
 
-Monster::Monster(Ogre::SceneManager* sceneMgr, Ogre::Vector3 spawn_point, Ogre::Vector3 destination)
+Monster::Monster(Ogre::SceneManager* sceneMgr, Ogre::Vector3 spawn_point)
 {
 
 	//Monster's Vision/Location
@@ -29,8 +29,9 @@ Monster::Monster(Ogre::SceneManager* sceneMgr, Ogre::Vector3 spawn_point, Ogre::
 	//Monster's Data
 	m_health = 100.0;
 	m_range = 4000.0;
-	m_attackRange = 100.0;
-
+	m_attackRange = 5.0;
+	m_state = STATE_WANDER;
+	
 	m_entity = sceneMgr->createEntity("ninja.mesh");
 	m_entity->setMaterialName("Ninja");
 
@@ -38,7 +39,7 @@ Monster::Monster(Ogre::SceneManager* sceneMgr, Ogre::Vector3 spawn_point, Ogre::
 
 	//Copied from Player.cpp
 
-    // restitution=1.0;//avg of allowable extremes
+    //restitution=1.0;//avg of allowable extremes
 
     position = btVector3(0,0,0);
     inertia= btVector3(0,0,0);
@@ -64,9 +65,7 @@ Monster::Monster(Ogre::SceneManager* sceneMgr, Ogre::Vector3 spawn_point, Ogre::
 	rootNode->setScale(0.01, 0.01, 0.01);
     rootNode->attachObject(m_entity);
 
-    //Set initial destination
-    m_destinationVector = destination;
-    
+
     //linear velocity
     Ogre::Vector3 posOgre= Ogre::Vector3(position.getX(),position.getY(),position.getZ());
     m_directionVector = m_destinationVector - posOgre; //set new direction vector
@@ -89,47 +88,35 @@ Monster::Monster(Ogre::SceneManager* sceneMgr, Ogre::Vector3 spawn_point, Ogre::
     btTransform btt;
     ms->getWorldTransform(btt);
 
-
-    //Change monster state to initiate animation
-    Monster::MONSTER_STATE state = Monster::STATE_WANDER;
-    changeState(state);
-
 }
-/*
-void Monster::setWalkList()
-{
-	int i, next;
-	
-	for(i = 0; i < 10; i++)
-	{
-		next = rand() % 3 + 1;
-		if (next == 1)
-		{
-			m_walkList.push_back(m_spawnPt1);			
-		}
-		else if (next == 2)
-		{
-			m_walkList.push_back(m_spawnPt2);
-		}
-		else if (next == 3)
-		{
-			m_walkList.push_back(m_spawnPt3);
-		}
-	}
-}
-*/
-void Monster::changeState(MONSTER_STATE state)
+
+void Monster::changeState(MONSTER_STATE state, Level* l, Player* player)
 {
 
-	if(state == STATE_WANDER)
+	int x = rand() % l->x*5 + 1;
+	int y = player->getY();
+    int z = rand() % l->y*5 + 1;
+    
+    m_state = state;
+	if(m_state == STATE_WANDER)
 	{
+		cout << "\nCHANGE TO STATE_WANDER\n";	
+		m_walkSpeed = 1.0f;		
+		m_destinationVector = Ogre::Vector3(x*-1, y, z);
 		m_animState = m_entity->getAnimationState("Walk");
 
 	}
-	else if (state == STATE_CHILL)
-	{
+	else if (m_state == STATE_CHILL)
+	{		
 		m_animState = m_entity->getAnimationState("Idle1");
 		//zero out the m_walkList so he stops moving around
+	}
+	else if(m_state == STATE_ATTACK)
+	{
+		cout << "\nCHANGE TO STATE_ATTACK\n";			
+		m_walkSpeed = 500.0f;
+		//btVector3 player_pos = player->getPosbt();
+		//m_destinationVector = Ogre::Vector3(player_pos.getX(), player_pos.getY(), player_pos.getZ());
 	}
 
 	//m_animState = m_entity->getAnimationState("Walk");
@@ -228,15 +215,27 @@ void Monster::killMonster()
 
 }
 
-void Monster::changeDestination(Level* level)
+void Monster::changeDestination(Level* level, Player* p)
 {
-	int x = rand() % level->x*5 + 1;
-	int z = rand() % level->y*5 + 1;
+	
+	Ogre::Vector3 posOgre= Ogre::Vector3(position.getX(),position.getY(),position.getZ());//not sure why we need this
 
-	Ogre::Vector3 posOgre= Ogre::Vector3(position.getX(),position.getY(),position.getZ());
+	if (p == NULL)
+	{
+		//Monster will pick a random destination
+		
+		//not following the player
+		int x = rand() % level->x*5 + 1;
+		int z = rand() % level->y*5 + 1;
+		m_destinationVector = Ogre::Vector3(x*-1, -2.2, z); //update y position to constant
+	}
+	else
+	{
+		//update to player's position
+		btVector3 player_pos = p->getPosbt();
+		m_destinationVector = Ogre::Vector3(player_pos.getX(), player_pos.getY(), player_pos.getZ());
 
-	Ogre::Vector3 destination = Ogre::Vector3(x*-1, -2.2, z); //update y position to constant
-	m_destinationVector = destination;
+	}
     
     //linear velocity
     m_directionVector = m_destinationVector - rootNode->getPosition(); //set new direction vector

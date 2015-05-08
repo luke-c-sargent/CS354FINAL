@@ -27,15 +27,15 @@ public:
 
 
 
-	Monster(Ogre::SceneManager* sceneMgr, Ogre::Vector3 spawn_point, Ogre::Vector3 destination);
+	Monster(Ogre::SceneManager* sceneMgr, Ogre::Vector3 spawn_point);
 	void initMonster(Ogre::SceneManager* smp, int spawn_point);
 	void setWalkList();
-	void changeState(MONSTER_STATE state);
+	void changeState(MONSTER_STATE state, Level* l, Player* p=NULL);
 	void moveMonster();
 	bool nextLocation();
 	void updateMonsters(Level* level, const Ogre::FrameEvent& evt);
 	void killMonster();
-	void changeDestination(Level* level);
+	void changeDestination(Level* level, Player* p = NULL);
 	
 	
 
@@ -73,6 +73,7 @@ public:
 	bool m_damaged;
 
 	//Monster's data
+	MONSTER_STATE m_state;
 	Ogre::Real m_health;
 	Ogre::Real m_range; //if player comes within this distance from monster, pursuit is triggered
 	Ogre::Real m_attack; //strength

@@ -78,15 +78,10 @@ Monster* BaseApplication::spawnMonster()
         //Make spawn point the approximate position of the tile
         //Currently hacked the y coordinate to bring ninja's closer to the ground    
         spawn_point = Ogre::Vector3(tile_x_sp*-1, y_pos, tile_y_sp);
-    }
-
-    int tile_x_dir = rand() % level->x*5 + 1;
-    int tile_y_dir = rand() % level->y*5 + 1;
-
-    Ogre::Vector3 destination = Ogre::Vector3(tile_x_dir*-1, y_pos, tile_y_dir);
+    }   
     
     //create new monster
-    Monster* m = new Monster(mSceneMgr, spawn_point, destination);
+    Monster* m = new Monster(mSceneMgr, spawn_point);
     return m;
 }
 
@@ -120,9 +115,10 @@ void BaseApplication::createScene(void)
     srand(time(0));
     spawn_point = 1; //initialize to spawn point 1, temporary
 
-    for (int i = 0; i < 1; i++)
+    for (int i = 0; i < 3; i++)
     {
         Monster* m = spawnMonster();
+        m->changeState(Monster::STATE_WANDER, level, player1);
         monster_list.push_back(m);
         num_monsters++;
     }
@@ -394,8 +390,8 @@ bool BaseApplication::frameRenderingQueued(const Ogre::FrameEvent& evt)
             //Monster* m_up = monster_list[j];
             //m_up->m_animState->addTime(evt.timeSinceLastFrame);
             //cout << "updating monster"<<j<<"\n";
-            if(!j)
-                monster_list.at(j)->printpos();
+            //if(!j)
+                //monster_list.at(j)->printpos();
             monster_list.at(j)->updateMonsters(level, evt);
         }
         //cout << "monsters updated\n";
