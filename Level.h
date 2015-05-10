@@ -45,6 +45,8 @@ public:
   //Added for Monster code
   int getTileMapSize();
 
+  int num_monsters;
+
 
   int x,y,z;
   

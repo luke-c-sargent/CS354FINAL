@@ -7,7 +7,8 @@ enum GameState{
 	Store,
 	Play,
 	Pause,
-	End
+	Win,
+	Lose
 };
 
 enum WeaponState{

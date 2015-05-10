@@ -28,7 +28,7 @@ Monster::Monster(Ogre::SceneManager* sMgr, Ogre::Vector3 spawn_point)
 	m_damaged = false;
 
 	//Monster's Data
-	m_health = 10.0;
+	m_health = 5.0;
 	m_range = 4000.0;
 	m_attackRange = 5.0;
 	m_state = STATE_WANDER;

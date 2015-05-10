@@ -98,9 +98,11 @@ protected:
     // GUI Stuff
     OgreBites::ParamsPanel* scoreboard;    // displays scores
     OgreBites::Button* play_button;
-    OgreBites::Button* store_button;
+    OgreBites::Button* restart_button;
     OgreBites::Button* quit_button;
     OgreBites::Button* resume_button;
+    OgreBites::Button* continue_button;
+    OgreBites::Label* state_label;
 
     // States
     GameState state;
@@ -139,9 +141,6 @@ protected:
 
     //Monster Code
 
-    int judgement_day;
-    int num_monsters;
-    int spawn_point; //will be between 1 - # of spawn pts
     //Monster* monster_list[10]; //change to # of monster variable
     vector<Monster*> monster_list;
     Monster* spawnMonster();

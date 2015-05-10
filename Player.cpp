@@ -35,6 +35,7 @@ Player::Player(Ogre::SceneManager* smp, Ogre::String inname, Ogre::Vector3 start
     mass=1000.0f;
     restitution=1.0;
     friction=0;
+    player_health = 10.0;
 
     //bind player
 

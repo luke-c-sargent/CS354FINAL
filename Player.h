@@ -16,6 +16,7 @@ public:
     btScalar getZ();
     void setLV(btVector3 lvin);
     void setLV(Ogre::Vector3 lvin);
+    Ogre::Real player_health;
 
     // PlayerState playerState;
     // WeaponState weapon;

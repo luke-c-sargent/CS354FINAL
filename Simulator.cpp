@@ -96,6 +96,11 @@ void Simulator::stepSimulation(const Ogre::Real elapsedTime, int maxSubSteps, co
         else if((objList[i]->getName()).compare("ninja") == 0)
         {
           bool monster_alive = true;
+          ccp->setAB(objList[i], objList[0]);
+
+          dynamicsWorld->contactPairTest(objList[i]->getBody(), objList[0]->getBody(), *ccp);
+          if ((objList[0])->hit)
+            ((Player*)objList[0])->player_health -= 1.0;
           
           for(int j = 2; j < objList.size(); j++)
           {
@@ -228,6 +233,7 @@ void Simulator::stepSimulation(const Ogre::Real elapsedTime, int maxSubSteps, co
         //delete objList[deadObjects[i]];
 
         go->getSMP()->destroySceneNode(go->getNode());
+        ((Level*)objList[1])->num_monsters--;
         objList.erase(objList.begin()+deadObjects[i]);
       }
       
