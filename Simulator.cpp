@@ -99,8 +99,9 @@ void Simulator::stepSimulation(const Ogre::Real elapsedTime, int maxSubSteps, co
           ccp->setAB(objList[i], objList[0]);
 
           dynamicsWorld->contactPairTest(objList[i]->getBody(), objList[0]->getBody(), *ccp);
-          if ((objList[0])->hit)
-            ((Player*)objList[0])->player_health -= 1.0;
+          if ((objList[0])->hit){
+            //((Player*)objList[0])->player_health -= 1.0;
+          }
           
           for(int j = 2; j < objList.size(); j++)
           {

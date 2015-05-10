@@ -41,6 +41,10 @@ btVector3 o2bVector3(Ogre::Vector3 in){
   return btVector3(in.x,in.y,in.z);
 }
 
+
+void printOV3(Ogre::Vector3 in){
+    cout <<in.x<<","<<in.y<<","<<in.z<<"\n";
+}
 //-------------------------------------------------------------------------------------
 BaseApplication::~BaseApplication(void)
 {
@@ -91,7 +95,6 @@ void BaseApplication::createScene(void)
 {
 	mSceneMgr->setAmbientLight(Ogre::ColourValue(0.3f,0.2f,0.25f));
 	mSceneMgr->setShadowTechnique(Ogre::SHADOWTYPE_STENCIL_ADDITIVE);
-
 
     Ogre::StringVector scores;
     scores.push_back("Level");
@@ -451,9 +454,20 @@ bool BaseApplication::frameRenderingQueued(const Ogre::FrameEvent& evt)
       if(mz<0)
         mz=0;
       float scrollMod=scrollMax*(mz/scrollSens);
-      cameraPos=player1->getPos()-(3+scrollMod)*cameraDir + Ogre::Vector3(0,1,0);
+        //jimmyjam
+      phi+=3.1415926-1.3;
+      Ogre::Vector3 cameraOffset=(Ogre::Vector3((cos(phi)),0,sin(-1*phi)));
+      phi-=3.1415926-1.3;
+
+      cameraPos=player1->getPos()/*-(3+scrollMod)*cameraDir*/ + Ogre::Vector3(0,1.7,0) + 1.6*cameraOffset;
+      cout <<"cameraPos:";
+      printOV3(cameraPos);
+      cout <<"playerPos:";
+      player1->printpos();
+
+
       mCamera->setPosition(cameraPos);
-      mCamera->lookAt(cameraPos+cameraDir);
+      mCamera->lookAt(/*player1->getPos()*/cameraPos+cameraDir);
       scoreboard->setParamValue(3, std::to_string((*equippedweapon)->ammo_left()) + "/" + std::to_string((*equippedweapon)->total_ammo_left()));
       scoreboard->setParamValue(4, std::to_string(level->num_monsters));
       //cout <<cameraDir.x<<","<<cameraDir.y<<","<<cameraDir.z<<"\n";
@@ -805,6 +819,8 @@ void BaseApplication::processInput(){
   //mz=0;
 
 }
+
+
 
 #if OGRE_PLATFORM == OGRE_PLATFORM_WIN32
 #define WIN32_LEAN_AND_MEAN
