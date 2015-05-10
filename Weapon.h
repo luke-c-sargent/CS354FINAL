@@ -34,6 +34,8 @@ public:
     float bulletSize;
     btCollisionShape* col_shape;
     float mass;
+    Ogre::Real power;
+    
 protected:
 
     WeaponSound * weaponsound;
@@ -43,8 +45,7 @@ protected:
     Ogre::Real firetime;
     Ogre::Real reloadtime;
     Ogre::Real switchtime;
-    // Ogre::Real lastCPUtime;
-    Ogre::Real power;
+    // Ogre::Real lastCPUtime;    
     int ammo_cap;
     int total_ammo_cap;
     int ammo;
@@ -69,6 +70,8 @@ struct Bullet:public GameObject{
     rotation=btQuaternion(0,0,0,1);
     hit=false;
 
+    //ADD WEAPON STRENGTH
+    power = weapon->power;
     //physics stuffs
     inertia= btVector3(0,0,0);
     mass=weapon->mass;

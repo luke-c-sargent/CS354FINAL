@@ -56,7 +56,7 @@ Monster* BaseApplication::spawnMonster()
     /* NOTE: for movement, ninja, every 'x' frames checks tile_map for a new, valid destination*/
 
     int player_y = player1->getY();
-    float y_pos = -2.2; //make this a global constant?
+    float y_pos = player1->getPosbt().getY(); //make this a global constant?
     //cout << "\n\nTILE MAP SIZE " << level->x*5 << " x " << level->y*5 << " x " << level->z*5 << "\n\n";
 
     //Calculate total 2-D dimensions of level (x, y) and randomly choose (x,y) coordinates to be used to pick random tile
@@ -115,7 +115,7 @@ void BaseApplication::createScene(void)
     srand(time(0));
     spawn_point = 1; //initialize to spawn point 1, temporary
 
-    for (int i = 0; i < 3; i++)
+    for (int i = 0; i < 5; i++)
     {
         Monster* m = spawnMonster();
         m->changeState(Monster::STATE_WANDER, level, player1);
@@ -420,9 +420,10 @@ bool BaseApplication::frameRenderingQueued(const Ogre::FrameEvent& evt)
             if((go->getName()).compare("bullet")==0){
                 btVector3 lv = ((Bullet*)go)->linvel();
                 go->getBody()->setLinearVelocity(lv);
-            }else if((go->getName()).compare("ninja")==0){
+            }else if((go->getName()).compare("ninja")==0){            
                 btVector3 lv =o2bVector3(((Monster*)go)->m_directionVector);
-                go->getBody()->setLinearVelocity(lv);
+                Ogre::Real speed = ((Monster*)go)->m_walkSpeed;
+                go->getBody()->setLinearVelocity(speed*lv);
             }
         }
 

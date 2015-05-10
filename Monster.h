@@ -27,7 +27,8 @@ public:
 
 
 
-	Monster(Ogre::SceneManager* sceneMgr, Ogre::Vector3 spawn_point);
+	Monster(Ogre::SceneManager* sMgr, Ogre::Vector3 spawn_point);
+	~Monster();
 	void initMonster(Ogre::SceneManager* smp, int spawn_point);
 	void setWalkList();
 	void changeState(MONSTER_STATE state, Level* l, Player* p=NULL);

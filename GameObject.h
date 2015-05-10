@@ -26,7 +26,9 @@ protected:
     btVector3 inertia;
     btQuaternion rotation;
 
+
 public:
+    Ogre::Real power;
     bool hit;
     GameObject();
     void addToSimulator();

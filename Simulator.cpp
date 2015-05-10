@@ -58,87 +58,149 @@ void Simulator::stepSimulation(const Ogre::Real elapsedTime, int maxSubSteps, co
     GameObject * p = objList[0];//player
     //p->printpos();
     //update in ogre
-    vector<int> deadBullets;
+    vector<int> deadObjects;
     for(int i=0; i < objList.size();i++){//step through all objects
         if((objList[i]->getName()).compare("bullet")==0){
+          
+          for(int j = 2; j < objList.size(); j++)
+          {
+            
+            if((objList[j]->getName()).compare("ninja")==0)
+            {
+              //Check for collision between ninja, bullet              
+              ccp->setAB(objList[j], objList[i]);
+
+              dynamicsWorld->contactPairTest(objList[j]->getBody(), objList[i]->getBody(), *ccp);
+              if((objList[i])->hit)
+              {
+                //bullet hit the ninja
+                deadObjects.push_back(i);
+                objList[i]->hit = false;             
+                //((Monster*)objList[j])->killMonster();
+              }
+            }
+            
+          }
+
           ccp->setAB(a,objList[i]);
           dynamicsWorld->contactPairTest(a->getBody(),objList[i]->getBody(),*ccp);
 
           if(((Bullet*)objList[i])->hit)
-            deadBullets.push_back(i);
+            deadObjects.push_back(i);
           else
             objList[i]->updateTransform();
+
+          
         }
-        //Monster Code
-        
+        //Monster Code        
         else if((objList[i]->getName()).compare("ninja") == 0)
         {
-        
-          /* PUT THIS IN MONSTER.CPP */
-          Monster* m = (Monster*)objList[i];
+          bool monster_alive = true;
           
-          btVector3 monster_pos = m->getPosbt();
-          btVector3 player_pos = p->getPosbt();
-
-          btScalar personal_space = (monster_pos - player_pos).length(); //player's distance from monster
-          
-          //Based on monster's states, decide what to do
-          if(m->m_state != Monster::STATE_ATTACK && personal_space <= m->m_attackRange) 
+          for(int j = 2; j < objList.size(); j++)
           {
-            //monster currently not in attack state but player is in his attackRange
-
-            //if close enough, monster should attack the player
-            m->changeState(Monster::STATE_ATTACK, (Level*) a, (Player*) p);
-
-            //follow the player
-            m->changeDestination((Level*) a, (Player*) p);
-          }
-          else if(m->m_state == Monster::STATE_ATTACK && personal_space <= m->m_attackRange) 
-          {
-            //monster currently in attack state and player is still in attackRange
-
-            //updates to player's new position
-            m->changeDestination((Level*) a, (Player*) p);
-          }
-          else if (m->m_state == Monster::STATE_ATTACK && personal_space >= m->m_attackRange)
-          {            
-            //monster currently in attack state but player left his attackRange
-           
-            //Monster goes back to wandering, picks random destination
-            m->changeState(Monster::STATE_WANDER, (Level*) a, (Player*) p);
-          }
-          else if (m->m_state != Monster::STATE_ATTACK)
-          {
-            //Monster is wandering around, be checking for walls/obstacles etc.
-
-            //Ray from monster's current position to his destination        
-            end = btVector3(m->m_destinationVector.x, m->m_destinationVector.y, m->m_destinationVector.z);
-          
-            //Create call back object and run rayTest
-            btCollisionWorld::ClosestRayResultCallback rayCallBack(monster_pos, end);
-            dynamicsWorld->rayTest(monster_pos, end, rayCallBack);
-
-            //Check whether ray hit any obstacle
-            if(rayCallBack.hasHit())
+            
+            if((objList[j]->getName()).compare("bullet")==0)
             {
-            
-              btVector3 hit = rayCallBack.m_hitPointWorld; //get position of obstacle in ray's way
-              btScalar distance = (monster_pos - hit).length(); //calculate distance to obstacle
+              //Check for collision between ninja, bullet              
+              ccp->setAB(objList[j], objList[i]);
 
-              //cout << "\nrayCallBack hit something \n" << distance << " meters away!!\n";
-            
-              //If ninja is close enough to obstacle, he changes his destination
-              if (distance < 5.0f)
+              dynamicsWorld->contactPairTest(objList[j]->getBody(), objList[i]->getBody(), *ccp);
+              
+              if((objList[i])->hit)
               {
-                cout << "\nMonster saw an obstacle (wall), must change destination\n";
-                m->changeDestination(((Level*)a));
+                //deduct weapon attack value from monster health
+                //check if health is < 0, if so kill it
+                ((Monster*)objList[i])->m_health -= ((Bullet*)objList[j])->power;     
+
+                //bullet hit the ninja
+                if(((Monster*)objList[i])->m_health <= 0.0)
+                {
+                  deadObjects.push_back(i);                
+                  monster_alive = false;                  
+                  //((Monster*)objList[j])->killMonster();  
+                }
+
+                objList[i]->hit = false;
+                
               }
+              //else
+                //objList[i]->updateTransform();                  
+            }
             
-            }            
+          }      
+          
+          if (monster_alive == true)
+          {
 
-          }          
+            /* PUT THIS IN MONSTER.CPP */
+            Monster* m = (Monster*)objList[i];
+            
+            btVector3 monster_pos = m->getPosbt();
+            btVector3 player_pos = p->getPosbt();
 
-          objList[i]->updateTransform();
+            btScalar personal_space = (monster_pos - player_pos).length(); //player's distance from monster
+            
+            //Based on monster's states, decide what to do
+            if(m->m_state != Monster::STATE_ATTACK && personal_space <= m->m_attackRange) 
+            {
+              //monster currently not in attack state but player is in his attackRange
+
+              //if close enough, monster should attack the player
+              m->changeState(Monster::STATE_ATTACK, (Level*) a, (Player*) p);
+
+              //follow the player
+              m->changeDestination((Level*) a, (Player*) p);
+            }
+            else if(m->m_state == Monster::STATE_ATTACK && personal_space <= m->m_attackRange) 
+            {
+              //monster currently in attack state and player is still in attackRange
+
+              //updates to player's new position
+              m->changeDestination((Level*) a, (Player*) p);
+            }
+            else if (m->m_state == Monster::STATE_ATTACK && personal_space >= m->m_attackRange)
+            {            
+              //monster currently in attack state but player left his attackRange
+             
+              //Monster goes back to wandering, picks random destination
+              m->changeState(Monster::STATE_WANDER, (Level*) a, (Player*) p);
+            }
+            else if (m->m_state != Monster::STATE_ATTACK)
+            {
+              //Monster is wandering around, be checking for walls/obstacles etc.
+
+              //Ray from monster's current position to his destination        
+              end = btVector3(m->m_destinationVector.x, m->m_destinationVector.y, m->m_destinationVector.z);
+            
+              //Create call back object and run rayTest
+              btCollisionWorld::ClosestRayResultCallback rayCallBack(monster_pos, end);
+              dynamicsWorld->rayTest(monster_pos, end, rayCallBack);
+
+              //Check whether ray hit any obstacle
+              if(rayCallBack.hasHit())
+              {
+              
+                btVector3 hit = rayCallBack.m_hitPointWorld; //get position of obstacle in ray's way
+                btScalar distance = (monster_pos - hit).length(); //calculate distance to obstacle
+
+                //cout << "\nrayCallBack hit something \n" << distance << " meters away!!\n";
+              
+                //If ninja is close enough to obstacle, he changes his destination
+                if (distance < 5.0f)
+                {
+                  cout << "\nMonster saw an obstacle (wall), must change destination\n";
+                  m->changeDestination(((Level*)a));
+                }
+              
+              }
+            }          
+            
+            objList[i]->updateTransform();
+          
+          }
+          
+          //objList[i]->updateTransform();
         }
         //===========
         //*/
@@ -151,12 +213,27 @@ void Simulator::stepSimulation(const Ogre::Real elapsedTime, int maxSubSteps, co
 
     }
     //cout << "for list one ended\n";
-    for(int i=deadBullets.size()-1; i >=0;i--){
-      Bullet * go=(Bullet*)objList[deadBullets[i]];
-      //delete objList[deadBullets[i]];
-      go->getSMP()->destroySceneNode(go->getNode());
-      objList.erase(objList.begin()+deadBullets[i]);
+    for(int i=deadObjects.size()-1; i >=0;i--){
+      if((objList[deadObjects[i]]->getName()).compare("bullet")==0)
+      {
+        Bullet * go=(Bullet*)objList[deadObjects[i]];
+         //delete objList[deadObjects[i]];        
+        go->getSMP()->destroySceneNode(go->getNode());
+        objList.erase(objList.begin()+deadObjects[i]);
+      }
+      else if ((objList[deadObjects[i]]->getName()).compare("ninja")==0)
+      {
+        Monster* go=(Monster*)objList[deadObjects[i]];
+
+        //delete objList[deadObjects[i]];
+
+        go->getSMP()->destroySceneNode(go->getNode());
+        objList.erase(objList.begin()+deadObjects[i]);
+      }
+      
+      
     }
+
     //cout << "end stepsim\n";
 }
 

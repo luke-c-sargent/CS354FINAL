@@ -9,8 +9,9 @@ the player as long as the player is still in range
 //Add monsters during createscene()
 //Get monster position, divide x/z by 5 and get current tile type
 
-Monster::Monster(Ogre::SceneManager* sceneMgr, Ogre::Vector3 spawn_point)
+Monster::Monster(Ogre::SceneManager* sMgr, Ogre::Vector3 spawn_point)
 {
+	sceneMgr = sMgr;
 
 	//Monster's Vision/Location
 	m_seePlayer = false;
@@ -27,7 +28,7 @@ Monster::Monster(Ogre::SceneManager* sceneMgr, Ogre::Vector3 spawn_point)
 	m_damaged = false;
 
 	//Monster's Data
-	m_health = 100.0;
+	m_health = 10.0;
 	m_range = 4000.0;
 	m_attackRange = 5.0;
 	m_state = STATE_WANDER;
@@ -90,6 +91,13 @@ Monster::Monster(Ogre::SceneManager* sceneMgr, Ogre::Vector3 spawn_point)
 
 }
 
+Monster::~Monster()
+{
+	sceneMgr->destroySceneNode(rootNode);
+	delete body;
+    delete ms;
+}
+
 void Monster::changeState(MONSTER_STATE state, Level* l, Player* player)
 {
 
@@ -114,7 +122,7 @@ void Monster::changeState(MONSTER_STATE state, Level* l, Player* player)
 	else if(m_state == STATE_ATTACK)
 	{
 		cout << "\nCHANGE TO STATE_ATTACK\n";			
-		m_walkSpeed = 500.0f;
+		m_walkSpeed = 3.5f;
 		//btVector3 player_pos = player->getPosbt();
 		//m_destinationVector = Ogre::Vector3(player_pos.getX(), player_pos.getY(), player_pos.getZ());
 	}
@@ -131,11 +139,14 @@ void Monster::changeState(MONSTER_STATE state, Level* l, Player* player)
 void Monster::updateMonsters(Level* level, const Ogre::FrameEvent& evt)
 {
 	//smooth out movement
+
 	Ogre::Real move = m_walkSpeed * evt.timeSinceLastFrame;
-	//update distance left to travel
-	Ogre::Vector3 posOgre= Ogre::Vector3(position.getX(),position.getY(),position.getZ());
-	m_distance=(posOgre-m_destinationVector).length();	
 	//m_distance -= move;
+	
+	//update distance left to travel, using monster's current position
+	Ogre::Vector3 posOgre= Ogre::Vector3(position.getX(),position.getY(),position.getZ());
+	m_distance = (posOgre-m_destinationVector).length();
+	
 
 	//check if monster reached destination
 	if(m_distance <= 0.1f)
@@ -207,11 +218,11 @@ void Monster::updateMonsters(Level* level, const Ogre::FrameEvent& evt)
 
 void Monster::killMonster()
 {
+	cout << "\nMONSTER HIT -- DIE\n";
 	m_animState = m_entity->getAnimationState("Death1");
 	m_animState->setEnabled(true);
 
 	rootNode->detachObject(m_entity);
-
 
 }
 
@@ -227,7 +238,7 @@ void Monster::changeDestination(Level* level, Player* p)
 		//not following the player
 		int x = rand() % level->x*5 + 1;
 		int z = rand() % level->y*5 + 1;
-		m_destinationVector = Ogre::Vector3(x*-1, -2.2, z); //update y position to constant
+		m_destinationVector = Ogre::Vector3(x*-1, position.getY(), z); //update y position to constant
 	}
 	else
 	{
