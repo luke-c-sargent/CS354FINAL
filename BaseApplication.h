@@ -99,11 +99,13 @@ protected:
     OgreBites::ParamsPanel* scoreboard;    // displays scores
     OgreBites::Button* play_button;
     OgreBites::Button* restart_button;
+    OgreBites::Button* tryagain_button;
     OgreBites::Button* quit_button;
     OgreBites::Button* resume_button;
     OgreBites::Button* continue_button;
     OgreBites::Label* state_label;
     int level_val;
+    int lives;
 
     // States
     GameState state;
