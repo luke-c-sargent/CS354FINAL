@@ -14,6 +14,7 @@ public:
 	bool loadMedia();
 	void closeMedia();
 	void monster_aggro();
+	void death();
 
 protected:	
 	int x = 0;
@@ -24,4 +25,5 @@ private:
 
 	//The music that will be played
 	Mix_Chunk *aggro_sound = NULL;
+	Mix_Chunk *death_sound = NULL;
 };

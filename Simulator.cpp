@@ -234,7 +234,7 @@ void Simulator::stepSimulation(const Ogre::Real elapsedTime, int maxSubSteps, co
       else if ((objList[deadObjects[i]]->getName()).compare("ninja")==0)
       {
         Monster* go=(Monster*)objList[deadObjects[i]];
-
+        go->monstersound->death();
         //delete objList[deadObjects[i]];
 
         go->getSMP()->destroySceneNode(go->getNode());
