@@ -61,7 +61,6 @@ Monster* BaseApplication::spawnMonster()
 {
     /* NOTE: for movement, ninja, every 'x' frames checks tile_map for a new, valid destination*/
 
-    int player_y = player1->getY();
     float y_pos = player1->getPosbt().getY(); //make this a global constant?
     //cout << "\n\nTILE MAP SIZE " << level->x*5 << " x " << level->y*5 << " x " << level->z*5 << "\n\n";
 
@@ -69,22 +68,19 @@ Monster* BaseApplication::spawnMonster()
     int tile_x_sp = rand() % level->x*5 + 1;
     int tile_y_sp = rand() % level->y*5 + 1;
 
+    Ogre::Vector3 spawn_point, player_position;
+    spawn_point = Ogre::Vector3(tile_x_sp*-1, y_pos, tile_y_sp);
+    player_position = player1->getPos();
 
-    //cout << "\nChosen [x,y]: [" << tile_x_sp << ", " << tile_y_sp << "]\n";
-    
-    //cout << "CHOSEN TILE: " << (short) level->getTile(tile_x_sp/5, tile_y_sp/5) << "\n";
-    Ogre::Vector3 spawn_point;
-        
+    while ((spawn_point - player_position).length() <= 10)
+    {
+        tile_x_sp = rand() % level->x*5 + 1;
+        tile_y_sp = rand() % level->y*5 + 1;
+        spawn_point = Ogre::Vector3(tile_x_sp*-1, y_pos, tile_y_sp);
+    }
+
     //Check validity of chosen tile, currently this should always work, should put in while loop when more validity conditions are implemented
     //Further validity checks: no other monster on tile, not near player, only tiles with no walls
-    if((short)level->getTile(tile_x_sp/5, tile_y_sp/5) != 0)
-    {
-        cout << "VALID TILE\n";
-        
-        //Make spawn point the approximate position of the tile
-        //Currently hacked the y coordinate to bring ninja's closer to the ground    
-        spawn_point = Ogre::Vector3(tile_x_sp*-1, y_pos, tile_y_sp);
-    }   
     
     //create new monster
     Monster* m = new Monster(mSceneMgr, spawn_point);
@@ -382,6 +378,7 @@ bool BaseApplication::frameRenderingQueued(const Ogre::FrameEvent& evt)
         }
 
         //Monster Code
+        /*
         int j;
         for(j = 0; j < level->num_monsters_left; j++)
         {
@@ -392,6 +389,7 @@ bool BaseApplication::frameRenderingQueued(const Ogre::FrameEvent& evt)
                 //monster_list.at(j)->printpos();
             monster_list.at(j)->updateMonsters(level, evt);
         }
+        */
         //cout << "monsters updated\n";
     }
     processInput();// move up?
@@ -425,10 +423,10 @@ bool BaseApplication::frameRenderingQueued(const Ogre::FrameEvent& evt)
             }
         }
 
-      sim->stepSimulation(evt.timeSinceLastFrame,10,1./60.);
+      sim->stepSimulation(evt, evt.timeSinceLastFrame,10,1./60.);
 
       //GAME WIN
-      if (level->num_monsters_left == 0)
+      if (level->num_monsters_left <= 0)
       {
         mTrayMgr->showCursor();
         bgmusic->playOrPause();
@@ -441,7 +439,7 @@ bool BaseApplication::frameRenderingQueued(const Ogre::FrameEvent& evt)
       }
 
       //GAME LOSE
-      else if (player1->player_health == 0)
+      else if (player1->player_health <= 0)
       {
         mTrayMgr->showCursor();
         bgmusic->playOrPause();
@@ -466,10 +464,6 @@ bool BaseApplication::frameRenderingQueued(const Ogre::FrameEvent& evt)
       phi-=3.1415926-1.3;
 
       cameraPos=player1->getPos()/*-(3+scrollMod)*cameraDir*/ + Ogre::Vector3(0,1.7,0) + 1.6*cameraOffset;
-      // cout <<"cameraPos:";
-      // printOV3(cameraPos);
-      // cout <<"playerPos:";
-      // player1->printpos();
 
 
       mCamera->setPosition(cameraPos);

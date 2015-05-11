@@ -28,6 +28,7 @@ protected:
 
 
 public:
+    Ogre::Vector3 m_directionVector;
     Ogre::Real power;
     bool hit;
     GameObject();

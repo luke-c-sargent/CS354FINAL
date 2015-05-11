@@ -39,7 +39,7 @@ public:
 	void killMonster();
 	void changeDestination(Level* level, Player* p = NULL);
 	
-	
+	void updateTransform();
 
 	//Monster Spawn Points 
 	/*	MIGHT MOVE THIS TO DIFFERENT Location	*/
@@ -60,7 +60,7 @@ public:
 	bool m_seePlayer; //player is in monster's range/line of sight
 	Ogre::Vector3 m_lastSeenPosition; //last position monster saw the player in	
 	Ogre::Vector3 m_destinationVector; //monster's current destination
-	Ogre::Vector3 m_directionVector; //direction the robot is facing/moving
+	//Ogre::Vector3 m_directionVector; //direction the robot is facing/moving
 	Ogre::Real m_distance; //distance left until monster reaches current destination
 	Ogre::Real m_walkSpeed;
 	std::deque<Ogre::Vector3> m_walkList; //locations that Monster wants to go to

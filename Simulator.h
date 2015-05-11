@@ -22,7 +22,7 @@ protected:
     std::deque<GameObject*> objList;
 public:
     Simulator();
-    void stepSimulation(const Ogre::Real elapsedTime, int maxSubSteps, const Ogre::Real fixedTimestep);
+    void stepSimulation(const Ogre::FrameEvent& evt, const Ogre::Real elapsedTime, int maxSubSteps, const Ogre::Real fixedTimestep);
     bool checkHit(int o);
     btDiscreteDynamicsWorld* getWorld();
     void addObject(GameObject* o);
