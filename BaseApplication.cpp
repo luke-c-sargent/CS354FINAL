@@ -395,11 +395,34 @@ bool BaseApplication::frameRenderingQueued(const Ogre::FrameEvent& evt)
     if(state==Play){
       //set player speed
         //cout << player1->playerLV.x()<<","<<player1->playerLV.z()<<"\n";
-      player1->getBody()->setLinearVelocity(btVector3(player1->playerLV.x(),0.000001,player1->playerLV.z()));
-      //cout << phi << "\n";
-      player1->setRotation(btQuaternion(btVector3(0,1,0),phi + 3.1415926));
-      //set projectile speeds
-      /*for(int i=0; i < bulletVector.size();i++){
+        if (player1->playerLV.x() == 0 && player1->playerLV.z()==0)
+        {
+            //player is not moving
+            //change animation state to idle
+            Ogre::Entity* entity = player1->p_entity;            
+            player1->p_animState = player1->p_entity->getAnimationState("Idle1");
+            
+        }
+        else
+        {
+            //player is moving            
+            player1->p_animState = player1->p_entity->getAnimationState("Walk");
+        }
+
+        if(playerState == PlayerState::Fire)
+        {
+            player1->p_animState = player1->p_entity->getAnimationState("Attack3");                    
+            //player1->p_animState->addTime(evt.timeSinceLastFrame);
+        }
+        player1->p_animState->setLoop(true);
+        player1->p_animState->setEnabled(true);
+        player1->p_animState->addTime(evt.timeSinceLastFrame);
+
+        player1->getBody()->setLinearVelocity(btVector3(player1->playerLV.x(),0.000001,player1->playerLV.z()));
+        //cout << phi << "\n";
+        player1->setRotation(btQuaternion(btVector3(0,1,0),phi + 3.1415926));
+        //set projectile speeds
+        /*for(int i=0; i < bulletVector.size();i++){
         btVector3 lv = (bulletVector[i])->linvel();
 
         bulletVector[i]->getBody()->setLinearVelocity(lv);
@@ -760,10 +783,12 @@ bool BaseApplication::mousePressed( const OIS::MouseEvent &arg, OIS::MouseButton
     if (state==Play){
         if (id == OIS::MB_Left)
         {
+
             last_playerState = PlayerState::Fire;
             if (playerState != PlayerState::Reload)
             {
                 playerState = PlayerState::Fire;
+
             }
         }
     }

@@ -40,16 +40,16 @@ Player::Player(Ogre::SceneManager* smp, Ogre::String inname, Ogre::Vector3 start
     //bind player
 
     rootNode=sceneMgr->getRootSceneNode()->createChildSceneNode(name + "Node");
-    Ogre::Entity * entity=sceneMgr->createEntity(inname,"ninja.mesh");
-    rootNode->attachObject(entity);
+    p_entity=sceneMgr->createEntity(inname,"ninja.mesh");
+    rootNode->attachObject(p_entity);
 
     //purdiness
-    entity->setCastShadows(true);
+    p_entity->setCastShadows(true);
     std::string namest = name;
     if(namest.compare("player")==0)
-      entity->setMaterialName("PlayerWire");
+      p_entity->setMaterialName("PlayerWire");
     else
-        entity->setMaterialName("PlayerWire2");
+        p_entity->setMaterialName("PlayerWire2");
     rootNode->translate(position.getX(),position.getY()-1.2,position.getZ());
     rootNode->scale(1.0/100.,1.0/100.,1.0/100.);
 

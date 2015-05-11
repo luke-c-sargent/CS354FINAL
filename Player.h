@@ -18,6 +18,8 @@ public:
     void setLV(Ogre::Vector3 lvin);
     Ogre::Real player_health;
 
+    Ogre::Entity* p_entity;
+    Ogre::AnimationState* p_animState;
     // PlayerState playerState;
     // WeaponState weapon;
 };

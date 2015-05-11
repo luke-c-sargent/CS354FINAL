@@ -92,3 +92,8 @@ Ogre::Vector3 GameObject::getPos(){
 void GameObject::setRotation(btQuaternion rot){
   rotation=rot;
 }
+
+Ogre::Entity* GameObject::getEntity()
+{
+  return geom;
+}

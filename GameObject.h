@@ -46,5 +46,6 @@ public:
     btVector3 getPosbt();
     void setPos(btVector3 pos);
     void setRotation(btQuaternion rot);
+    Ogre::Entity* getEntity();
 
 };
