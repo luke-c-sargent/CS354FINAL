@@ -9,6 +9,7 @@
 
 #include "Player.h"
 #include "Level.h"
+#include "MonsterSound.h"
 
 using std::cout;
 
@@ -79,6 +80,8 @@ public:
 	Ogre::Real m_range; //if player comes within this distance from monster, pursuit is triggered
 	Ogre::Real m_attack; //strength
 	Ogre::Real m_attackRange; //monster physically attacks when within this range
+	MonsterSound * monstersound;
+
 
 
 /*

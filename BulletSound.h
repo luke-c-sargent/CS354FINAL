@@ -7,17 +7,14 @@
 
 using std::cout;
 
-class BGMusic{
+class BulletSound{
 public:  
-	BGMusic();
-	virtual ~BGMusic();
+	BulletSound();
+	virtual ~BulletSound();
 	bool loadMedia();
 	void closeMedia();
-	void playOrPause();
-	void start();
-	void win();
-	void lose();
-	void monster_aggro();
+	void strike();
+	void miss();
 
 protected:	
 	int x = 0;
@@ -27,9 +24,6 @@ private:
 	bool success = true;
 
 	//The music that will be played
-	Mix_Music *bgmusic = NULL;
-	Mix_Chunk *start_sound = NULL;
-	Mix_Chunk *victory_sound = NULL;
-	Mix_Chunk *lose_sound = NULL;
-	Mix_Chunk *aggro_sound = NULL;
+	Mix_Chunk *hit_enemy = NULL;
+	Mix_Chunk *hit_wall = NULL;
 };

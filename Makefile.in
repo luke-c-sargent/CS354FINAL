@@ -105,7 +105,8 @@ am_OgreApp_OBJECTS = OgreApp-BaseApplication.$(OBJEXT) \
 	OgreApp-Level.$(OBJEXT) OgreApp-Tile.$(OBJEXT) \
 	OgreApp-Weapon.$(OBJEXT) OgreApp-Monster.$(OBJEXT) \
 	OgreApp-BGMusic.$(OBJEXT) OgreApp-WeaponSound.$(OBJEXT) \
-	OgreApp-Player.$(OBJEXT)
+	OgreApp-Player.$(OBJEXT) OgreApp-BulletSound.$(OBJEXT) \
+	OgreApp-MonsterSound.$(OBJEXT)
 OgreApp_OBJECTS = $(am_OgreApp_OBJECTS)
 am__DEPENDENCIES_1 =
 OgreApp_DEPENDENCIES = $(am__DEPENDENCIES_1) $(am__DEPENDENCIES_1) \
@@ -338,8 +339,8 @@ top_build_prefix = @top_build_prefix@
 top_builddir = @top_builddir@
 top_srcdir = @top_srcdir@
 ACLOCAL_AMFLAGS = -I m4
-noinst_HEADERS = BaseApplication.h GameObject.h Simulator.h Level.h Tile.h Weapon.h Monster.h BGMusic.h WeaponSound.h Player.h
-OgreApp_SOURCES = BaseApplication.cpp GameObject.cpp Simulator.cpp Level.cpp Tile.cpp Weapon.cpp Monster.cpp BGMusic.cpp WeaponSound.cpp Player.cpp
+noinst_HEADERS = BaseApplication.h GameObject.h Simulator.h Level.h Tile.h Weapon.h Monster.h BGMusic.h WeaponSound.h Player.h BulletSound.h MonsterSound.h
+OgreApp_SOURCES = BaseApplication.cpp GameObject.cpp Simulator.cpp Level.cpp Tile.cpp Weapon.cpp Monster.cpp BGMusic.cpp WeaponSound.cpp Player.cpp BulletSound.cpp MonsterSound.cpp
 OgreApp_CPPFLAGS = -I$(top_srcdir)
 OgreApp_CXXFLAGS = $(OGRE_CFLAGS) $(OIS_CFLAGS) $(bullet_CFLAGS) $(CEGUI_CFLAGS) $(CEGUI_OGRE_CFLAGS) $(sdl_CFLAGS)
 OgreApp_LDADD = $(OGRE_LIBS) $(OIS_LIBS) $(bullet_LIBS) $(CEGUI_LIBS) $(CEGUI_OGRE_LIBS) $(sdl_LIBS)
@@ -462,9 +463,11 @@ distclean-compile:
 
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/OgreApp-BGMusic.Po@am__quote@
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/OgreApp-BaseApplication.Po@am__quote@
+@AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/OgreApp-BulletSound.Po@am__quote@
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/OgreApp-GameObject.Po@am__quote@
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/OgreApp-Level.Po@am__quote@
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/OgreApp-Monster.Po@am__quote@
+@AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/OgreApp-MonsterSound.Po@am__quote@
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/OgreApp-Player.Po@am__quote@
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/OgreApp-Simulator.Po@am__quote@
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/OgreApp-Tile.Po@am__quote@
@@ -631,6 +634,34 @@ OgreApp-Player.obj: Player.cpp
 @AMDEP_TRUE@@am__fastdepCXX_FALSE@	$(AM_V_CXX)source='Player.cpp' object='OgreApp-Player.obj' libtool=no @AMDEPBACKSLASH@
 @AMDEP_TRUE@@am__fastdepCXX_FALSE@	DEPDIR=$(DEPDIR) $(CXXDEPMODE) $(depcomp) @AMDEPBACKSLASH@
 @am__fastdepCXX_FALSE@	$(AM_V_CXX@am__nodep@)$(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(OgreApp_CPPFLAGS) $(CPPFLAGS) $(OgreApp_CXXFLAGS) $(CXXFLAGS) -c -o OgreApp-Player.obj `if test -f 'Player.cpp'; then $(CYGPATH_W) 'Player.cpp'; else $(CYGPATH_W) '$(srcdir)/Player.cpp'; fi`
+
+OgreApp-BulletSound.o: BulletSound.cpp
+@am__fastdepCXX_TRUE@	$(AM_V_CXX)$(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(OgreApp_CPPFLAGS) $(CPPFLAGS) $(OgreApp_CXXFLAGS) $(CXXFLAGS) -MT OgreApp-BulletSound.o -MD -MP -MF $(DEPDIR)/OgreApp-BulletSound.Tpo -c -o OgreApp-BulletSound.o `test -f 'BulletSound.cpp' || echo '$(srcdir)/'`BulletSound.cpp
+@am__fastdepCXX_TRUE@	$(AM_V_at)$(am__mv) $(DEPDIR)/OgreApp-BulletSound.Tpo $(DEPDIR)/OgreApp-BulletSound.Po
+@AMDEP_TRUE@@am__fastdepCXX_FALSE@	$(AM_V_CXX)source='BulletSound.cpp' object='OgreApp-BulletSound.o' libtool=no @AMDEPBACKSLASH@
+@AMDEP_TRUE@@am__fastdepCXX_FALSE@	DEPDIR=$(DEPDIR) $(CXXDEPMODE) $(depcomp) @AMDEPBACKSLASH@
+@am__fastdepCXX_FALSE@	$(AM_V_CXX@am__nodep@)$(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(OgreApp_CPPFLAGS) $(CPPFLAGS) $(OgreApp_CXXFLAGS) $(CXXFLAGS) -c -o OgreApp-BulletSound.o `test -f 'BulletSound.cpp' || echo '$(srcdir)/'`BulletSound.cpp
+
+OgreApp-BulletSound.obj: BulletSound.cpp
+@am__fastdepCXX_TRUE@	$(AM_V_CXX)$(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(OgreApp_CPPFLAGS) $(CPPFLAGS) $(OgreApp_CXXFLAGS) $(CXXFLAGS) -MT OgreApp-BulletSound.obj -MD -MP -MF $(DEPDIR)/OgreApp-BulletSound.Tpo -c -o OgreApp-BulletSound.obj `if test -f 'BulletSound.cpp'; then $(CYGPATH_W) 'BulletSound.cpp'; else $(CYGPATH_W) '$(srcdir)/BulletSound.cpp'; fi`
+@am__fastdepCXX_TRUE@	$(AM_V_at)$(am__mv) $(DEPDIR)/OgreApp-BulletSound.Tpo $(DEPDIR)/OgreApp-BulletSound.Po
+@AMDEP_TRUE@@am__fastdepCXX_FALSE@	$(AM_V_CXX)source='BulletSound.cpp' object='OgreApp-BulletSound.obj' libtool=no @AMDEPBACKSLASH@
+@AMDEP_TRUE@@am__fastdepCXX_FALSE@	DEPDIR=$(DEPDIR) $(CXXDEPMODE) $(depcomp) @AMDEPBACKSLASH@
+@am__fastdepCXX_FALSE@	$(AM_V_CXX@am__nodep@)$(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(OgreApp_CPPFLAGS) $(CPPFLAGS) $(OgreApp_CXXFLAGS) $(CXXFLAGS) -c -o OgreApp-BulletSound.obj `if test -f 'BulletSound.cpp'; then $(CYGPATH_W) 'BulletSound.cpp'; else $(CYGPATH_W) '$(srcdir)/BulletSound.cpp'; fi`
+
+OgreApp-MonsterSound.o: MonsterSound.cpp
+@am__fastdepCXX_TRUE@	$(AM_V_CXX)$(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(OgreApp_CPPFLAGS) $(CPPFLAGS) $(OgreApp_CXXFLAGS) $(CXXFLAGS) -MT OgreApp-MonsterSound.o -MD -MP -MF $(DEPDIR)/OgreApp-MonsterSound.Tpo -c -o OgreApp-MonsterSound.o `test -f 'MonsterSound.cpp' || echo '$(srcdir)/'`MonsterSound.cpp
+@am__fastdepCXX_TRUE@	$(AM_V_at)$(am__mv) $(DEPDIR)/OgreApp-MonsterSound.Tpo $(DEPDIR)/OgreApp-MonsterSound.Po
+@AMDEP_TRUE@@am__fastdepCXX_FALSE@	$(AM_V_CXX)source='MonsterSound.cpp' object='OgreApp-MonsterSound.o' libtool=no @AMDEPBACKSLASH@
+@AMDEP_TRUE@@am__fastdepCXX_FALSE@	DEPDIR=$(DEPDIR) $(CXXDEPMODE) $(depcomp) @AMDEPBACKSLASH@
+@am__fastdepCXX_FALSE@	$(AM_V_CXX@am__nodep@)$(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(OgreApp_CPPFLAGS) $(CPPFLAGS) $(OgreApp_CXXFLAGS) $(CXXFLAGS) -c -o OgreApp-MonsterSound.o `test -f 'MonsterSound.cpp' || echo '$(srcdir)/'`MonsterSound.cpp
+
+OgreApp-MonsterSound.obj: MonsterSound.cpp
+@am__fastdepCXX_TRUE@	$(AM_V_CXX)$(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(OgreApp_CPPFLAGS) $(CPPFLAGS) $(OgreApp_CXXFLAGS) $(CXXFLAGS) -MT OgreApp-MonsterSound.obj -MD -MP -MF $(DEPDIR)/OgreApp-MonsterSound.Tpo -c -o OgreApp-MonsterSound.obj `if test -f 'MonsterSound.cpp'; then $(CYGPATH_W) 'MonsterSound.cpp'; else $(CYGPATH_W) '$(srcdir)/MonsterSound.cpp'; fi`
+@am__fastdepCXX_TRUE@	$(AM_V_at)$(am__mv) $(DEPDIR)/OgreApp-MonsterSound.Tpo $(DEPDIR)/OgreApp-MonsterSound.Po
+@AMDEP_TRUE@@am__fastdepCXX_FALSE@	$(AM_V_CXX)source='MonsterSound.cpp' object='OgreApp-MonsterSound.obj' libtool=no @AMDEPBACKSLASH@
+@AMDEP_TRUE@@am__fastdepCXX_FALSE@	DEPDIR=$(DEPDIR) $(CXXDEPMODE) $(depcomp) @AMDEPBACKSLASH@
+@am__fastdepCXX_FALSE@	$(AM_V_CXX@am__nodep@)$(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(OgreApp_CPPFLAGS) $(CPPFLAGS) $(OgreApp_CXXFLAGS) $(CXXFLAGS) -c -o OgreApp-MonsterSound.obj `if test -f 'MonsterSound.cpp'; then $(CYGPATH_W) 'MonsterSound.cpp'; else $(CYGPATH_W) '$(srcdir)/MonsterSound.cpp'; fi`
 
 mostlyclean-libtool:
 	-rm -f *.lo

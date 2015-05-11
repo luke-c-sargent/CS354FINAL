@@ -7,16 +7,12 @@
 
 using std::cout;
 
-class BGMusic{
+class MonsterSound{
 public:  
-	BGMusic();
-	virtual ~BGMusic();
+	MonsterSound();
+	virtual ~MonsterSound();
 	bool loadMedia();
 	void closeMedia();
-	void playOrPause();
-	void start();
-	void win();
-	void lose();
 	void monster_aggro();
 
 protected:	
@@ -27,9 +23,5 @@ private:
 	bool success = true;
 
 	//The music that will be played
-	Mix_Music *bgmusic = NULL;
-	Mix_Chunk *start_sound = NULL;
-	Mix_Chunk *victory_sound = NULL;
-	Mix_Chunk *lose_sound = NULL;
 	Mix_Chunk *aggro_sound = NULL;
 };

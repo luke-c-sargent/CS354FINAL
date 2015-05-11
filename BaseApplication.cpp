@@ -139,6 +139,7 @@ void BaseApplication::createScene(void)
 
     //setup music
     bgmusic = new BGMusic();
+    bgmusic->start();
 
     //setup weapons
 
@@ -430,6 +431,8 @@ bool BaseApplication::frameRenderingQueued(const Ogre::FrameEvent& evt)
       if (level->num_monsters_left == 0)
       {
         mTrayMgr->showCursor();
+        bgmusic->playOrPause();
+        bgmusic->win();
         state_label = mTrayMgr->createLabel(OgreBites::TL_CENTER, "Win", "You Win! :)", 400);
         continue_button = mTrayMgr->createButton(OgreBites::TL_CENTER, "Continue", "Next Level");
         restart_button = mTrayMgr->createButton(OgreBites::TL_CENTER, "Restart", "Restart Level");
@@ -437,9 +440,12 @@ bool BaseApplication::frameRenderingQueued(const Ogre::FrameEvent& evt)
         state = Win;
       }
 
+      //GAME LOSE
       else if (player1->player_health == 0)
       {
         mTrayMgr->showCursor();
+        bgmusic->playOrPause();
+        bgmusic->lose();
         state_label = mTrayMgr->createLabel(OgreBites::TL_CENTER, "Lose", "You Died! :(", 400);
         restart_button = mTrayMgr->createButton(OgreBites::TL_CENTER, "Restart", "Try Again");
         quit_button = mTrayMgr->createButton(OgreBites::TL_CENTER, "Exit", "Quit");
@@ -460,10 +466,10 @@ bool BaseApplication::frameRenderingQueued(const Ogre::FrameEvent& evt)
       phi-=3.1415926-1.3;
 
       cameraPos=player1->getPos()/*-(3+scrollMod)*cameraDir*/ + Ogre::Vector3(0,1.7,0) + 1.6*cameraOffset;
-      cout <<"cameraPos:";
-      printOV3(cameraPos);
-      cout <<"playerPos:";
-      player1->printpos();
+      // cout <<"cameraPos:";
+      // printOV3(cameraPos);
+      // cout <<"playerPos:";
+      // player1->printpos();
 
 
       mCamera->setPosition(cameraPos);
@@ -515,6 +521,7 @@ bool BaseApplication::keyPressed( const OIS::KeyEvent &arg )
             resume_button = mTrayMgr->createButton(OgreBites::TL_CENTER, "Resume", "Resume");
             restart_button = mTrayMgr->createButton(OgreBites::TL_CENTER, "Restart", "Restart Level");
             quit_button = mTrayMgr->createButton(OgreBites::TL_CENTER, "Exit", "Quit");
+            bgmusic->playOrPause();
         }
 
         else if(arg.key == OIS::KC_M)
@@ -596,6 +603,7 @@ bool BaseApplication::keyPressed( const OIS::KeyEvent &arg )
             mTrayMgr->destroyWidget(restart_button);
             mTrayMgr->destroyWidget(quit_button);
             mTrayMgr->hideCursor();
+            bgmusic->playOrPause();
             state = Play;
         }
     }
@@ -659,6 +667,7 @@ void BaseApplication::buttonHit (OgreBites::Button *button)
         mTrayMgr->destroyWidget(restart_button);
         mTrayMgr->destroyWidget(quit_button);
         mTrayMgr->hideCursor();
+        bgmusic->playOrPause();
         state = Play;
     }
     else if (button == continue_button)
@@ -671,6 +680,7 @@ void BaseApplication::buttonHit (OgreBites::Button *button)
         mTrayMgr->destroyWidget(continue_button);
         mTrayMgr->destroyWidget(quit_button);
         mTrayMgr->hideCursor();
+        bgmusic->playOrPause();
         state = Play;
     }
     else if (button == restart_button)
@@ -685,6 +695,7 @@ void BaseApplication::buttonHit (OgreBites::Button *button)
         Ogre::Vector3 startPos=Ogre::Vector3(-10,1,0);
         btVector3 ori=btVector3(startPos.x,startPos.y,startPos.z);
         player1->setPos(btVector3(ori));
+        bgmusic->playOrPause();
 
         // for (int i = 0; i < level->num_monsters; i++)
         // {

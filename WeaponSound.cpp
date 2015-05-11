@@ -77,6 +77,10 @@ void WeaponSound::closeMedia()
 {
     Mix_FreeChunk( gunshot );
     gunshot = NULL;
+    Mix_FreeChunk( reload_sound );
+    reload_sound = NULL;
+    Mix_FreeChunk( switch_sound );
+    switch_sound = NULL;
     //Quit SDL subsystems
     Mix_Quit();
     SDL_Quit();

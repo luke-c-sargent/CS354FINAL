@@ -89,6 +89,7 @@ Monster::Monster(Ogre::SceneManager* sMgr, Ogre::Vector3 spawn_point)
     btTransform btt;
     ms->getWorldTransform(btt);
 
+    monstersound = new MonsterSound();
 }
 
 Monster::~Monster()
@@ -123,6 +124,7 @@ void Monster::changeState(MONSTER_STATE state, Level* l, Player* player)
 	{
 		cout << "\nCHANGE TO STATE_ATTACK\n";			
 		m_walkSpeed = 3.5f;
+		monstersound->monster_aggro();
 		//btVector3 player_pos = player->getPosbt();
 		//m_destinationVector = Ogre::Vector3(player_pos.getX(), player_pos.getY(), player_pos.getZ());
 	}

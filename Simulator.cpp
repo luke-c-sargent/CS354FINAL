@@ -74,6 +74,7 @@ void Simulator::stepSimulation(const Ogre::Real elapsedTime, int maxSubSteps, co
               if((objList[i])->hit)
               {
                 //bullet hit the ninja
+                ((Bullet *)objList[i])->bulletsound->strike();
                 deadObjects.push_back(i);
                 objList[i]->hit = false;             
                 //((Monster*)objList[j])->killMonster();
@@ -86,7 +87,10 @@ void Simulator::stepSimulation(const Ogre::Real elapsedTime, int maxSubSteps, co
           dynamicsWorld->contactPairTest(a->getBody(),objList[i]->getBody(),*ccp);
 
           if(((Bullet*)objList[i])->hit)
+          {
             deadObjects.push_back(i);
+            ((Bullet *)objList[i])->bulletsound->miss();
+          }
           else
             objList[i]->updateTransform();
 
@@ -100,7 +104,7 @@ void Simulator::stepSimulation(const Ogre::Real elapsedTime, int maxSubSteps, co
 
           dynamicsWorld->contactPairTest(objList[i]->getBody(), objList[0]->getBody(), *ccp);
           if ((objList[0])->hit){
-            //((Player*)objList[0])->player_health -= 1.0;
+            ((Player*)objList[0])->player_health -= 1.0;
           }
           
           for(int j = 2; j < objList.size(); j++)

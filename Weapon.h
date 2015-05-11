@@ -5,6 +5,7 @@
 #include "GameEnums.h"
 #include <stdio.h>
 #include "WeaponSound.h"
+#include "BulletSound.h"
 #include <btBulletDynamicsCommon.h>
 
 using std::cout;
@@ -74,6 +75,7 @@ struct Bullet:public GameObject{
     power = weapon->power;
     //physics stuffs
     inertia= btVector3(0,0,0);
+    bulletsound = new BulletSound();
     mass=weapon->mass;
     shape=weapon->col_shape;
     weapon->col_shape->calculateLocalInertia(mass,inertia);
@@ -110,4 +112,5 @@ struct Bullet:public GameObject{
   Weapon * weapon;
   btVector3 direction;
   float age;
+  BulletSound * bulletsound;
 };
