@@ -51,7 +51,6 @@ Player::Player(Ogre::SceneManager* smp, Ogre::String inname, Ogre::Vector3 start
     else
         entity->setMaterialName("PlayerWire2");
     rootNode->translate(position.getX(),position.getY()-1.2,position.getZ());
-
     rootNode->scale(1.0/100.,1.0/100.,1.0/100.);
 
     //bt values

@@ -28,6 +28,7 @@ public:
     void addObject(GameObject* o);
     GameObject * getObjectPtr(int i);
     int getObjectListSize();
+    void clearObjectList();
 
     btCollisionWorld::ClosestRayResultCallback RayCallBack(btVector3 start, btVector3 end);
 };

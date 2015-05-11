@@ -46,6 +46,7 @@ public:
   int getTileMapSize();
 
   int num_monsters;
+  int num_monsters_left;
 
 
   int x,y,z;

@@ -234,7 +234,7 @@ void Simulator::stepSimulation(const Ogre::Real elapsedTime, int maxSubSteps, co
         //delete objList[deadObjects[i]];
 
         go->getSMP()->destroySceneNode(go->getNode());
-        ((Level*)objList[1])->num_monsters--;
+        ((Level*)objList[1])->num_monsters_left--;
         objList.erase(objList.begin()+deadObjects[i]);
       }
       
@@ -258,6 +258,19 @@ void Simulator::addObject (GameObject* o) {
 
 GameObject * Simulator::getObjectPtr(int i){
         return objList[i];
+}
+
+void Simulator::clearObjectList ()
+{
+  for (int i = objList.size() - 1; i >= 2; i--)
+  {
+    cout << i << "\n";
+    GameObject * go=(GameObject*)objList[i];
+    cout << "Deleting Object: " << go->getName() << "\n";
+         //delete objList[deadObjects[i]];        
+    go->getSMP()->destroySceneNode(go->getNode());
+    objList.erase(objList.begin()+i);
+  }
 }
 
 int Simulator::getObjectListSize(){

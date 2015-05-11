@@ -382,7 +382,7 @@ bool BaseApplication::frameRenderingQueued(const Ogre::FrameEvent& evt)
 
         //Monster Code
         int j;
-        for(j = 0; j < level->num_monsters; j++)
+        for(j = 0; j < level->num_monsters_left; j++)
         {
             //Monster* m_up = monster_list[j];
             //m_up->m_animState->addTime(evt.timeSinceLastFrame);
@@ -401,7 +401,7 @@ bool BaseApplication::frameRenderingQueued(const Ogre::FrameEvent& evt)
         //cout << player1->playerLV.x()<<","<<player1->playerLV.z()<<"\n";
       player1->getBody()->setLinearVelocity(btVector3(player1->playerLV.x(),0.000001,player1->playerLV.z()));
       //cout << phi << "\n";
-      player1->setRotation(btQuaternion(btVector3(0,1,0),phi ));
+      player1->setRotation(btQuaternion(btVector3(0,1,0),phi + 3.1415926));
       //set projectile speeds
       /*for(int i=0; i < bulletVector.size();i++){
         btVector3 lv = (bulletVector[i])->linvel();
@@ -427,7 +427,7 @@ bool BaseApplication::frameRenderingQueued(const Ogre::FrameEvent& evt)
       sim->stepSimulation(evt.timeSinceLastFrame,10,1./60.);
 
       //GAME WIN
-      if (level->num_monsters == 0)
+      if (level->num_monsters_left == 0)
       {
         mTrayMgr->showCursor();
         state_label = mTrayMgr->createLabel(OgreBites::TL_CENTER, "Win", "You Win! :)", 400);
@@ -456,7 +456,7 @@ bool BaseApplication::frameRenderingQueued(const Ogre::FrameEvent& evt)
       float scrollMod=scrollMax*(mz/scrollSens);
         //jimmyjam
       phi+=3.1415926-1.3;
-      Ogre::Vector3 cameraOffset=(Ogre::Vector3((cos(phi)),0,sin(-1*phi)));
+      Ogre::Vector3 cameraOffset=(Ogre::Vector3(cos(theta)*cos(phi),-sin(theta),cos(theta)*sin(-1*phi)));
       phi-=3.1415926-1.3;
 
       cameraPos=player1->getPos()/*-(3+scrollMod)*cameraDir*/ + Ogre::Vector3(0,1.7,0) + 1.6*cameraOffset;
@@ -467,9 +467,9 @@ bool BaseApplication::frameRenderingQueued(const Ogre::FrameEvent& evt)
 
 
       mCamera->setPosition(cameraPos);
-      mCamera->lookAt(/*player1->getPos()*/cameraPos+cameraDir);
+      mCamera->lookAt(cameraPos+cameraDir);
       scoreboard->setParamValue(3, std::to_string((*equippedweapon)->ammo_left()) + "/" + std::to_string((*equippedweapon)->total_ammo_left()));
-      scoreboard->setParamValue(4, std::to_string(level->num_monsters));
+      scoreboard->setParamValue(4, std::to_string(level->num_monsters_left));
       //cout <<cameraDir.x<<","<<cameraDir.y<<","<<cameraDir.z<<"\n";
     }
 
@@ -656,6 +656,7 @@ void BaseApplication::buttonHit (OgreBites::Button *button)
         mTrayMgr->clearTray(OgreBites::TL_CENTER);
         mTrayMgr->destroyWidget(state_label);
         mTrayMgr->destroyWidget(resume_button);
+        mTrayMgr->destroyWidget(restart_button);
         mTrayMgr->destroyWidget(quit_button);
         mTrayMgr->hideCursor();
         state = Play;
@@ -676,7 +677,39 @@ void BaseApplication::buttonHit (OgreBites::Button *button)
     {
         // Destroy current scene, regenerate level
 
-        mShutDown = true;
+        sim->clearObjectList();
+        //Monster Code
+
+        srand(time(0));
+
+        Ogre::Vector3 startPos=Ogre::Vector3(-10,1,0);
+        btVector3 ori=btVector3(startPos.x,startPos.y,startPos.z);
+        player1->setPos(btVector3(ori));
+
+        // for (int i = 0; i < level->num_monsters; i++)
+        // {
+        //     Monster* m = spawnMonster();
+        //     m->changeState(Monster::STATE_WANDER, level, player1);
+        //     monster_list.push_back(m);
+        // }
+
+        // //============
+
+        // for (int i = 0; i < level->num_monsters; i++)
+        // {
+        //     sim->addObject(monster_list.at(i));
+        // }
+
+        // level->num_monsters_left = level->num_monsters;
+
+        mTrayMgr->clearTray(OgreBites::TL_CENTER);
+        mTrayMgr->destroyWidget(state_label);
+        mTrayMgr->destroyWidget(restart_button);
+        mTrayMgr->destroyWidget(resume_button);
+        mTrayMgr->destroyWidget(quit_button);
+        mTrayMgr->hideCursor();
+        last_playerState = PlayerState::NoFire;
+        state = Play;
     }
     else if (button == quit_button)
     {
@@ -717,14 +750,12 @@ bool BaseApplication::mousePressed( const OIS::MouseEvent &arg, OIS::MouseButton
 
 bool BaseApplication::mouseReleased( const OIS::MouseEvent &arg, OIS::MouseButtonID id )
 {
-    if (state==Play){
-        if (id == OIS::MB_Left)
+    if (id == OIS::MB_Left)
+    {
+        last_playerState = PlayerState::NoFire;
+        if (playerState != PlayerState::Reload)
         {
-            last_playerState = PlayerState::NoFire;
-            if (playerState != PlayerState::Reload)
-            {
-                playerState = PlayerState::NoFire;
-            }
+            playerState = PlayerState::NoFire;
         }
     }
     if (mTrayMgr->injectMouseUp(arg, id)) return true;
