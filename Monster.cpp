@@ -63,7 +63,7 @@ Monster::Monster(Ogre::SceneManager* sMgr, Ogre::Vector3 spawn_point)
 	position = btspawn;
 	//setWalkList();
 
-	rootNode->setScale(0.01, 0.01, 0.01);
+	rootNode->setScale(0.015, 0.015, 0.015);
     rootNode->attachObject(m_entity);
 
 
@@ -112,6 +112,7 @@ void Monster::updateTransform(){
 	  float theta = atan(-1*m_directionVector.z/m_directionVector.x);
       Ogre::Quaternion quat = Ogre::Quaternion(Ogre::Radian(theta),Ogre::Vector3::UNIT_Y);
       rootNode->setOrientation(quat);
+      rootNode->translate(0,-1.9,0);
 }
 
 void Monster::changeState(MONSTER_STATE state, Level* l, Player* player)
