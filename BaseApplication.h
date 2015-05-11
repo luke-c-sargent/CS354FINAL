@@ -103,6 +103,7 @@ protected:
     OgreBites::Button* resume_button;
     OgreBites::Button* continue_button;
     OgreBites::Label* state_label;
+    int level_val;
 
     // States
     GameState state;

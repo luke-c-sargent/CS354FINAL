@@ -19,6 +19,7 @@ BaseApplication::BaseApplication(void)
     down(0),
     left(0),
     right(0),
+    level_val(1),
     state(GameState::Main),
     play_button(0),
     restart_button(0),
@@ -101,7 +102,7 @@ void BaseApplication::createScene(void)
     scores.push_back("Music");
 
     scoreboard = mTrayMgr->createParamsPanel(OgreBites::TL_TOPLEFT, "Scoreboard", 250, scores);
-    scoreboard->setParamValue(0, "0");
+    scoreboard->setParamValue(0, std::to_string(level_val));
     scoreboard->setParamValue(3, "0");
     scoreboard->setParamValue(4, "0");
     scoreboard->setParamValue(5, "On");
@@ -123,15 +124,11 @@ void BaseApplication::createScene(void)
     {
         Monster* m = spawnMonster();
         m->changeState(Monster::STATE_WANDER, level, player1);
-        monster_list.push_back(m);
+        // monster_list.push_back(m);
+        sim->addObject(m);
     }
 
     //============
-
-    for (int i = 0; i < level->num_monsters; i++)
-    {
-        sim->addObject(monster_list.at(i));
-    }
 
     //setup music
     bgmusic = new BGMusic();
@@ -463,11 +460,12 @@ bool BaseApplication::frameRenderingQueued(const Ogre::FrameEvent& evt)
       Ogre::Vector3 cameraOffset=(Ogre::Vector3(cos(theta)*cos(phi),-sin(theta),cos(theta)*sin(-1*phi)));
       phi-=3.1415926-1.3;
 
-      cameraPos=player1->getPos()/*-(3+scrollMod)*cameraDir*/ + Ogre::Vector3(0,1.7,0) + 1.6*cameraOffset;
+      cameraPos=player1->getPos()-(scrollMod)*cameraDir + Ogre::Vector3(0,1.7,0) + 1.6*cameraOffset;
 
 
       mCamera->setPosition(cameraPos);
       mCamera->lookAt(cameraPos+cameraDir);
+      scoreboard->setParamValue(0, std::to_string(level_val));
       scoreboard->setParamValue(3, std::to_string((*equippedweapon)->ammo_left()) + "/" + std::to_string((*equippedweapon)->total_ammo_left()));
       scoreboard->setParamValue(4, std::to_string(level->num_monsters_left));
       //cout <<cameraDir.x<<","<<cameraDir.y<<","<<cameraDir.z<<"\n";
@@ -666,7 +664,31 @@ void BaseApplication::buttonHit (OgreBites::Button *button)
     }
     else if (button == continue_button)
     {
-        // Destroy current scene, generate next level
+        // Destroy current scene, regenerate level
+
+        sim->clearObjectList();
+        //Monster Code
+
+        srand(time(0));
+
+        // Ogre::Vector3 startPos=Ogre::Vector3(-10,1,0);
+        // btVector3 ori=btVector3(startPos.x,startPos.y,startPos.z);
+        // player1->setPos(btVector3(ori));
+        bgmusic->playOrPause();
+        level->num_monsters = level->num_monsters + 2;
+        level_val++;
+        for (int i = 0; i < level->num_monsters; i++)
+        {
+            Monster* m = spawnMonster();
+            m->changeState(Monster::STATE_WANDER, level, player1);
+            // monster_list.push_back(m);
+            sim->addObject(m);
+        }
+        level->num_monsters_left = level->num_monsters;
+        weapon1->reset_weapon();
+        weapon2->reset_weapon();
+        weapon3->reset_weapon();
+        equippedweapon = &weapon1;
 
         mTrayMgr->clearTray(OgreBites::TL_CENTER);
         mTrayMgr->destroyWidget(state_label);
@@ -674,7 +696,7 @@ void BaseApplication::buttonHit (OgreBites::Button *button)
         mTrayMgr->destroyWidget(continue_button);
         mTrayMgr->destroyWidget(quit_button);
         mTrayMgr->hideCursor();
-        bgmusic->playOrPause();
+        last_playerState = PlayerState::NoFire;
         state = Play;
     }
     else if (button == restart_button)
@@ -686,26 +708,23 @@ void BaseApplication::buttonHit (OgreBites::Button *button)
 
         srand(time(0));
 
-        Ogre::Vector3 startPos=Ogre::Vector3(-10,1,0);
-        btVector3 ori=btVector3(startPos.x,startPos.y,startPos.z);
-        player1->setPos(btVector3(ori));
+        // Ogre::Vector3 startPos=Ogre::Vector3(-10,1,0);
+        // btVector3 ori=btVector3(startPos.x,startPos.y,startPos.z);
+        // player1->setPos(btVector3(ori));
         bgmusic->playOrPause();
 
-        // for (int i = 0; i < level->num_monsters; i++)
-        // {
-        //     Monster* m = spawnMonster();
-        //     m->changeState(Monster::STATE_WANDER, level, player1);
-        //     monster_list.push_back(m);
-        // }
-
-        // //============
-
-        // for (int i = 0; i < level->num_monsters; i++)
-        // {
-        //     sim->addObject(monster_list.at(i));
-        // }
-
-        // level->num_monsters_left = level->num_monsters;
+        for (int i = 0; i < level->num_monsters; i++)
+        {
+            Monster* m = spawnMonster();
+            m->changeState(Monster::STATE_WANDER, level, player1);
+            // monster_list.push_back(m);
+            sim->addObject(m);
+        }
+        level->num_monsters_left = level->num_monsters;
+        weapon1->reset_weapon();
+        weapon2->reset_weapon();
+        weapon3->reset_weapon();
+        equippedweapon = &weapon1;
 
         mTrayMgr->clearTray(OgreBites::TL_CENTER);
         mTrayMgr->destroyWidget(state_label);

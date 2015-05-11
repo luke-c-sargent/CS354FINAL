@@ -75,6 +75,12 @@ Weapon::~Weapon()
 	delete fireTimer;
 }
 
+void Weapon::reset_weapon()
+{
+	ammo = ammo_cap;
+	total_ammo = total_ammo_cap;
+}
+
 int Weapon::ammo_left()
 {
 	return ammo;

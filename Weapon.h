@@ -26,6 +26,7 @@ public:
     void cancel_reload();
     int ammo_left();
     int total_ammo_left();
+    void reset_weapon();
     Ogre::SceneManager* sceneMgr;
     Bullet* spawnBullet(btVector3 playerPos, btVector3 dir,Simulator* simulator);
 

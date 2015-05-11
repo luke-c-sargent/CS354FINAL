@@ -18,7 +18,7 @@ Level::Level(Ogre::SceneManager* smptr)
   tileBodies = new btCompoundShape();
   tileset=new Tile(rootNode, sceneMgr,tileBodies);
   start=Ogre::Vector3(0,0,0);
-  num_monsters = 5;
+  num_monsters = 1;
   num_monsters_left = num_monsters;
   cout << "\n\nLEVEL MADE: "<<rootNode<<"\n\n";
 
