@@ -52,7 +52,8 @@ protected:
     Ogre::Real temp_firetime;
     Ogre::Real temp_reloadtime;
     Ogre::Real temp_switchtime;
-    // Ogre::Real lastCPUtime;    
+    // Ogre::Real lastCPUtime;
+    int spf;    
     int ammo_cap;
     int total_ammo_cap;
     int ammo;

@@ -336,8 +336,8 @@ void BaseApplication::createMenu()
     quit_button = mTrayMgr->createButton(OgreBites::TL_CENTER, "Exit", "Quit");
 
     // Create background material
-    Ogre::MaterialPtr material = Ogre::MaterialManager::getSingleton().create("Background", "General");
-    material->getTechnique(0)->getPass(0)->createTextureUnitState("rockwall.tga");
+    Ogre::MaterialPtr material = Ogre::MaterialManager::getSingleton().create("Background Menu", "General");
+    material->getTechnique(0)->getPass(0)->createTextureUnitState("background.png");
     material->getTechnique(0)->getPass(0)->setDepthCheckEnabled(false);
     material->getTechnique(0)->getPass(0)->setDepthWriteEnabled(false);
     material->getTechnique(0)->getPass(0)->setLightingEnabled(false);
@@ -345,7 +345,7 @@ void BaseApplication::createMenu()
     // Create background rectangle covering the whole screen
     rect = new Ogre::Rectangle2D(true);
     rect->setCorners(-1.0, 1.0, 1.0, -1.0);
-    rect->setMaterial("Background");
+    rect->setMaterial("Background Menu");
      
     // Render the background before everything else
     rect->setRenderQueueGroup(Ogre::RENDER_QUEUE_BACKGROUND);
@@ -360,7 +360,7 @@ void BaseApplication::createMenu()
     node->attachObject(rect);
 
     // Example of background scrolling
-    material->getTechnique(0)->getPass(0)->getTextureUnitState(0)->setScrollAnimation(-0.25, 0.0);
+    // material->getTechnique(0)->getPass(0)->getTextureUnitState(0)->setScrollAnimation(-0.25, 0.0);
 }
 //-------------------------------------------------------------------------------------
 bool BaseApplication::frameRenderingQueued(const Ogre::FrameEvent& evt)
@@ -392,6 +392,7 @@ bool BaseApplication::frameRenderingQueued(const Ogre::FrameEvent& evt)
             {
               cout << "firing!\n";
               btVector3 dir = btVector3(cameraDir.x,cameraDir.y,cameraDir.z);
+              // cout << "\n" << dir << "\n";
               btVector3 pos = player1->getPosbt() + btVector3(0,1,0) + dir/2.0;
               //bulletVector.push_back((*equippedweapon)->spawnBullet(pos,dir,sim));
               (*equippedweapon)->spawnBullet(pos,dir,sim);

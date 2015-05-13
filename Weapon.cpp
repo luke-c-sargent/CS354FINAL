@@ -24,13 +24,14 @@ Weapon::Weapon(const int weapon)
 			name = "Weak";
 			power = 1;
 			ammo = 20;
-			total_ammo = 2000;
+			total_ammo = 100;
 			ammo_cap = 20;
 			total_ammo_cap = 2000;
 			firetime = 100;
 			reloadtime = 3500;
 			bulletSize=0.1;
 			mass=10;
+			spf = 1;
 			break;
 		}
 		case WeaponState::Weapon1:
@@ -45,20 +46,22 @@ Weapon::Weapon(const int weapon)
 			reloadtime = 3500;
 			bulletSize=0.2;
 			mass=100;
+			spf = 1;
 			break;
 		}
 		case WeaponState::Weapon2:
 		{
-			name = "Strong";
-			power = 3;
-			ammo = 5;
-			total_ammo = 50;
-			ammo_cap = 5;
-			total_ammo_cap = 50;
+			name = "Scatter";
+			power = 1;
+			ammo = 15;
+			total_ammo = 90;
+			ammo_cap = 15;
+			total_ammo_cap = 90;
 			firetime = 1500;
 			reloadtime = 3500;
-			bulletSize=0.3;
-			mass=1000;
+			bulletSize=0.1;
+			mass=10;
+			spf = 3;
 			break;
 		}
 	}
@@ -108,8 +111,8 @@ int Weapon::fire(void)
 		else
 		{
 			// FIRE
-			ammo = ammo - 1;
-			total_ammo = total_ammo - 1;
+			ammo = ammo - spf;
+			total_ammo = total_ammo - spf;
 			weaponsound->fire();
 			fireTimer->reset();
 			return 1;
@@ -142,12 +145,22 @@ void Weapon::cancel_reload(void)
 	weaponsound->switch_weapon();
 }
 
-Bullet* Weapon::spawnBullet(btVector3 playerPos, btVector3 dir, Simulator* simulator){
+Bullet* Weapon::spawnBullet(btVector3 playerPos, btVector3 dir, Simulator* simulator)
+{
+	Bullet * b = new Bullet(this,sceneMgr,simulator,playerPos, dir.rotate(btVector3(0, 1, 0), btScalar(-0.1)),std::to_string(count));
 
-	Bullet * b = new Bullet(this,sceneMgr,simulator,playerPos, dir,std::to_string(count));
 	count++;
 	if(count<0)
 		count=0;
+	if (name == "Scatter")
+	{
+		Bullet * b2 = new Bullet(this,sceneMgr,simulator,playerPos, dir,std::to_string(count));
+
+		count++;
+		Bullet * b3 = new Bullet(this,sceneMgr,simulator,playerPos, dir.rotate(btVector3(0, 1, 0), btScalar(0.1)),std::to_string(count));
+
+		count++;
+	}
 	return b;
 }
 
