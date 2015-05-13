@@ -62,6 +62,9 @@ Weapon::Weapon(const int weapon)
 			break;
 		}
 	}
+	temp_firetime = firetime;
+	temp_switchtime = switchtime;
+	temp_reloadtime = reloadtime;
 	col_shape=new btSphereShape(bulletSize);
 }
 
@@ -94,8 +97,10 @@ int Weapon::total_ammo_left()
 
 int Weapon::fire(void)
 {
-	if (fireTimer->getMilliseconds() >= firetime && switchTimer->getMilliseconds() >= switchtime)
+	if (fireTimer->getMilliseconds() >= temp_firetime && switchTimer->getMilliseconds() >= temp_switchtime)
 	{
+		temp_firetime = firetime;
+		temp_switchtime = switchtime;
 		if (ammo == 0)
 		{
 			return Weapon::reload();
@@ -112,6 +117,23 @@ int Weapon::fire(void)
 		}
 	}
 	return 2;
+}
+
+void Weapon::pause()
+{
+	temp_firetime = temp_firetime - fireTimer->getMilliseconds();
+	temp_switchtime = temp_switchtime - fireTimer->getMilliseconds();
+	temp_reloadtime = temp_reloadtime - fireTimer->getMilliseconds();
+	weaponsound->pause();
+	// cout << "\n pausetime: " << temp_reloadtime << "\n";
+}
+
+void Weapon::unpause()
+{
+	reloadTimer->reset();
+	fireTimer->reset();
+	switchTimer->reset();
+	weaponsound->unpause();
 }
 
 void Weapon::cancel_reload(void)
@@ -131,16 +153,19 @@ Bullet* Weapon::spawnBullet(btVector3 playerPos, btVector3 dir, Simulator* simul
 
 bool Weapon::reload(void)
 {
+	// cout << "\n can we reload? " << reloadTimer->getMilliseconds() << " vs " << temp_reloadtime;
 	if (ammo == ammo_cap || total_ammo <= 0)
 		return true;
-	else if (reloadBool == false && switchTimer->getMilliseconds() >= switchtime)
+	else if (reloadBool == false && switchTimer->getMilliseconds() >= temp_switchtime)
 	{
+		temp_switchtime = switchtime;
 		weaponsound->reload();
 		reloadTimer->reset();
 		reloadBool = true;
 	}
-	else if (reloadTimer->getMilliseconds() >= reloadtime)
+	else if (reloadTimer->getMilliseconds() >= temp_reloadtime)
 	{
+		temp_reloadtime = reloadtime;
 		reloadBool = false;
 		reloadTimer->reset();
 		if (total_ammo >= ammo_cap)

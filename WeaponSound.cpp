@@ -24,6 +24,16 @@ WeaponSound::~WeaponSound() {
 	closeMedia();
 }
 
+void WeaponSound::pause()
+{
+    Mix_Pause(-1);
+}
+
+void WeaponSound::unpause()
+{
+    Mix_Resume(-1);
+}
+
 bool WeaponSound::loadMedia()
 {
 

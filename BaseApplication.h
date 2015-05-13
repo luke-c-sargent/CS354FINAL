@@ -5,10 +5,12 @@
 #include <OgreEntity.h>
 #include <OgreLogManager.h>
 #include <OgreRoot.h>
+#include <OgreMaterial.h>
 #include <OgreViewport.h>
 #include <OgreSceneManager.h>
 #include <OgreRenderWindow.h>
 #include <OgreConfigFile.h>
+#
 
 #include <OISEvents.h>
 #include <OISInputManager.h>
@@ -104,6 +106,7 @@ protected:
     OgreBites::Button* resume_button;
     OgreBites::Button* continue_button;
     OgreBites::Label* state_label;
+    Ogre::Rectangle2D* rect;
     int level_val;
     int lives;
 

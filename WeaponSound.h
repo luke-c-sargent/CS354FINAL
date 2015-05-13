@@ -16,6 +16,8 @@ public:
 	void fire();
 	void switch_weapon();
 	void reload();
+	void pause();
+	void unpause();
 
 protected:	
 	int x = 0;

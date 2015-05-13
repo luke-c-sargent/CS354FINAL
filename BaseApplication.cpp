@@ -21,6 +21,7 @@ BaseApplication::BaseApplication(void)
     right(0),
     level_val(1),
     state(GameState::Main),
+    rect(0),
     play_button(0),
     restart_button(0),
     quit_button(0),
@@ -333,6 +334,33 @@ void BaseApplication::createMenu()
     mTrayMgr = new OgreBites::SdkTrayManager("InterfaceName", mWindow, mInputContext, this);
     play_button = mTrayMgr->createButton(OgreBites::TL_CENTER, "Play", "Play");
     quit_button = mTrayMgr->createButton(OgreBites::TL_CENTER, "Exit", "Quit");
+
+    // Create background material
+    Ogre::MaterialPtr material = Ogre::MaterialManager::getSingleton().create("Background", "General");
+    material->getTechnique(0)->getPass(0)->createTextureUnitState("rockwall.tga");
+    material->getTechnique(0)->getPass(0)->setDepthCheckEnabled(false);
+    material->getTechnique(0)->getPass(0)->setDepthWriteEnabled(false);
+    material->getTechnique(0)->getPass(0)->setLightingEnabled(false);
+     
+    // Create background rectangle covering the whole screen
+    rect = new Ogre::Rectangle2D(true);
+    rect->setCorners(-1.0, 1.0, 1.0, -1.0);
+    rect->setMaterial("Background");
+     
+    // Render the background before everything else
+    rect->setRenderQueueGroup(Ogre::RENDER_QUEUE_BACKGROUND);
+     
+    // Use infinite AAB to always stay visible
+    Ogre::AxisAlignedBox aabInf;
+    aabInf.setInfinite();
+    rect->setBoundingBox(aabInf);
+     
+    // Attach background to the scene
+    Ogre::SceneNode* node = mSceneMgr->getRootSceneNode()->createChildSceneNode("Background");
+    node->attachObject(rect);
+
+    // Example of background scrolling
+    material->getTechnique(0)->getPass(0)->getTextureUnitState(0)->setScrollAnimation(-0.25, 0.0);
 }
 //-------------------------------------------------------------------------------------
 bool BaseApplication::frameRenderingQueued(const Ogre::FrameEvent& evt)
@@ -553,6 +581,7 @@ bool BaseApplication::keyPressed( const OIS::KeyEvent &arg )
             restart_button = mTrayMgr->createButton(OgreBites::TL_CENTER, "Restart", "Restart Level");
             quit_button = mTrayMgr->createButton(OgreBites::TL_CENTER, "Exit", "Quit");
             bgmusic->playOrPause();
+            (*equippedweapon)->pause();
         }
 
         else if(arg.key == OIS::KC_M)
@@ -636,6 +665,7 @@ bool BaseApplication::keyPressed( const OIS::KeyEvent &arg )
             mTrayMgr->hideCursor();
             bgmusic->playOrPause();
             state = Play;
+            (*equippedweapon)->unpause();
         }
     }
 
@@ -689,6 +719,7 @@ void BaseApplication::buttonHit (OgreBites::Button *button)
         createScene();
         mTrayMgr->hideCursor();
         state = Play;
+        delete rect;
     }
     else if (button == resume_button)
     {
@@ -699,6 +730,7 @@ void BaseApplication::buttonHit (OgreBites::Button *button)
         mTrayMgr->destroyWidget(quit_button);
         mTrayMgr->hideCursor();
         bgmusic->playOrPause();
+        (*equippedweapon)->unpause();
         state = Play;
     }
     else if (button == tryagain_button)

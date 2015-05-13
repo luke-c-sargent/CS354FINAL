@@ -24,6 +24,8 @@ public:
     bool reload();
     void switch_weapon();
     void cancel_reload();
+    void pause();
+    void unpause();
     int ammo_left();
     int total_ammo_left();
     void reset_weapon();
@@ -47,6 +49,9 @@ protected:
     Ogre::Real firetime;
     Ogre::Real reloadtime;
     Ogre::Real switchtime;
+    Ogre::Real temp_firetime;
+    Ogre::Real temp_reloadtime;
+    Ogre::Real temp_switchtime;
     // Ogre::Real lastCPUtime;    
     int ammo_cap;
     int total_ammo_cap;
