@@ -100,12 +100,12 @@ void Level::proceduralLevelGen(int nRooms){
 
   x=2*roomx;
   y=2*roomy;
-  z=1;
+  z=2;
 
   midx=roomx/2;
   midy=roomy/2;
 
-  tile_map.resize(roomx*roomy*4,0);
+  tile_map.resize(roomx*roomy*4*2,0);
 
   cout << getTile(0,0)<<"\n";
   rooms.push_back(Ogre::Vector4(roomx,roomy,0,0));
@@ -131,6 +131,12 @@ void Level::proceduralLevelGen(int nRooms){
 
   setTile(nwt,roomx-1,midy+roomy);
   setTile(nwt,roomx,midy+roomy);
+
+  int halfsz = tile_map.size()/2;
+  for(int i=0;i<halfsz;i++){
+    cout<<i%(roomx*2)<<","<<i/(roomx*2)<<":"<<i%(roomx*2)<<","<<i/(roomx*2)<<"\n";
+    setTile(getTile(i%(roomx*2),i/(roomx*2)),i%(roomx*2),i/(roomx*2),1);
+  }
 
 }
 
