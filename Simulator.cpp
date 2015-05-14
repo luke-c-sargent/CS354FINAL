@@ -140,7 +140,7 @@ void Simulator::stepSimulation(const Ogre::FrameEvent& evt, const Ogre::Real ela
                 {
                   deadObjects.push_back(i);
                   monster_alive = false;
-                  //((Monster*)objList[j])->killMonster();  
+                  //((Monster*)objList[j])->killMonster();
                 }
 
                 objList[i]->hit = false;
@@ -250,9 +250,9 @@ void Simulator::stepSimulation(const Ogre::FrameEvent& evt, const Ogre::Real ela
       else if ((objList[deadObjects[i]]->getName()).compare("ninja")==0)
       {
         Monster* go=(Monster*)objList[deadObjects[i]];
-        monsters_killed++;          
+        monsters_killed++;
         if (monsters_killed%10==0)
-          lives++; 
+          lives++;
         go->monstersound->death(monsters_killed);
         //delete objList[deadObjects[i]];
 

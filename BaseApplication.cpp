@@ -159,7 +159,7 @@ void BaseApplication::createScene(void)
 	light = mSceneMgr->createLight("light1");
     light->setType(Ogre::Light::LT_POINT);
 
-	light->setDiffuseColour(.25, .2, .3);
+	light->setDiffuseColour(.8, .4, .4);
 	light->setSpecularColour(.5, 0.0, 0.0);
     light->setAttenuation(100, 1.0, 0.045, 0.0075);
     light->setPosition(Ogre::Vector3(0,20,20));

@@ -103,10 +103,15 @@ void Monster::updateTransform(){
 	btTransform tr;
     ms->getWorldTransform(tr);
 		btVector3 origin = tr.getOrigin();
-
-		if(origin.getY()<(float)((int)(origin.getY()/5.0))*5.0-2.2){
-			cout <<(float)((int)(origin.getY()/5.0))*5.0-2.2<<"it aint where it should be\n";
+		if(origin.getY()<-.4){
+			//cout <<(float)((int)(origin.getY()/5.0))*5.0-2.2<<"it aint where it should be\n";
+			origin.setY(-.4);
+			tr.setOrigin(origin);
+			ms->setWorldTransform(tr);
 		}
+		ms->getWorldTransform(tr);
+		origin=tr.getOrigin();
+		//cout << origin.getY()<<"\n";
 
 
     rootNode->setPosition(tr.getOrigin().getX(),
@@ -116,7 +121,16 @@ void Monster::updateTransform(){
                        tr.getOrigin().getY(),
                        tr.getOrigin().getZ());
 
-	  float theta = atan(-1*m_directionVector.z/m_directionVector.x);
+	  float theta = atan(m_directionVector.z/(m_directionVector.x*(-1.0)));
+		if(m_directionVector.x>0)
+			theta+=3.14159;
+		theta+=3.14159/2.;
+		if(theta < 0)
+			theta+=3.14159*2;
+		if(theta> 3.14159*2)
+			theta-=3.14159*2;
+
+		cout << "theta:"<<theta<<"\n";
     Ogre::Quaternion quat = Ogre::Quaternion(Ogre::Radian(theta),Ogre::Vector3::UNIT_Y);
     rootNode->setOrientation(quat);
     rootNode->translate(0,-1.9,0);
