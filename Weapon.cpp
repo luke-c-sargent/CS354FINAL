@@ -28,8 +28,8 @@ Weapon::Weapon(const int weapon)
 			total_ammo = 100000;
 			ammo_cap = 10;
 			total_ammo_cap = 100000;
-			firetime = 250;
-			reloadtime = 2000;
+			firetime = 350;
+			reloadtime = 1500;
 			bulletSize=0.075;
 			mass=10;
 			spf = 1;
@@ -37,14 +37,14 @@ Weapon::Weapon(const int weapon)
 		}
 		case WeaponState::Weapon2:
 		{
-			name = "Balanced Shiruken";
+			name = "Lightweight Shiruken";
 			power = 1;
 			ammo = 20;
 			total_ammo = 200;
 			ammo_cap = 20;
 			total_ammo_cap = 200;
 			firetime = 100;
-			reloadtime = 3000;
+			reloadtime = 2000;
 			bulletSize=0.08;
 			mass=10;
 			spf = 1;
@@ -60,7 +60,7 @@ Weapon::Weapon(const int weapon)
 			total_ammo_cap = 100;
 			firetime = 800;
 			reloadtime = 3500;
-			bulletSize=0.2;
+			bulletSize=0.3;
 			mass=20;
 			spf = 1;
 			lifetime = 200;
@@ -78,7 +78,7 @@ Weapon::Weapon(const int weapon)
 			total_ammo_cap = 90;
 			firetime = 600;
 			reloadtime = 3000;
-			bulletSize=0.1;
+			bulletSize=0.15;
 			mass=10;
 			mat="icestar";
 			spf = 3;

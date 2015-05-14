@@ -38,7 +38,7 @@ BaseApplication::BaseApplication(void)
 {
   cameraDir=Ogre::Vector3(0,-1,-1);
   cameraPos=Ogre::Vector3(0,0,0);
-  mSensitivity=0.05;
+  mSensitivity=0.005;
 }
 
 btVector3 o2bVector3(Ogre::Vector3 in){
@@ -93,7 +93,7 @@ Monster* BaseApplication::spawnMonster()
 
 void BaseApplication::createScene(void)
 {
-	mSceneMgr->setAmbientLight(Ogre::ColourValue(0.08f,0.05f,0.10f));
+	mSceneMgr->setAmbientLight(Ogre::ColourValue(0.16f,0.1f,0.20f));
 	mSceneMgr->setShadowTechnique(Ogre::SHADOWTYPE_STENCIL_ADDITIVE);
 
     Ogre::StringVector scores;
@@ -998,7 +998,7 @@ void BaseApplication::processInput(){
   cameraDir=Ogre::Vector3(sin(phi)*cos(theta),sin(theta),cos(phi)*cos(theta));
 
   //move camera with keyboard
-  float cameraSpeed=5;
+  float cameraSpeed=7;
   if(up){
     //cameraPos+=cameraSpeed*cameraDir;
     //player1->setLV((cameraSpeed*cameraDir));
