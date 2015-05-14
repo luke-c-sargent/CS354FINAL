@@ -73,7 +73,7 @@ protected:
 
 struct Bullet:public GameObject{
 
-  Bullet(Weapon* weap,Ogre::SceneManager* smp, Simulator* sim,btVector3 pos, btVector3 dir, Ogre::String count, Ogre::String matname=""){
+  Bullet(Weapon* weap,Ogre::SceneManager* smp, Simulator* sim,btVector3 pos, btVector3 dir, Ogre::String count, Ogre::String matname="metal"){
     std::cout <<dir.getX()<<","<<dir.getY()<<","<<dir.getZ()<<"\n";
     sceneMgr=smp;
     simulator=sim;

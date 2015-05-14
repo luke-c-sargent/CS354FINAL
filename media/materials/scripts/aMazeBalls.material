@@ -49,6 +49,42 @@ material firestar
      }
    }
  }
+material icestar
+ {
+   technique
+   {
+     pass
+     {
+       scene_blend alpha_blend
+       depth_write off
+
+       texture_unit
+       {
+         texture icestar.jpg
+       }
+			emissive .8 .8 1.0 1
+     }
+   }
+ }
+material metal
+{
+	technique
+	{
+		pass
+		{
+			ambient 0.7 0.7 0.7
+			diffuse 0.5 0.8 0.5
+			specular 1.0 1.0 1.0 12.5
+
+			texture_unit
+			{
+				texture metal.jpg
+			}
+			shading phong
+		}
+	}
+}
+
 
 material stonewall
 {
@@ -56,7 +92,7 @@ material stonewall
 	{
 		pass
 		{
-			ambient 0.7 0.7 0.7
+			ambient 0.5 0.5 0.5
 			diffuse 0.5 0.8 0.5
 			specular 1.0 1.0 1.0 12.5
 

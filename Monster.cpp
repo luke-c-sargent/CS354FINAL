@@ -149,7 +149,7 @@ void Monster::changeState(MONSTER_STATE state, Level* l, Player* player)
 	if(m_state == STATE_WANDER)
 	{
 		cout << "\nCHANGE TO STATE_WANDER\n";
-		m_walkSpeed = 1.0f;
+		m_walkSpeed = 2.0f;
 		changeDestination(l);
 		m_animState = m_entity->getAnimationState("Walk");
 
@@ -162,7 +162,7 @@ void Monster::changeState(MONSTER_STATE state, Level* l, Player* player)
 	else if(m_state == STATE_ATTACK)
 	{
 		cout << "\nCHANGE TO STATE_ATTACK\n";
-		m_walkSpeed = 3.5f;
+		m_walkSpeed = 4.0f;
 		monstersound->monster_aggro();
 		changeDestination(l, player);
 		m_animState = m_entity->getAnimationState("Attack2");

@@ -22,7 +22,7 @@ Weapon::Weapon(const int weapon)
 	switch (weapon){
 		case WeaponState::Weapon1:
 		{
-			name = "Pistol";
+			name = "Lead Shiruken";
 			power = 1;
 			ammo = 10;
 			total_ammo = 100000;
@@ -37,7 +37,7 @@ Weapon::Weapon(const int weapon)
 		}
 		case WeaponState::Weapon2:
 		{
-			name = "Machine Gun";
+			name = "Iron Shiruken";
 			power = 1;
 			ammo = 20;
 			total_ammo = 200;
@@ -52,7 +52,7 @@ Weapon::Weapon(const int weapon)
 		}
 		case WeaponState::Weapon3:
 		{
-			name = "Shotgun";
+			name = "Fire Ninpo";
 			power = 3;
 			ammo = 10;
 			total_ammo = 100;
@@ -70,7 +70,7 @@ Weapon::Weapon(const int weapon)
 		}
 		case WeaponState::Weapon4:
 		{
-			name = "Triple Shot";
+			name = "Ice Ninpo";
 			power = 1;
 			ammo = 15;
 			total_ammo = 90;
@@ -78,8 +78,9 @@ Weapon::Weapon(const int weapon)
 			total_ammo_cap = 90;
 			firetime = 600;
 			reloadtime = 3000;
-			bulletSize=0.025;
+			bulletSize=0.1;
 			mass=10;
+			mat="icestar";
 			spf = 3;
 			break;
 		}
@@ -157,7 +158,7 @@ int Weapon::fire(void)
 		{
 			// FIRE
 			ammo = ammo - spf;
-			if (name != "Pistol")
+			if (name != "Lead Shiruken")
 			{
 				total_ammo = total_ammo - spf;
 			}
@@ -201,12 +202,12 @@ Bullet* Weapon::spawnBullet(btVector3 playerPos, btVector3 dir, Simulator* simul
 	count++;
 	if(count<0)
 		count=0;
-	if (name == "Triple Shot")
+	if (name == "Ice Ninpo")
 	{
-		Bullet * b2 = new Bullet(this,sceneMgr,simulator,playerPos, dir,std::to_string(count));
+		Bullet * b2 = new Bullet(this,sceneMgr,simulator,playerPos, dir,std::to_string(count),mat);
 
 		count++;
-		Bullet * b3 = new Bullet(this,sceneMgr,simulator,playerPos, dir.rotate(btVector3(0, 1, 0), btScalar(0.1)),std::to_string(count));
+		Bullet * b3 = new Bullet(this,sceneMgr,simulator,playerPos, dir.rotate(btVector3(0, 1, 0), btScalar(0.1)),std::to_string(count),mat);
 
 		count++;
 	}
