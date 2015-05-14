@@ -28,8 +28,8 @@ Weapon::Weapon(const int weapon)
 			total_ammo = 100000;
 			ammo_cap = 10;
 			total_ammo_cap = 100000;
-			firetime = 500;
-			reloadtime = 2500;
+			firetime = 250;
+			reloadtime = 2000;
 			bulletSize=0.05;
 			mass=10;
 			spf = 1;
@@ -44,7 +44,7 @@ Weapon::Weapon(const int weapon)
 			ammo_cap = 20;
 			total_ammo_cap = 200;
 			firetime = 100;
-			reloadtime = 3500;
+			reloadtime = 3000;
 			bulletSize=0.025;
 			mass=10;
 			spf = 1;
@@ -58,7 +58,7 @@ Weapon::Weapon(const int weapon)
 			total_ammo = 100;
 			ammo_cap = 10;
 			total_ammo_cap = 100;
-			firetime = 1000;
+			firetime = 800;
 			reloadtime = 3500;
 			bulletSize=0.1;
 			mass=100;
@@ -75,8 +75,8 @@ Weapon::Weapon(const int weapon)
 			total_ammo = 90;
 			ammo_cap = 15;
 			total_ammo_cap = 90;
-			firetime = 1500;
-			reloadtime = 3500;
+			firetime = 600;
+			reloadtime = 3000;
 			bulletSize=0.025;
 			mass=10;
 			spf = 3;
@@ -102,16 +102,18 @@ Weapon::~Weapon()
 	delete fireTimer;
 }
 
-void Weapon::next_level(int level)
+bool Weapon::next_level(int level)
 {
 	if (level % 5 == 0)
 	{
 		replenish_weapon();
+		return true;
 	}
 	else
 	{
 		reset_ammo = ammo;
 		reset_total_ammo = total_ammo;
+		return false;
 	}
 }
 

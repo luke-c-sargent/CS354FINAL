@@ -29,6 +29,7 @@ BaseApplication::BaseApplication(void)
     tryagain_button(0),
     continue_button(0),
     state_label(0),
+    progress_label(0),
     playerState(PlayerState::NoFire),
     last_playerState(PlayerState::NoFire),
     weapon(Weapon1),
@@ -511,7 +512,6 @@ bool BaseApplication::frameRenderingQueued(const Ogre::FrameEvent& evt)
         }
         else
         {
-            bgmusic->lose();
             state_label = mTrayMgr->createLabel(OgreBites::TL_CENTER, "Lose", "You Died and lose a life!", 400);
             tryagain_button = mTrayMgr->createButton(OgreBites::TL_CENTER, "Try Again", "Try Again");
             quit_button = mTrayMgr->createButton(OgreBites::TL_CENTER, "Exit", "Quit");
@@ -732,6 +732,7 @@ void BaseApplication::buttonHit (OgreBites::Button *button)
         mTrayMgr->hideCursor();
         state = Play;
         delete rect;
+        progress_label = mTrayMgr->createLabel(OgreBites::TL_TOP, "Welcome", "Level " + std::to_string(level_val) , 650);
     }
     else if (button == resume_button)
     {
@@ -796,6 +797,9 @@ void BaseApplication::buttonHit (OgreBites::Button *button)
         weapon = WeaponState::Weapon1;
         last_playerState = PlayerState::NoFire;
         state = Play;
+        mTrayMgr->clearTray(OgreBites::TL_TOP);
+        mTrayMgr->destroyWidget(progress_label);
+        progress_label = mTrayMgr->createLabel(OgreBites::TL_TOP, "Repeat Level", "Level " + std::to_string(level_val) , 650);
     }
     else if (button == continue_button)
     {
@@ -820,7 +824,15 @@ void BaseApplication::buttonHit (OgreBites::Button *button)
             sim->addObject(m);
         }
         level->num_monsters_left = level->num_monsters;
-        weapon1->next_level(level_val);
+        mTrayMgr->clearTray(OgreBites::TL_TOP);
+        mTrayMgr->destroyWidget(progress_label);
+        if (weapon1->next_level(level_val))
+        {
+            // MESSAGE: WEAPONS REPLENISHED
+            progress_label = mTrayMgr->createLabel(OgreBites::TL_TOP, "Weapons Replenished", "Weapons Replenished, Level " + level_val , 650);
+        }
+        else
+            progress_label = mTrayMgr->createLabel(OgreBites::TL_TOP, "Next Level", "Level " + std::to_string(level_val) , 650);
         weapon2->next_level(level_val);
         weapon3->next_level(level_val);
         weapon4->next_level(level_val);
@@ -869,6 +881,10 @@ void BaseApplication::buttonHit (OgreBites::Button *button)
         mTrayMgr->hideCursor();
         last_playerState = PlayerState::NoFire;
         state = Play;
+
+        mTrayMgr->clearTray(OgreBites::TL_TOP);
+        mTrayMgr->destroyWidget(progress_label);
+        progress_label = mTrayMgr->createLabel(OgreBites::TL_TOP, "Restart Level", "Level " + std::to_string(level_val) , 650);
     }
     else if (button == quit_button)
     {

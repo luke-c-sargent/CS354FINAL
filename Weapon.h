@@ -28,7 +28,7 @@ public:
     void unpause();
     int ammo_left();
     int total_ammo_left();
-    void next_level(int level);
+    bool next_level(int level);
     void reset_level();
     void replenish_weapon();
     Ogre::SceneManager* sceneMgr;
