@@ -332,8 +332,8 @@ void BaseApplication::createMenu()
 {
     // Setup GUI
     mTrayMgr = new OgreBites::SdkTrayManager("InterfaceName", mWindow, mInputContext, this);
-    play_button = mTrayMgr->createButton(OgreBites::TL_CENTER, "Play", "Play");
-    quit_button = mTrayMgr->createButton(OgreBites::TL_CENTER, "Exit", "Quit");
+    play_button = mTrayMgr->createButton(OgreBites::TL_BOTTOM, "Play", "Play");
+    quit_button = mTrayMgr->createButton(OgreBites::TL_BOTTOM, "Exit", "Quit");
 
     // Create background material
     Ogre::MaterialPtr material = Ogre::MaterialManager::getSingleton().create("Background Menu", "General");
@@ -534,6 +534,7 @@ bool BaseApplication::frameRenderingQueued(const Ogre::FrameEvent& evt)
       mCamera->lookAt(cameraPos+cameraDir);
       scoreboard->setParamValue(0, std::to_string(level_val));
       scoreboard->setParamValue(1, std::to_string(lives));
+      scoreboard->setParamValue(2, (*equippedweapon)->name);
       scoreboard->setParamValue(3, std::to_string((*equippedweapon)->ammo_left()) + "/" + std::to_string((*equippedweapon)->total_ammo_left()));
       scoreboard->setParamValue(4, std::to_string(level->num_monsters_left));
       //cout <<cameraDir.x<<","<<cameraDir.y<<","<<cameraDir.z<<"\n";
@@ -617,7 +618,6 @@ bool BaseApplication::keyPressed( const OIS::KeyEvent &arg )
             (*equippedweapon)->cancel_reload();
             equippedweapon = &weapon1;
             (*equippedweapon)->switch_weapon();
-            scoreboard->setParamValue(2, (*equippedweapon)->name);
         }
         else if(arg.key == OIS::KC_2 && weapon != WeaponState::Weapon1){
             weapon = WeaponState::Weapon1;
@@ -625,7 +625,6 @@ bool BaseApplication::keyPressed( const OIS::KeyEvent &arg )
             (*equippedweapon)->cancel_reload();
             equippedweapon = &weapon2;
             (*equippedweapon)->switch_weapon();
-            scoreboard->setParamValue(2, (*equippedweapon)->name);
         }
         else if(arg.key == OIS::KC_3 && weapon != WeaponState::Weapon2){
             weapon = WeaponState::Weapon2;
@@ -633,7 +632,6 @@ bool BaseApplication::keyPressed( const OIS::KeyEvent &arg )
             (*equippedweapon)->cancel_reload();
             equippedweapon = &weapon3;
             (*equippedweapon)->switch_weapon();
-            scoreboard->setParamValue(2, (*equippedweapon)->name);
         }
         //Monster Code
         //============
@@ -699,7 +697,7 @@ void BaseApplication::buttonHit (OgreBites::Button *button)
     if (button == play_button)
     {
         // Create the scene
-        mTrayMgr->clearTray(OgreBites::TL_CENTER);
+        mTrayMgr->clearTray(OgreBites::TL_BOTTOM);
         mTrayMgr->destroyAllWidgets();
         cout << "\n\nLEVEL GEN\n\n";
         //generate level
@@ -774,6 +772,7 @@ void BaseApplication::buttonHit (OgreBites::Button *button)
         weapon2->reset_weapon();
         weapon3->reset_weapon();
         equippedweapon = &weapon1;
+        weapon = WeaponState::Weapon0;
         last_playerState = PlayerState::NoFire;
         state = Play;
     }
@@ -804,6 +803,7 @@ void BaseApplication::buttonHit (OgreBites::Button *button)
         weapon2->reset_weapon();
         weapon3->reset_weapon();
         equippedweapon = &weapon1;
+        weapon = WeaponState::Weapon0;
 
         mTrayMgr->clearTray(OgreBites::TL_CENTER);
         mTrayMgr->destroyWidget(state_label);
@@ -840,6 +840,7 @@ void BaseApplication::buttonHit (OgreBites::Button *button)
         weapon2->reset_weapon();
         weapon3->reset_weapon();
         equippedweapon = &weapon1;
+        weapon = WeaponState::Weapon0;
 
         mTrayMgr->clearTray(OgreBites::TL_CENTER);
         mTrayMgr->destroyWidget(state_label);

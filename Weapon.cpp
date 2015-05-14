@@ -29,7 +29,7 @@ Weapon::Weapon(const int weapon)
 			total_ammo_cap = 2000;
 			firetime = 100;
 			reloadtime = 3500;
-			bulletSize=0.1;
+			bulletSize=0.025;
 			mass=10;
 			spf = 1;
 			break;
@@ -44,7 +44,7 @@ Weapon::Weapon(const int weapon)
 			total_ammo_cap = 100;
 			firetime = 1000;
 			reloadtime = 3500;
-			bulletSize=0.2;
+			bulletSize=0.1;
 			mass=100;
 			spf = 1;
 			break;
@@ -59,7 +59,7 @@ Weapon::Weapon(const int weapon)
 			total_ammo_cap = 90;
 			firetime = 1500;
 			reloadtime = 3500;
-			bulletSize=0.1;
+			bulletSize=0.025;
 			mass=10;
 			spf = 3;
 			break;

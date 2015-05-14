@@ -130,7 +130,7 @@ void Simulator::stepSimulation(const Ogre::FrameEvent& evt, const Ogre::Real ela
                 ((Monster*)objList[i])->m_health -= ((Bullet*)objList[j])->power;     
 
                 //bullet hit the ninja
-                if(((Monster*)objList[i])->m_health <= 0.0)
+                if(((Monster*)objList[i])->m_health <= 0.0 && monster_alive == true)
                 {
                   deadObjects.push_back(i);                
                   monster_alive = false;                  
