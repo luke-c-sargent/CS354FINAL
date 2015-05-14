@@ -68,6 +68,24 @@ material tiledfloor
 	}
 }
 
+material bloodsky
+{
+   technique
+   {
+      pass
+      {
+         lighting off
+         depth_write off
+
+         texture_unit
+         {
+            cubic_texture bloodsky.jpg separateUV
+            tex_address_mode clamp
+         }
+      }
+   }
+}
+
 material Ninja
 {
 	technique

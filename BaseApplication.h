@@ -89,6 +89,8 @@ protected:
     Ogre::String mPluginsCfg;
     Ogre::OverlaySystem *mOverlaySystem;
 
+    Ogre::Light * light;
+
     // OgreBites
     OgreBites::InputContext mInputContext;
     OgreBites::SdkTrayManager* mTrayMgr;

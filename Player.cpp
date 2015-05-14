@@ -15,7 +15,7 @@ Player::Player(Ogre::SceneManager* smp, Ogre::String inname, Ogre::Vector3 start
     //set scene manager pointer
     sceneMgr=smp;
     playerLV=btVector3(0,0,0);
-    
+
     //physical constants
     l=.5;
     w=.6;
@@ -44,7 +44,7 @@ Player::Player(Ogre::SceneManager* smp, Ogre::String inname, Ogre::Vector3 start
     rootNode->attachObject(p_entity);
 
     //purdiness
-    p_entity->setCastShadows(true);
+    p_entity->setCastShadows(false);
     std::string namest = name;
     if(namest.compare("player")==0)
       p_entity->setMaterialName("PlayerWire");

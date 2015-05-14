@@ -68,7 +68,7 @@ Monster* BaseApplication::spawnMonster()
     float y_pos = player1->getPosbt().getY(); //make this a global constant?
     //cout << "\n\nTILE MAP SIZE " << level->x*5 << " x " << level->y*5 << " x " << level->z*5 << "\n\n";
 
-    //Calculate total 2-D dimensions of level (x, y) and randomly choose (x,y) coordinates to be used to pick random tile
+    //Calculate total 2-D dimensions of level (x, y) and randomly choose (x,y) coordilight->setAttenuation(100, 1.0, 0.045, 0.0075);lightnates to be used to pick random tile
     int tile_x_sp = rand() % level->x*5 + 1;
     int tile_y_sp = rand() % level->y*5 + 1;
 
@@ -85,7 +85,7 @@ Monster* BaseApplication::spawnMonster()
 
     //Check validity of chosen tile, currently this should always work, should put in while loop when more validity conditions are implemented
     //Further validity checks: no other monster on tile, not near player, only tiles with no walls
-    
+
     //create new monster
     Monster* m = new Monster(mSceneMgr, spawn_point);
     return m;
@@ -93,7 +93,7 @@ Monster* BaseApplication::spawnMonster()
 
 void BaseApplication::createScene(void)
 {
-	mSceneMgr->setAmbientLight(Ogre::ColourValue(0.3f,0.2f,0.25f));
+	mSceneMgr->setAmbientLight(Ogre::ColourValue(0.08f,0.05f,0.10f));
 	mSceneMgr->setShadowTechnique(Ogre::SHADOWTYPE_STENCIL_ADDITIVE);
 
     Ogre::StringVector scores;
@@ -112,6 +112,8 @@ void BaseApplication::createScene(void)
     scoreboard->setParamValue(5, "On");
     mTrayMgr->moveWidgetToTray(scoreboard, OgreBites::TL_TOPLEFT, 0);
     scoreboard->show();
+
+    mSceneMgr->setSkyDome(true, "bloodsky", 5, 8);
 
     //level making
     level->constructLevel();
@@ -154,12 +156,13 @@ void BaseApplication::createScene(void)
 
     //lighting
 
-	Ogre::Light * light = mSceneMgr->createLight("light1");
+	light = mSceneMgr->createLight("light1");
     light->setType(Ogre::Light::LT_POINT);
 
-	light->setDiffuseColour(1.0, 1.0, 1.0);
-	light->setSpecularColour(1.0, 0.0, 0.0);
+	light->setDiffuseColour(.25, .2, .3);
+	light->setSpecularColour(.5, 0.0, 0.0);
 
+  light->setAttenuation(100, 1.0, 0.045, 0.0075);
     light->setPosition(Ogre::Vector3(0,20,20));
 }
 
@@ -341,20 +344,20 @@ void BaseApplication::createMenu()
     material->getTechnique(0)->getPass(0)->setDepthCheckEnabled(false);
     material->getTechnique(0)->getPass(0)->setDepthWriteEnabled(false);
     material->getTechnique(0)->getPass(0)->setLightingEnabled(false);
-     
+
     // Create background rectangle covering the whole screen
     rect = new Ogre::Rectangle2D(true);
     rect->setCorners(-1.0, 1.0, 1.0, -1.0);
     rect->setMaterial("Background Menu");
-     
+
     // Render the background before everything else
     rect->setRenderQueueGroup(Ogre::RENDER_QUEUE_BACKGROUND);
-     
+
     // Use infinite AAB to always stay visible
     Ogre::AxisAlignedBox aabInf;
     aabInf.setInfinite();
     rect->setBoundingBox(aabInf);
-     
+
     // Attach background to the scene
     Ogre::SceneNode* node = mSceneMgr->getRootSceneNode()->createChildSceneNode("Background");
     node->attachObject(rect);
@@ -431,19 +434,19 @@ bool BaseApplication::frameRenderingQueued(const Ogre::FrameEvent& evt)
         {
             //player is not moving
             //change animation state to idle
-            Ogre::Entity* entity = player1->p_entity;            
+            Ogre::Entity* entity = player1->p_entity;
             player1->p_animState = player1->p_entity->getAnimationState("Idle1");
-            
+
         }
         else
         {
-            //player is moving            
+            //player is moving
             player1->p_animState = player1->p_entity->getAnimationState("Walk");
         }
 
         if(playerState == PlayerState::Fire)
         {
-            player1->p_animState = player1->p_entity->getAnimationState("Attack3");                    
+            player1->p_animState = player1->p_entity->getAnimationState("Attack3");
             //player1->p_animState->addTime(evt.timeSinceLastFrame);
         }
         player1->p_animState->setLoop(true);
@@ -468,7 +471,7 @@ bool BaseApplication::frameRenderingQueued(const Ogre::FrameEvent& evt)
             if((go->getName()).compare("bullet")==0){
                 btVector3 lv = ((Bullet*)go)->linvel();
                 go->getBody()->setLinearVelocity(lv);
-            }else if((go->getName()).compare("ninja")==0){            
+            }else if((go->getName()).compare("ninja")==0){
                 btVector3 lv =o2bVector3(((Monster*)go)->m_directionVector);
                 Ogre::Real speed = ((Monster*)go)->m_walkSpeed;
                 go->getBody()->setLinearVelocity(speed*lv);
@@ -528,7 +531,8 @@ bool BaseApplication::frameRenderingQueued(const Ogre::FrameEvent& evt)
       phi-=3.1415926-1.3;
 
       cameraPos=player1->getPos()-(scrollMod)*cameraDir + Ogre::Vector3(0,1.7,0) + 1.6*cameraOffset;
-
+      Ogre::Vector3 lightoffset=Ogre::Vector3(0,1.9,0);
+      light->setPosition(player1->getPos()+lightoffset);
 
       mCamera->setPosition(cameraPos);
       mCamera->lookAt(cameraPos+cameraDir);
