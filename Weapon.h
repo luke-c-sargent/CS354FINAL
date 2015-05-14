@@ -42,7 +42,7 @@ public:
     float mass;
     Ogre::Real power;
     Ogre::Real lifetime;
-    
+
 protected:
 
     WeaponSound * weaponsound;
@@ -56,7 +56,7 @@ protected:
     Ogre::Real temp_reloadtime;
     Ogre::Real temp_switchtime;
     // Ogre::Real lastCPUtime;
-    int spf;    
+    int spf;
     int ammo_cap;
     int total_ammo_cap;
     int ammo;
@@ -102,11 +102,12 @@ struct Bullet:public GameObject{
     name="bullet";
     Ogre::String outname = weapon->name+"_"+name+"_"+count;
     rootNode=sceneMgr->getRootSceneNode()->createChildSceneNode(outname +Ogre::String()+ "Node");
-    Ogre::Entity * entity=sceneMgr->createEntity(outname,"sphere.mesh");
+    Ogre::Entity * entity=sceneMgr->createEntity(outname,"star.mesh");
     rootNode->attachObject(entity);
     float ratio = weapon->bulletSize/200.0;
     rootNode->scale(ratio,ratio,ratio);
     rootNode->translate(position.getX(),position.getY(),position.getZ());
+    rootNode->pitch(Ogre::Degree(90));
   }
 
   ~Bullet()

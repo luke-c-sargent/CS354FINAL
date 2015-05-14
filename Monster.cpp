@@ -32,7 +32,7 @@ Monster::Monster(Ogre::SceneManager* sMgr, Ogre::Vector3 spawn_point)
 	m_range = 4000.0;
 	m_attackRange = 10.0;
 	m_state = STATE_WANDER;
-	
+
 	m_entity = sceneMgr->createEntity("ninja.mesh");
 	m_entity->setMaterialName("Ninja");
 
@@ -71,7 +71,7 @@ Monster::Monster(Ogre::SceneManager* sMgr, Ogre::Vector3 spawn_point)
     Ogre::Vector3 posOgre= Ogre::Vector3(position.getX(),position.getY(),position.getZ());
     m_directionVector = m_destinationVector - posOgre; //set new direction vector
     m_distance = m_directionVector.normalise();
-    
+
 	//bullet stuff
 	shape = new btBoxShape(btVector3(.5,1.9,.5));
     shape->calculateLocalInertia(mass,inertia);
@@ -102,6 +102,13 @@ Monster::~Monster()
 void Monster::updateTransform(){
 	btTransform tr;
     ms->getWorldTransform(tr);
+		btVector3 origin = tr.getOrigin();
+
+		if(origin.getY()<(float)((int)(origin.getY()/5.0))*5.0-2.2){
+			cout <<(float)((int)(origin.getY()/5.0))*5.0-2.2<<"it aint where it should be\n";
+		}
+
+
     rootNode->setPosition(tr.getOrigin().getX(),
                           tr.getOrigin().getY(),
                           tr.getOrigin().getZ());
@@ -110,9 +117,11 @@ void Monster::updateTransform(){
                        tr.getOrigin().getZ());
 
 	  float theta = atan(-1*m_directionVector.z/m_directionVector.x);
-      Ogre::Quaternion quat = Ogre::Quaternion(Ogre::Radian(theta),Ogre::Vector3::UNIT_Y);
-      rootNode->setOrientation(quat);
-      rootNode->translate(0,-1.9,0);
+    Ogre::Quaternion quat = Ogre::Quaternion(Ogre::Radian(theta),Ogre::Vector3::UNIT_Y);
+    rootNode->setOrientation(quat);
+    rootNode->translate(0,-1.9,0);
+
+
 }
 
 void Monster::changeState(MONSTER_STATE state, Level* l, Player* player)
@@ -121,24 +130,24 @@ void Monster::changeState(MONSTER_STATE state, Level* l, Player* player)
 	int x = rand() % l->x*5 + 1;
 	int y = player->getY();
     int z = rand() % l->y*5 + 1;
-    
+
     m_state = state;
 	if(m_state == STATE_WANDER)
 	{
-		cout << "\nCHANGE TO STATE_WANDER\n";	
-		m_walkSpeed = 1.0f;		
+		cout << "\nCHANGE TO STATE_WANDER\n";
+		m_walkSpeed = 1.0f;
 		changeDestination(l);
 		m_animState = m_entity->getAnimationState("Walk");
 
 	}
 	else if (m_state == STATE_CHILL)
-	{		
+	{
 		m_animState = m_entity->getAnimationState("Idle1");
 		//zero out the m_walkList so he stops moving around
 	}
 	else if(m_state == STATE_ATTACK)
 	{
-		cout << "\nCHANGE TO STATE_ATTACK\n";			
+		cout << "\nCHANGE TO STATE_ATTACK\n";
 		m_walkSpeed = 3.5f;
 		monstersound->monster_aggro();
 		changeDestination(l, player);
@@ -164,11 +173,11 @@ void Monster::updateMonsters(Level* level, const Ogre::FrameEvent& evt)
 
 	Ogre::Real move = m_walkSpeed * evt.timeSinceLastFrame;
 	//m_distance -= move;
-	
+
 	//update distance left to travel, using monster's current position
 	Ogre::Vector3 posOgre= Ogre::Vector3(position.getX(),position.getY(),position.getZ());
 	m_distance = (posOgre-m_destinationVector).length();
-	
+
 
 	//check if monster reached destination
 	if(m_distance <= 0.1f)
@@ -177,14 +186,14 @@ void Monster::updateMonsters(Level* level, const Ogre::FrameEvent& evt)
 		//cout << "\nDestination reached\n";
 		rootNode->setPosition(m_destinationVector); //place monster at destination
 		position=btVector3(m_destinationVector.x,m_destinationVector.y,m_destinationVector.z);
-		
+
 		m_directionVector = Ogre::Vector3::ZERO; //set to 0 so next part of path can be started
 		changeDestination(level);
-		
+
     	//linear velocity
     	m_directionVector = m_destinationVector - rootNode->getPosition(); //set new direction vector
     	m_distance = m_directionVector.normalise();
-		
+
 		/*
 		if(m_directionVector==Ogre::Vector3(0,0,0)){
 			cout << "zero norm\n";
@@ -215,10 +224,10 @@ void Monster::updateMonsters(Level* level, const Ogre::FrameEvent& evt)
 		//Ogre::Vector3 cur_pos = rootNode->getPosition();
 		//position = btVector3(cur_pos.x, cur_pos.y, cur_pos.z);
 	}
-	
+
 	//cout << "\nMonster position: " << rootNode->getPosition().x << " " << rootNode->getPosition().z << "\n";
 	//cout << "\nBullet box position: " << position.getX() << " " << position.getZ() << "\n";
-	
+
 	m_animState->addTime(evt.timeSinceLastFrame);
 }
 
@@ -234,13 +243,13 @@ void Monster::killMonster()
 
 void Monster::changeDestination(Level* level, Player* p)
 {
-	
+
 	Ogre::Vector3 posOgre= Ogre::Vector3(position.getX(),position.getY(),position.getZ());//not sure why we need this
 
 	if (p == NULL)
 	{
 		//Monster will pick a random destination
-		
+
 		//not following the player
 		int x = rand() % level->x*5 + 1;
 		int z = rand() % level->y*5 + 1;
@@ -253,9 +262,9 @@ void Monster::changeDestination(Level* level, Player* p)
 		m_destinationVector = Ogre::Vector3(player_pos.getX(), player_pos.getY(), player_pos.getZ());
 
 	}
-    
+
     cout << "\nMonster's destination: " << m_destinationVector.x << ", " << m_destinationVector.y << ", " << m_destinationVector.z << "\n";
-    
+
     //linear velocity
     m_directionVector = m_destinationVector - rootNode->getPosition(); //set new direction vector
     m_distance = m_directionVector.normalise();

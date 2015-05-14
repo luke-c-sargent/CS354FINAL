@@ -781,7 +781,7 @@ void BaseApplication::buttonHit (OgreBites::Button *button)
         }
         else
         {
-            sim->lvl_lives = sim_lives;
+            sim->lvl_lives = sim->lives;
             sim->monsters_killed = sim->lvl_monsters_killed;
             weapon1->reset_level();
             weapon2->reset_level();

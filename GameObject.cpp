@@ -38,10 +38,10 @@ void GameObject::updateTransform(){
     rootNode->setPosition(tr.getOrigin().getX(),
                           tr.getOrigin().getY(),
                           tr.getOrigin().getZ());
-    
-    //Ogre::Vector3 currentFacing = rotation * Ogre::Vector3::UNIT_Z;                          
+
+    //Ogre::Vector3 currentFacing = rotation * Ogre::Vector3::UNIT_Z;
     //Ogre::Quaternion quat = currentFacing.getRotationTo(Ogre::Vector3::UNIT_Z);
-    
+
 
     if(name.compare("player")==0){
       Ogre::Quaternion quat = Ogre::Quaternion(rotation.getW(),rotation.getX(),rotation.getY(),rotation.getZ());
@@ -50,6 +50,9 @@ void GameObject::updateTransform(){
     position=btVector3(tr.getOrigin().getX(),
                        tr.getOrigin().getY(),
                        tr.getOrigin().getZ());
+  if(name.compare("bullet")==0){
+    //rootNode->yaw(Ogre::Radian(1));
+  }
 }
 
 void GameObject::setTransform(Ogre::Vector3 tr){
