@@ -66,32 +66,9 @@ void Simulator::stepSimulation(const Ogre::FrameEvent& evt, const Ogre::Real ela
     vector<int> deadObjects;
     for(int i=0; i < objList.size();i++){ // step through all objects
         if((objList[i]->getName()).compare("bullet")==0){
-
-          for(int j = 2; j < objList.size(); j++)
-          {
-
-            if((objList[j]->getName()).compare("ninja")==0)
-            {
-              //Check for collision between ninja, bullet
-              ccp->setAB(objList[j], objList[i]);
-
-              dynamicsWorld->contactPairTest(objList[j]->getBody(), objList[i]->getBody(), *ccp);
-              if((objList[i])->hit)
-              {
-                //bullet hit the ninja
-                ((Bullet *)objList[i])->bulletsound->strike();
-                deadObjects.push_back(i);
-                objList[i]->hit = false;
-                //((Monster*)objList[j])->killMonster();
-              }
-            }
-
-          }
-
           ccp->setAB(a,objList[i]);
           dynamicsWorld->contactPairTest(a->getBody(),objList[i]->getBody(),*ccp);
-
-          if(((Bullet*)objList[i])->hit)
+          if (((Bullet*)objList[i])->hit)
           {
             deadObjects.push_back(i);
             ((Bullet *)objList[i])->bulletsound->miss();
@@ -101,8 +78,30 @@ void Simulator::stepSimulation(const Ogre::FrameEvent& evt, const Ogre::Real ela
             deadObjects.push_back(i);
           }
           else
-            objList[i]->updateTransform();
+          {
+            for(int j = 2; j < objList.size(); j++)
+            {
 
+              if((objList[j]->getName()).compare("ninja")==0)
+              {
+                //Check for collision between ninja, bullet
+                ccp->setAB(objList[j], objList[i]);
+
+                dynamicsWorld->contactPairTest(objList[j]->getBody(), objList[i]->getBody(), *ccp);
+                if((objList[i])->hit)
+                {
+                  //bullet hit the ninja
+                  ((Bullet *)objList[i])->bulletsound->strike();
+                  deadObjects.push_back(i);
+                  break;
+                  //((Monster*)objList[j])->killMonster();
+                }
+              }
+
+            }
+          }
+          if (!objList[i]->hit)
+            objList[i]->updateTransform();
         }
         //Monster Code
         else if((objList[i]->getName()).compare("ninja") == 0)
