@@ -16,6 +16,7 @@ public:
     btScalar getZ();
     void setLV(btVector3 lvin);
     void setLV(Ogre::Vector3 lvin);
+    void updateTransform();
     Ogre::Real player_health;
 
     Ogre::Entity* p_entity;

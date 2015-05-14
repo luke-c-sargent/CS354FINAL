@@ -4,7 +4,7 @@ Weapon::Weapon(const int weapon)
 {
 
 	float bulletsize = 0.1;
-  mat = "";
+  mat = "metal";
 
 	//physics geom
 
@@ -37,7 +37,7 @@ Weapon::Weapon(const int weapon)
 		}
 		case WeaponState::Weapon2:
 		{
-			name = "Iron Shiruken";
+			name = "Balanced Shiruken";
 			power = 1;
 			ammo = 20;
 			total_ammo = 200;
@@ -45,7 +45,7 @@ Weapon::Weapon(const int weapon)
 			total_ammo_cap = 200;
 			firetime = 100;
 			reloadtime = 3000;
-			bulletSize=0.05;
+			bulletSize=0.08;
 			mass=10;
 			spf = 1;
 			break;

@@ -47,7 +47,7 @@ Player::Player(Ogre::SceneManager* smp, Ogre::String inname, Ogre::Vector3 start
     p_entity->setCastShadows(false);
     std::string namest = name;
     if(namest.compare("player")==0)
-      p_entity->setMaterialName("PlayerWire");
+      p_entity->setMaterialName("redninja");
     else
         p_entity->setMaterialName("PlayerWire2");
     rootNode->translate(position.getX(),position.getY()-1.2,position.getZ());
@@ -77,6 +77,35 @@ Player::Player(Ogre::SceneManager* smp, Ogre::String inname, Ogre::Vector3 start
 
 void Player::setLV(btVector3 lvin){
   playerLV=lvin;
+}
+
+void Player::updateTransform(){
+  btTransform tr;
+    ms->getWorldTransform(tr);
+
+
+
+
+    btVector3 origin = tr.getOrigin();
+    if(origin.getY()<-.4){
+      //cout <<(float)((int)(origin.getY()/5.0))*5.0-2.2<<"it aint where it should be\n";
+      origin.setY(-.4);
+      tr.setOrigin(origin);
+      ms->setWorldTransform(tr);
+    }
+    ms->getWorldTransform(tr);
+    //origin=tr.getOrigin();
+
+    rootNode->setPosition(tr.getOrigin().getX(),
+                          tr.getOrigin().getY(),
+                          tr.getOrigin().getZ());
+
+   Ogre::Quaternion quat = Ogre::Quaternion(rotation.getW(),rotation.getX(),rotation.getY(),rotation.getZ());
+   rootNode->setOrientation(quat);
+   position=btVector3(tr.getOrigin().getX(),
+                       tr.getOrigin().getY(),
+                       tr.getOrigin().getZ());
+
 }
 
 void Player::setLV(Ogre::Vector3 lvin){

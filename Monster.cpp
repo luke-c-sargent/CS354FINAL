@@ -130,7 +130,7 @@ void Monster::updateTransform(){
 		if(theta> 3.14159*2)
 			theta-=3.14159*2;
 
-		cout << "theta:"<<theta<<"\n";
+		//cout << "theta:"<<theta<<"\n";
     Ogre::Quaternion quat = Ogre::Quaternion(Ogre::Radian(theta),Ogre::Vector3::UNIT_Y);
     rootNode->setOrientation(quat);
     rootNode->translate(0,-1.9,0);
@@ -172,7 +172,7 @@ void Monster::changeState(MONSTER_STATE state, Level* l, Player* player)
 
 	//m_animState = m_entity->getAnimationState("Walk");
 
-	cout << "\nMonster's destination: " << m_destinationVector.x << ", " << m_destinationVector.y << ", " << m_destinationVector.z << "\n";
+	//cout << "\nMonster's destination: " << m_destinationVector.x << ", " << m_destinationVector.y << ", " << m_destinationVector.z << "\n";
 	m_animState->setLoop(true);
 	m_animState->setEnabled(true);
 
@@ -277,7 +277,7 @@ void Monster::changeDestination(Level* level, Player* p)
 
 	}
 
-    cout << "\nMonster's destination: " << m_destinationVector.x << ", " << m_destinationVector.y << ", " << m_destinationVector.z << "\n";
+    //cout << "\nMonster's destination: " << m_destinationVector.x << ", " << m_destinationVector.y << ", " << m_destinationVector.z << "\n";
 
     //linear velocity
     m_directionVector = m_destinationVector - rootNode->getPosition(); //set new direction vector
