@@ -43,6 +43,13 @@ bool MonsterSound::loadMedia()
         printf( "Failed to load beat music! SDL_mixer Error: %s\n", Mix_GetError() );
         success = false;
     }
+    life_up = Mix_LoadWAV( "life_up.wav" );
+    if( life_up == NULL )
+    {
+        cout << Mix_GetError();
+        printf( "Failed to load beat music! SDL_mixer Error: %s\n", Mix_GetError() );
+        success = false;
+    }
 
     return success;
 }
@@ -52,9 +59,12 @@ void MonsterSound::monster_aggro()
     Mix_PlayChannel( -1, aggro_sound, 0 );
 }
 
-void MonsterSound::death()
+void MonsterSound::death(int monsters_killed)
 {
-    Mix_PlayChannel( -1, death_sound, 0 );
+    if (monsters_killed%10 == 0)
+        Mix_PlayChannel( -1, life_up, 0);
+    else
+        Mix_PlayChannel( -1, death_sound, 0 );
 }
 
 void MonsterSound::closeMedia()
