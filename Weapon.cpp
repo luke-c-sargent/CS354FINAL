@@ -4,7 +4,7 @@ Weapon::Weapon(const int weapon)
 {
 
 	float bulletsize = 0.1;
-
+  mat = "";
 
 	//physics geom
 
@@ -30,7 +30,7 @@ Weapon::Weapon(const int weapon)
 			total_ammo_cap = 100000;
 			firetime = 250;
 			reloadtime = 2000;
-			bulletSize=0.05;
+			bulletSize=0.075;
 			mass=10;
 			spf = 1;
 			break;
@@ -45,7 +45,7 @@ Weapon::Weapon(const int weapon)
 			total_ammo_cap = 200;
 			firetime = 100;
 			reloadtime = 3000;
-			bulletSize=0.025;
+			bulletSize=0.05;
 			mass=10;
 			spf = 1;
 			break;
@@ -60,11 +60,12 @@ Weapon::Weapon(const int weapon)
 			total_ammo_cap = 100;
 			firetime = 800;
 			reloadtime = 3500;
-			bulletSize=0.1;
-			mass=100;
+			bulletSize=0.2;
+			mass=20;
 			spf = 1;
 			lifetime = 200;
 			bulletSpeed = 40.0;
+			mat="firestar";
 			break;
 		}
 		case WeaponState::Weapon4:
@@ -194,7 +195,8 @@ void Weapon::cancel_reload(void)
 
 Bullet* Weapon::spawnBullet(btVector3 playerPos, btVector3 dir, Simulator* simulator)
 {
-	Bullet * b = new Bullet(this,sceneMgr,simulator,playerPos, dir.rotate(btVector3(0, 1, 0), btScalar(-0.1)),std::to_string(count));
+	Bullet * b = new Bullet(this,sceneMgr,simulator,playerPos, dir.rotate(btVector3(0, 1, 0), btScalar(-0.1)),std::to_string(count),mat);
+
 
 	count++;
 	if(count<0)

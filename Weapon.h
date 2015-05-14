@@ -64,6 +64,7 @@ protected:
     int reset_ammo;
     int reset_total_ammo;
     bool reloadBool;
+    Ogre::String mat;
 
 
 
@@ -72,7 +73,7 @@ protected:
 
 struct Bullet:public GameObject{
 
-  Bullet(Weapon* weap,Ogre::SceneManager* smp, Simulator* sim,btVector3 pos, btVector3 dir, Ogre::String count){
+  Bullet(Weapon* weap,Ogre::SceneManager* smp, Simulator* sim,btVector3 pos, btVector3 dir, Ogre::String count, Ogre::String matname=""){
     std::cout <<dir.getX()<<","<<dir.getY()<<","<<dir.getZ()<<"\n";
     sceneMgr=smp;
     simulator=sim;
@@ -103,6 +104,7 @@ struct Bullet:public GameObject{
     Ogre::String outname = weapon->name+"_"+name+"_"+count;
     rootNode=sceneMgr->getRootSceneNode()->createChildSceneNode(outname +Ogre::String()+ "Node");
     Ogre::Entity * entity=sceneMgr->createEntity(outname,"star.mesh");
+    entity->setMaterialName(matname);
     rootNode->attachObject(entity);
     float ratio = weapon->bulletSize/200.0;
     rootNode->scale(ratio,ratio,ratio);

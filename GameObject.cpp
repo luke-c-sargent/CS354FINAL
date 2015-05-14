@@ -51,7 +51,7 @@ void GameObject::updateTransform(){
                        tr.getOrigin().getY(),
                        tr.getOrigin().getZ());
   if(name.compare("bullet")==0){
-    //rootNode->yaw(Ogre::Radian(1));
+    rootNode->yaw(Ogre::Degree(1));
   }
 }
 
