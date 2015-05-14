@@ -93,6 +93,10 @@ void Simulator::stepSimulation(const Ogre::FrameEvent& evt, const Ogre::Real ela
             deadObjects.push_back(i);
             ((Bullet *)objList[i])->bulletsound->miss();
           }
+          else if (((Bullet*)objList[i])->lifeTimer->getMilliseconds() >= ((Bullet*)objList[i])->weapon->lifetime)
+          {
+            deadObjects.push_back(i);
+          }
           else
             objList[i]->updateTransform();
 

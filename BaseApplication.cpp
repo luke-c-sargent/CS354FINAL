@@ -821,7 +821,6 @@ void BaseApplication::buttonHit (OgreBites::Button *button)
     else if (button == restart_button)
     {
         // Destroy current scene, regenerate level
-
         sim->clearObjectList();
         //Monster Code
 
@@ -845,7 +844,6 @@ void BaseApplication::buttonHit (OgreBites::Button *button)
         weapon3->reset_weapon();
         equippedweapon = &weapon1;
         weapon = WeaponState::Weapon0;
-
         mTrayMgr->clearTray(OgreBites::TL_CENTER);
         mTrayMgr->destroyWidget(state_label);
         mTrayMgr->destroyWidget(restart_button);

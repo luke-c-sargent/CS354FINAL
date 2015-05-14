@@ -39,6 +39,7 @@ public:
     btCollisionShape* col_shape;
     float mass;
     Ogre::Real power;
+    Ogre::Real lifetime;
     
 protected:
 
@@ -83,6 +84,7 @@ struct Bullet:public GameObject{
     //physics stuffs
     inertia= btVector3(0,0,0);
     bulletsound = new BulletSound();
+    lifeTimer = new Ogre::Timer();
     mass=weapon->mass;
     shape=weapon->col_shape;
     weapon->col_shape->calculateLocalInertia(mass,inertia);
@@ -120,4 +122,5 @@ struct Bullet:public GameObject{
   btVector3 direction;
   float age;
   BulletSound * bulletsound;
+  Ogre::Timer* lifeTimer;
 };

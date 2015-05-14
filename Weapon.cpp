@@ -16,12 +16,13 @@ Weapon::Weapon(const int weapon)
 	reloadBool = false;
 	switchtime = 500;
 	bulletSize=0.1;
-	bulletSpeed=10.0;
+	bulletSpeed=20.0;
 	count=0;
+	lifetime = 10000;
 	switch (weapon){
 		case WeaponState::Weapon0:
 		{
-			name = "Weak";
+			name = "Machine Gun";
 			power = 1;
 			ammo = 20;
 			total_ammo = 100;
@@ -36,8 +37,8 @@ Weapon::Weapon(const int weapon)
 		}
 		case WeaponState::Weapon1:
 		{
-			name = "Medium";
-			power = 2;
+			name = "Shotgun";
+			power = 3;
 			ammo = 10;
 			total_ammo = 100;
 			ammo_cap = 10;
@@ -47,11 +48,13 @@ Weapon::Weapon(const int weapon)
 			bulletSize=0.1;
 			mass=100;
 			spf = 1;
+			lifetime = 200;
+			bulletSpeed = 40.0;
 			break;
 		}
 		case WeaponState::Weapon2:
 		{
-			name = "Scatter";
+			name = "Triple Shot";
 			power = 1;
 			ammo = 15;
 			total_ammo = 90;
@@ -152,7 +155,7 @@ Bullet* Weapon::spawnBullet(btVector3 playerPos, btVector3 dir, Simulator* simul
 	count++;
 	if(count<0)
 		count=0;
-	if (name == "Scatter")
+	if (name == "Triple Shot")
 	{
 		Bullet * b2 = new Bullet(this,sceneMgr,simulator,playerPos, dir,std::to_string(count));
 
