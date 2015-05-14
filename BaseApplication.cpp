@@ -767,8 +767,8 @@ void BaseApplication::buttonHit (OgreBites::Button *button)
 
         if (sim->lives == 0)
         {
-            level->num_monsters = 1;
-            level->num_monsters_left = 1;
+            level->num_monsters = 3;
+            level->num_monsters_left = 3;
             level_val = 1;
             sim->lives = 3;
             sim->lvl_lives = 3;
