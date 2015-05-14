@@ -12,9 +12,10 @@ enum GameState{
 };
 
 enum WeaponState{
-	Weapon0 = 0,
-	Weapon1,
-	Weapon2
+	Weapon1 = 0,
+	Weapon2,
+	Weapon3,
+	Weapon4
 };
 
 enum PlayerState{

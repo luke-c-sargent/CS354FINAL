@@ -20,14 +20,29 @@ Weapon::Weapon(const int weapon)
 	count=0;
 	lifetime = 10000;
 	switch (weapon){
-		case WeaponState::Weapon0:
+		case WeaponState::Weapon1:
+		{
+			name = "Pistol";
+			power = 1;
+			ammo = 10;
+			total_ammo = 100000;
+			ammo_cap = 10;
+			total_ammo_cap = 100000;
+			firetime = 500;
+			reloadtime = 2500;
+			bulletSize=0.05;
+			mass=10;
+			spf = 1;
+			break;
+		}
+		case WeaponState::Weapon2:
 		{
 			name = "Machine Gun";
 			power = 1;
 			ammo = 20;
-			total_ammo = 100;
+			total_ammo = 200;
 			ammo_cap = 20;
-			total_ammo_cap = 2000;
+			total_ammo_cap = 200;
 			firetime = 100;
 			reloadtime = 3500;
 			bulletSize=0.025;
@@ -35,7 +50,7 @@ Weapon::Weapon(const int weapon)
 			spf = 1;
 			break;
 		}
-		case WeaponState::Weapon1:
+		case WeaponState::Weapon3:
 		{
 			name = "Shotgun";
 			power = 3;
@@ -52,7 +67,7 @@ Weapon::Weapon(const int weapon)
 			bulletSpeed = 40.0;
 			break;
 		}
-		case WeaponState::Weapon2:
+		case WeaponState::Weapon4:
 		{
 			name = "Triple Shot";
 			power = 1;
@@ -71,6 +86,9 @@ Weapon::Weapon(const int weapon)
 	temp_firetime = firetime;
 	temp_switchtime = switchtime;
 	temp_reloadtime = reloadtime;
+	reset_ammo = ammo;
+	reset_total_ammo = total_ammo;
+
 	col_shape=new btSphereShape(bulletSize);
 }
 
@@ -84,10 +102,31 @@ Weapon::~Weapon()
 	delete fireTimer;
 }
 
-void Weapon::reset_weapon()
+void Weapon::next_level(int level)
+{
+	if (level % 5 == 0)
+	{
+		replenish_weapon();
+	}
+	else
+	{
+		reset_ammo = ammo;
+		reset_total_ammo = total_ammo;
+	}
+}
+
+void Weapon::replenish_weapon()
 {
 	ammo = ammo_cap;
+	reset_ammo = ammo_cap;
 	total_ammo = total_ammo_cap;
+	reset_total_ammo = total_ammo_cap;
+}
+
+void Weapon::reset_level()
+{
+	ammo = reset_ammo;
+	total_ammo = reset_total_ammo;
 }
 
 int Weapon::ammo_left()
@@ -115,7 +154,10 @@ int Weapon::fire(void)
 		{
 			// FIRE
 			ammo = ammo - spf;
-			total_ammo = total_ammo - spf;
+			if (name != "Pistol")
+			{
+				total_ammo = total_ammo - spf;
+			}
 			weaponsound->fire();
 			fireTimer->reset();
 			return 1;

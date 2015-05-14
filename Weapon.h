@@ -28,7 +28,9 @@ public:
     void unpause();
     int ammo_left();
     int total_ammo_left();
-    void reset_weapon();
+    void next_level(int level);
+    void reset_level();
+    void replenish_weapon();
     Ogre::SceneManager* sceneMgr;
     Bullet* spawnBullet(btVector3 playerPos, btVector3 dir,Simulator* simulator);
 
@@ -59,6 +61,8 @@ protected:
     int total_ammo_cap;
     int ammo;
     int total_ammo;
+    int reset_ammo;
+    int reset_total_ammo;
     bool reloadBool;
 
 

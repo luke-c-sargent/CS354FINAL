@@ -142,6 +142,7 @@ protected:
     Weapon * weapon1;
     Weapon * weapon2;
     Weapon * weapon3;
+    Weapon * weapon4;
     Weapon ** equippedweapon;
 
     // bullets

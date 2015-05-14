@@ -31,7 +31,7 @@ BaseApplication::BaseApplication(void)
     state_label(0),
     playerState(PlayerState::NoFire),
     last_playerState(PlayerState::NoFire),
-    weapon(Weapon0),
+    weapon(Weapon1),
     scoreboard(0),
     lives(3),
     mx(0),my(0),mz(0),scrollMax(4),scrollMin(0),theta(0),phi(0)
@@ -142,13 +142,15 @@ void BaseApplication::createScene(void)
 
     //setup weapons
 
-    weapon1 = new Weapon(WeaponState::Weapon0);
-    weapon2 = new Weapon(WeaponState::Weapon1);
-    weapon3 = new Weapon(WeaponState::Weapon2);
+    weapon1 = new Weapon(WeaponState::Weapon1);
+    weapon2 = new Weapon(WeaponState::Weapon2);
+    weapon3 = new Weapon(WeaponState::Weapon3);
+    weapon4 = new Weapon(WeaponState::Weapon4);
 
     weapon1->setSMP(mSceneMgr);
     weapon2->setSMP(mSceneMgr);
     weapon3->setSMP(mSceneMgr);
+    weapon4->setSMP(mSceneMgr);
 
 
     equippedweapon = &weapon1;
@@ -616,25 +618,32 @@ bool BaseApplication::keyPressed( const OIS::KeyEvent &arg )
         else if(arg.key == OIS::KC_D){
             right=true;
         }
-        else if(arg.key == OIS::KC_1 && weapon != WeaponState::Weapon0){
-            weapon = WeaponState::Weapon0;
+        else if(arg.key == OIS::KC_1 && weapon != WeaponState::Weapon1){
+            weapon = WeaponState::Weapon1;
             playerState = PlayerState::NoFire;
             (*equippedweapon)->cancel_reload();
             equippedweapon = &weapon1;
             (*equippedweapon)->switch_weapon();
         }
-        else if(arg.key == OIS::KC_2 && weapon != WeaponState::Weapon1){
-            weapon = WeaponState::Weapon1;
+        else if(arg.key == OIS::KC_2 && weapon != WeaponState::Weapon2){
+            weapon = WeaponState::Weapon2;
             playerState = PlayerState::NoFire;
             (*equippedweapon)->cancel_reload();
             equippedweapon = &weapon2;
             (*equippedweapon)->switch_weapon();
         }
-        else if(arg.key == OIS::KC_3 && weapon != WeaponState::Weapon2){
-            weapon = WeaponState::Weapon2;
+        else if(arg.key == OIS::KC_3 && weapon != WeaponState::Weapon3){
+            weapon = WeaponState::Weapon3;
             playerState = PlayerState::NoFire;
             (*equippedweapon)->cancel_reload();
             equippedweapon = &weapon3;
+            (*equippedweapon)->switch_weapon();
+        }
+        else if(arg.key == OIS::KC_4 && weapon != WeaponState::Weapon4){
+            weapon = WeaponState::Weapon4;
+            playerState = PlayerState::NoFire;
+            (*equippedweapon)->cancel_reload();
+            equippedweapon = &weapon4;
             (*equippedweapon)->switch_weapon();
         }
         //Monster Code
@@ -761,6 +770,17 @@ void BaseApplication::buttonHit (OgreBites::Button *button)
             level->num_monsters_left = 1;
             level_val = 1;
             lives = 3;
+            weapon1->replenish_weapon();
+            weapon2->replenish_weapon();
+            weapon3->replenish_weapon();
+            weapon4->replenish_weapon();
+        }
+        else
+        {
+            weapon1->reset_level();
+            weapon2->reset_level();
+            weapon3->reset_level();
+            weapon4->reset_level();
         }
         for (int i = 0; i < level->num_monsters; i++)
         {
@@ -772,11 +792,8 @@ void BaseApplication::buttonHit (OgreBites::Button *button)
         player1->player_health = 10.0;
         player1->hit = false;
         level->num_monsters_left = level->num_monsters;
-        weapon1->reset_weapon();
-        weapon2->reset_weapon();
-        weapon3->reset_weapon();
         equippedweapon = &weapon1;
-        weapon = WeaponState::Weapon0;
+        weapon = WeaponState::Weapon1;
         last_playerState = PlayerState::NoFire;
         state = Play;
     }
@@ -803,11 +820,10 @@ void BaseApplication::buttonHit (OgreBites::Button *button)
             sim->addObject(m);
         }
         level->num_monsters_left = level->num_monsters;
-        weapon1->reset_weapon();
-        weapon2->reset_weapon();
-        weapon3->reset_weapon();
-        equippedweapon = &weapon1;
-        weapon = WeaponState::Weapon0;
+        weapon1->next_level(level_val);
+        weapon2->next_level(level_val);
+        weapon3->next_level(level_val);
+        weapon4->next_level(level_val);
 
         mTrayMgr->clearTray(OgreBites::TL_CENTER);
         mTrayMgr->destroyWidget(state_label);
@@ -839,11 +855,12 @@ void BaseApplication::buttonHit (OgreBites::Button *button)
             sim->addObject(m);
         }
         level->num_monsters_left = level->num_monsters;
-        weapon1->reset_weapon();
-        weapon2->reset_weapon();
-        weapon3->reset_weapon();
+        weapon1->reset_level();
+        weapon2->reset_level();
+        weapon3->reset_level();
+        weapon4->reset_level();
         equippedweapon = &weapon1;
-        weapon = WeaponState::Weapon0;
+        weapon = WeaponState::Weapon1;
         mTrayMgr->clearTray(OgreBites::TL_CENTER);
         mTrayMgr->destroyWidget(state_label);
         mTrayMgr->destroyWidget(restart_button);
