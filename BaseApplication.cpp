@@ -34,7 +34,6 @@ BaseApplication::BaseApplication(void)
     last_playerState(PlayerState::NoFire),
     weapon(Weapon1),
     scoreboard(0),
-    lives(3),
     mx(0),my(0),mz(0),scrollMax(4),scrollMin(0),theta(0),phi(0)
 {
   cameraDir=Ogre::Vector3(0,-1,-1);
@@ -98,16 +97,14 @@ void BaseApplication::createScene(void)
 	mSceneMgr->setShadowTechnique(Ogre::SHADOWTYPE_STENCIL_ADDITIVE);
 
     Ogre::StringVector scores;
-    scores.push_back("Level");
     scores.push_back("Lives");
+    scores.push_back("Monsters Killed");
     scores.push_back("Weapon");
     scores.push_back("Ammunition");
     scores.push_back("Monsters Left: ");
     scores.push_back("Music");
 
     scoreboard = mTrayMgr->createParamsPanel(OgreBites::TL_TOPLEFT, "Scoreboard", 250, scores);
-    scoreboard->setParamValue(0, std::to_string(level_val));
-    scoreboard->setParamValue(1, std::to_string(lives));
     scoreboard->setParamValue(3, "0");
     scoreboard->setParamValue(4, "0");
     scoreboard->setParamValue(5, "On");
@@ -164,8 +161,7 @@ void BaseApplication::createScene(void)
 
 	light->setDiffuseColour(.25, .2, .3);
 	light->setSpecularColour(.5, 0.0, 0.0);
-
-  light->setAttenuation(100, 1.0, 0.045, 0.0075);
+    light->setAttenuation(100, 1.0, 0.045, 0.0075);
     light->setPosition(Ogre::Vector3(0,20,20));
 }
 
@@ -481,69 +477,73 @@ bool BaseApplication::frameRenderingQueued(const Ogre::FrameEvent& evt)
             }
         }
 
-      sim->stepSimulation(evt, evt.timeSinceLastFrame,10,1./60.);
+        sim->stepSimulation(evt, evt.timeSinceLastFrame,10,1./60.);
 
-      //GAME WIN
-      if (level->num_monsters_left <= 0)
-      {
-        mTrayMgr->showCursor();
-        bgmusic->playOrPause();
-        bgmusic->win();
-        state_label = mTrayMgr->createLabel(OgreBites::TL_CENTER, "Win", "You Win! :)", 400);
-        continue_button = mTrayMgr->createButton(OgreBites::TL_CENTER, "Continue", "Next Level");
-        // restart_button = mTrayMgr->createButton(OgreBites::TL_CENTER, "Restart", "Restart Level");
-        quit_button = mTrayMgr->createButton(OgreBites::TL_CENTER, "Exit", "Quit");
-        state = Win;
-      }
-
-      //GAME LOSE
-      else if (player1->player_health <= 0)
-      {
-        lives--;
-        mTrayMgr->showCursor();
-        bgmusic->playOrPause();
-        if (lives == 0)
+        //GAME WIN
+        if (level->num_monsters_left <= 0)
         {
-            bgmusic->lose();
-            state_label = mTrayMgr->createLabel(OgreBites::TL_CENTER, "Lose", "Game Over! You reached level: " + std::to_string(level_val), 400);
-            tryagain_button = mTrayMgr->createButton(OgreBites::TL_CENTER, "Try Again", "Start Over");
+            mTrayMgr->showCursor();
+            bgmusic->playOrPause();
+            bgmusic->win();
+            state_label = mTrayMgr->createLabel(OgreBites::TL_CENTER, "Win", "You Win! :)", 400);
+            continue_button = mTrayMgr->createButton(OgreBites::TL_CENTER, "Continue", "Next Level");
+            // restart_button = mTrayMgr->createButton(OgreBites::TL_CENTER, "Restart", "Restart Level");
             quit_button = mTrayMgr->createButton(OgreBites::TL_CENTER, "Exit", "Quit");
-            state = Lose;
+            state = Win;
+        }
+
+        //GAME LOSE
+        else if (player1->player_health <= 0)
+        {
+            sim->lives--;
+            mTrayMgr->showCursor();
+            bgmusic->playOrPause();
+            if (sim->lives == 0)
+            {
+                bgmusic->lose();
+                state_label = mTrayMgr->createLabel(OgreBites::TL_CENTER, "Lose", "Game Over! You reached level: " + std::to_string(level_val), 400);
+                tryagain_button = mTrayMgr->createButton(OgreBites::TL_CENTER, "Try Again", "Start Over");
+                quit_button = mTrayMgr->createButton(OgreBites::TL_CENTER, "Exit", "Quit");
+                state = Lose;
+            }
+            else
+            {
+                state_label = mTrayMgr->createLabel(OgreBites::TL_CENTER, "Lose", "You Died and lose a life!", 400);
+                tryagain_button = mTrayMgr->createButton(OgreBites::TL_CENTER, "Try Again", "Try Again");
+                quit_button = mTrayMgr->createButton(OgreBites::TL_CENTER, "Exit", "Quit");
+                state = Lose;
+            }
+        }
+
+        player1->playerLV=btVector3(0,0,0);
+        float scrollSens=1000;
+        if(mz>scrollSens)
+            mz=scrollSens;
+        if(mz<0)
+            mz=0;
+        float scrollMod=scrollMax*(mz/scrollSens);
+        //jimmyjam
+        phi+=3.1415926-1.3;
+        Ogre::Vector3 cameraOffset=(Ogre::Vector3(cos(theta)*cos(phi),-sin(theta),cos(theta)*sin(-1*phi)));
+        phi-=3.1415926-1.3;
+
+        cameraPos=player1->getPos()-(scrollMod)*cameraDir + Ogre::Vector3(0,1.7,0) + 1.6*cameraOffset;
+        Ogre::Vector3 lightoffset=Ogre::Vector3(0,1.9,0);
+        light->setPosition(player1->getPos()+lightoffset);
+
+        mCamera->setPosition(cameraPos);
+        mCamera->lookAt(cameraPos+cameraDir);
+        scoreboard->setParamValue(0, std::to_string(sim->lives));
+        scoreboard->setParamValue(1, std::to_string(sim->monsters_killed));
+        scoreboard->setParamValue(2, (*equippedweapon)->name);
+        if ((*equippedweapon)->name == "Pistol")
+        {
+            scoreboard->setParamValue(3, std::to_string((*equippedweapon)->ammo_left()) + "/INF");
         }
         else
-        {
-            state_label = mTrayMgr->createLabel(OgreBites::TL_CENTER, "Lose", "You Died and lose a life!", 400);
-            tryagain_button = mTrayMgr->createButton(OgreBites::TL_CENTER, "Try Again", "Try Again");
-            quit_button = mTrayMgr->createButton(OgreBites::TL_CENTER, "Exit", "Quit");
-            state = Lose;
-        }
-      }
-
-
-      player1->playerLV=btVector3(0,0,0);
-      float scrollSens=1000;
-      if(mz>scrollSens)
-        mz=scrollSens;
-      if(mz<0)
-        mz=0;
-      float scrollMod=scrollMax*(mz/scrollSens);
-        //jimmyjam
-      phi+=3.1415926-1.3;
-      Ogre::Vector3 cameraOffset=(Ogre::Vector3(cos(theta)*cos(phi),-sin(theta),cos(theta)*sin(-1*phi)));
-      phi-=3.1415926-1.3;
-
-      cameraPos=player1->getPos()-(scrollMod)*cameraDir + Ogre::Vector3(0,1.7,0) + 1.6*cameraOffset;
-      Ogre::Vector3 lightoffset=Ogre::Vector3(0,1.9,0);
-      light->setPosition(player1->getPos()+lightoffset);
-
-      mCamera->setPosition(cameraPos);
-      mCamera->lookAt(cameraPos+cameraDir);
-      scoreboard->setParamValue(0, std::to_string(level_val));
-      scoreboard->setParamValue(1, std::to_string(lives));
-      scoreboard->setParamValue(2, (*equippedweapon)->name);
-      scoreboard->setParamValue(3, std::to_string((*equippedweapon)->ammo_left()) + "/" + std::to_string((*equippedweapon)->total_ammo_left()));
-      scoreboard->setParamValue(4, std::to_string(level->num_monsters_left));
-      //cout <<cameraDir.x<<","<<cameraDir.y<<","<<cameraDir.z<<"\n";
+            scoreboard->setParamValue(3, std::to_string((*equippedweapon)->ammo_left()) + "/" + std::to_string((*equippedweapon)->total_ammo_left()));
+        scoreboard->setParamValue(4, std::to_string(level->num_monsters_left));
+        //cout <<cameraDir.x<<","<<cameraDir.y<<","<<cameraDir.z<<"\n";
     }
 
     mTrayMgr->frameRenderingQueued(evt);
@@ -732,7 +732,7 @@ void BaseApplication::buttonHit (OgreBites::Button *button)
         mTrayMgr->hideCursor();
         state = Play;
         delete rect;
-        progress_label = mTrayMgr->createLabel(OgreBites::TL_TOP, "Welcome", "Level " + std::to_string(level_val) , 650);
+        progress_label = mTrayMgr->createLabel(OgreBites::TL_TOP, "Welcome", "Level " + std::to_string(level_val) , 400);
     }
     else if (button == resume_button)
     {
@@ -765,12 +765,15 @@ void BaseApplication::buttonHit (OgreBites::Button *button)
         mTrayMgr->destroyWidget(quit_button);
         mTrayMgr->hideCursor();
 
-        if (lives == 0)
+        if (sim->lives == 0)
         {
             level->num_monsters = 1;
             level->num_monsters_left = 1;
             level_val = 1;
-            lives = 3;
+            sim->lives = 3;
+            sim->lvl_lives = 3;
+            sim->monsters_killed = 0;
+            sim->lvl_monsters_killed = 0;
             weapon1->replenish_weapon();
             weapon2->replenish_weapon();
             weapon3->replenish_weapon();
@@ -778,6 +781,8 @@ void BaseApplication::buttonHit (OgreBites::Button *button)
         }
         else
         {
+            sim->lvl_lives = sim_lives;
+            sim->monsters_killed = sim->lvl_monsters_killed;
             weapon1->reset_level();
             weapon2->reset_level();
             weapon3->reset_level();
@@ -799,7 +804,7 @@ void BaseApplication::buttonHit (OgreBites::Button *button)
         state = Play;
         mTrayMgr->clearTray(OgreBites::TL_TOP);
         mTrayMgr->destroyWidget(progress_label);
-        progress_label = mTrayMgr->createLabel(OgreBites::TL_TOP, "Repeat Level", "Level " + std::to_string(level_val) , 650);
+        progress_label = mTrayMgr->createLabel(OgreBites::TL_TOP, "Repeat Level", "Level " + std::to_string(level_val) , 400);
     }
     else if (button == continue_button)
     {
@@ -824,15 +829,17 @@ void BaseApplication::buttonHit (OgreBites::Button *button)
             sim->addObject(m);
         }
         level->num_monsters_left = level->num_monsters;
+        sim->lvl_monsters_killed = sim->monsters_killed;
+        sim->lvl_lives = sim->lives;
         mTrayMgr->clearTray(OgreBites::TL_TOP);
         mTrayMgr->destroyWidget(progress_label);
         if (weapon1->next_level(level_val))
         {
             // MESSAGE: WEAPONS REPLENISHED
-            progress_label = mTrayMgr->createLabel(OgreBites::TL_TOP, "Weapons Replenished", "Weapons Replenished, Level " + level_val , 650);
+            progress_label = mTrayMgr->createLabel(OgreBites::TL_TOP, "Weapons Replenished", "Ammo Restocked! Level " + std::to_string(level_val) , 400);
         }
         else
-            progress_label = mTrayMgr->createLabel(OgreBites::TL_TOP, "Next Level", "Level " + std::to_string(level_val) , 650);
+            progress_label = mTrayMgr->createLabel(OgreBites::TL_TOP, "Next Level", "Level " + std::to_string(level_val) , 400);
         weapon2->next_level(level_val);
         weapon3->next_level(level_val);
         weapon4->next_level(level_val);
@@ -867,6 +874,8 @@ void BaseApplication::buttonHit (OgreBites::Button *button)
             sim->addObject(m);
         }
         level->num_monsters_left = level->num_monsters;
+        sim->monsters_killed = sim->lvl_monsters_killed;
+        sim->lives = sim->lvl_lives;
         weapon1->reset_level();
         weapon2->reset_level();
         weapon3->reset_level();
@@ -884,7 +893,7 @@ void BaseApplication::buttonHit (OgreBites::Button *button)
 
         mTrayMgr->clearTray(OgreBites::TL_TOP);
         mTrayMgr->destroyWidget(progress_label);
-        progress_label = mTrayMgr->createLabel(OgreBites::TL_TOP, "Restart Level", "Level " + std::to_string(level_val) , 650);
+        progress_label = mTrayMgr->createLabel(OgreBites::TL_TOP, "Restart Level", "Level " + std::to_string(level_val) , 400);
     }
     else if (button == quit_button)
     {

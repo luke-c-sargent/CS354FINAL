@@ -111,7 +111,6 @@ protected:
     OgreBites::Label* progress_label;
     Ogre::Rectangle2D* rect;
     int level_val;
-    int lives;
 
     // States
     GameState state;

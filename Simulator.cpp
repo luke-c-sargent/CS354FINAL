@@ -41,7 +41,10 @@ Simulator::Simulator(){
     dynamicsWorld = new btDiscreteDynamicsWorld( dispatcher, broadphase, solver,collisionConfig);
     //create world
     dynamicsWorld->setGravity(btVector3(0,-100, 0));//386.09 inches/s^2 = 9.8m/s^2
-
+    monsters_killed = 0;
+    lvl_monsters_killed = 0;
+    lives = 3;
+    lvl_lives = 3;
     //contact callback context
     ccp=new ContactCallback(objList[0]);
 
@@ -137,7 +140,10 @@ void Simulator::stepSimulation(const Ogre::FrameEvent& evt, const Ogre::Real ela
                 if(((Monster*)objList[i])->m_health <= 0.0 && monster_alive == true)
                 {
                   deadObjects.push_back(i);                
-                  monster_alive = false;                  
+                  monster_alive = false;
+                  monsters_killed++;          
+                  if (monsters_killed%10==0)
+                    lives++; 
                   //((Monster*)objList[j])->killMonster();  
                 }
 

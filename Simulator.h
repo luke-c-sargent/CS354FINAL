@@ -29,6 +29,10 @@ public:
     GameObject * getObjectPtr(int i);
     int getObjectListSize();
     void clearObjectList();
+    int monsters_killed;
+    int lvl_monsters_killed;
+    int lives;
+    int lvl_lives;
 
     btCollisionWorld::ClosestRayResultCallback RayCallBack(btVector3 start, btVector3 end);
 };
