@@ -44,14 +44,14 @@ Player::Player(Ogre::SceneManager* smp, Ogre::String inname, Ogre::Vector3 start
     rootNode->attachObject(p_entity);
 
     //purdiness
-    p_entity->setCastShadows(false);
+    p_entity->setCastShadows(true);
     std::string namest = name;
     if(namest.compare("player")==0)
       p_entity->setMaterialName("redninja");
     else
         p_entity->setMaterialName("PlayerWire2");
     rootNode->translate(position.getX(),position.getY()-1.2,position.getZ());
-    rootNode->scale(1.0/100.,1.0/100.,1.0/100.);
+    rootNode->scale(1.2/100.,1.2/100.,1.2/100.);
 
     //bt values
     shape = new btBoxShape(btVector3(w/2.,h/2.,l/2.));
@@ -81,30 +81,29 @@ void Player::setLV(btVector3 lvin){
 
 void Player::updateTransform(){
   btTransform tr;
-    ms->getWorldTransform(tr);
+  ms->getWorldTransform(tr);
+  btVector3 origin = tr.getOrigin();
+  float mod = -2.1;
+  if(origin.getY()<mod || origin.getY()>mod){
+    //cout <<(float)((int)(origin.getY()/5.0))*5.0-2.2<<"it aint where it should be\n";
+    origin.setY(mod);
+    tr.setOrigin(origin);
+    ms->setWorldTransform(tr);
+  }
+  ms->getWorldTransform(tr);
+  origin=tr.getOrigin();
+  cout << origin.getY()<<"\n";
 
+  rootNode->setPosition(tr.getOrigin().getX(),
+                        tr.getOrigin().getY(),
+                        tr.getOrigin().getZ());
+ //rootNode->translate(0,-0.5,0);
 
-
-
-    btVector3 origin = tr.getOrigin();
-    if(origin.getY()<-.4){
-      //cout <<(float)((int)(origin.getY()/5.0))*5.0-2.2<<"it aint where it should be\n";
-      origin.setY(-.4);
-      tr.setOrigin(origin);
-      ms->setWorldTransform(tr);
-    }
-    ms->getWorldTransform(tr);
-    //origin=tr.getOrigin();
-
-    rootNode->setPosition(tr.getOrigin().getX(),
-                          tr.getOrigin().getY(),
-                          tr.getOrigin().getZ());
-
-   Ogre::Quaternion quat = Ogre::Quaternion(rotation.getW(),rotation.getX(),rotation.getY(),rotation.getZ());
-   rootNode->setOrientation(quat);
-   position=btVector3(tr.getOrigin().getX(),
-                       tr.getOrigin().getY(),
-                       tr.getOrigin().getZ());
+ Ogre::Quaternion quat = Ogre::Quaternion(rotation.getW(),rotation.getX(),rotation.getY(),rotation.getZ());
+ rootNode->setOrientation(quat);
+ position=btVector3(tr.getOrigin().getX(),
+                     tr.getOrigin().getY(),
+                     tr.getOrigin().getZ());
 
 }
 

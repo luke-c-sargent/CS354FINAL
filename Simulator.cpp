@@ -228,6 +228,11 @@ void Simulator::stepSimulation(const Ogre::FrameEvent& evt, const Ogre::Real ela
 
           //objList[i]->updateTransform();
         }
+
+        else if((objList[i]->getName()).compare("player") == 0){
+          ((Player*)objList[i])->updateTransform();
+        }
+
         //===========
         //*/
         else {

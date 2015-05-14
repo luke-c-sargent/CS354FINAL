@@ -161,7 +161,7 @@ void BaseApplication::createScene(void)
 
 	light->setDiffuseColour(.8, .4, .4);
 	light->setSpecularColour(.5, 0.0, 0.0);
-    light->setAttenuation(100, 1.0, 0.045, 0.0075);
+    light->setAttenuation(80, 1.0, 0.045, 0.0075);
     light->setPosition(Ogre::Vector3(0,20,20));
 }
 
@@ -528,7 +528,7 @@ bool BaseApplication::frameRenderingQueued(const Ogre::FrameEvent& evt)
         phi-=3.1415926-1.3;
 
         cameraPos=player1->getPos()-(scrollMod)*cameraDir + Ogre::Vector3(0,1.7,0) + 1.6*cameraOffset;
-        Ogre::Vector3 lightoffset=Ogre::Vector3(0,1.9,0);
+        Ogre::Vector3 lightoffset=Ogre::Vector3(0,3,0);
         light->setPosition(player1->getPos()+lightoffset);
 
         mCamera->setPosition(cameraPos);
